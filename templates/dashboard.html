@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CodeHub</title>
+
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/vendor.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/teams.css')}}">
+
+    <!-- favicons
+    ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='images/1.png')}}">
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/1.png')}}"> -->
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="1.png"> -->
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="1.png"> -->
+    <link rel="shortcut icon" href="../static/images/1.ico" type="image/x-icon">
+    <link rel="manifest" href="{{url_for('static', filename='site.webmanifest')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body id="top">
+
+
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader">
+        </div>
+    </div>
+
+
+    <!-- page wrap
+    ================================================== -->
+    <div class="s-pagewrap">
+
+
+
+        <!-- # site header 
+        ================================================== -->
+        <header class="s-header">
+
+            <div class="s-header__block">
+                <div class="s-header__logo">
+                    <a class="logo logo1" href="/">
+                        <img src="{{url_for('static', filename='images/3.png')}}" alt="Homepage">
+                    </a>
+                </div>
+
+                <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+            </div> <!-- end s-header__block -->
+
+            <div class="row s-header__nav-wrap">
+                <nav class="s-header__nav">
+                    <ul>
+                        <li class="current"><a href="#intro" class="smoothscroll">Create</a></li>
+                        <li><a href="#works" class="smoothscroll">All Projects</a></li>
+                    </ul>
+                </nav>
+
+                <a class="s-header__social" href="{{url_for('login')}}">{{user}}</a>
+            </div> <!-- end s-header__nav-wrap -->
+
+        </header> <!-- end s-header -->
+
+
+
+        <!-- # intro 
+        ================================================== -->
+        <section id="intro" class="s-intro target-section" style="padding: 150px;">
+
+            <div class="" style="max-width: 500px; margin:auto;">
+                <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Project: </h4>
+                <form>
+                    <div>
+                        <label for="sampleInput">Your email</label>
+                        <input class="u-fullwidth" type="email" placeholder="test@mailbox.com" id="sampleInput">
+                    </div>
+                    <div>
+                        <label for="sampleRecipientInput">Reason for contacting</label>
+                        <div class="ss-custom-select">
+                            <select class="u-fullwidth" id="sampleRecipientInput">
+                                <option value="Option 1">Questions</option>
+                                <option value="Option 2">Report</option>
+                                <option value="Option 3">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                
+                    <label for="exampleMessage">Message</label>
+                    <textarea class="u-fullwidth" placeholder="Your message" id="exampleMessage"></textarea>
+                
+                    <label class="u-add-bottom">
+                        <input type="checkbox">
+                        <span class="label-text">Send a copy to yourself</span>
+                    </label>
+                
+                    <input class="btn--primary u-fullwidth" type="submit" value="Submit">
+                </form>
+            </div>
+
+        </section> 
+
+
+        <!-- ## works
+        ================================================== -->
+        <section id="works" class="s-works target-section">
+
+            <div class="row section-header section-header--dark has-bottom-sep">
+                <div class="column lg-12">
+                    <!-- <h3 class="text-pretitle">Recent Projects</h3> -->
+                    <h1 class="text-display-title">All Projects</h1>
+                </div>
+            </div> <!-- end section-header -->
+
+            <div class="row folio-list block-lg-one-third block-tab-one-half block-stack-on-550 collapse"
+                data-animate-block>
+
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-tulips.jpg"
+                                title="The Red Wheel" data-size="1050x700">
+                                <img src="../static/images/portfolio/tulips.jpg"
+                                    srcset="../static/images/portfolio/tulips.jpg 1x, ../static/images/portfolio/tulips@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">Project 1</div>
+                            <h4 class="folio-item__title">Flask + Postgresql</h4>
+                        </div>
+                        <a href="https://github.com/Kamalkoranga/flask-postgres" title="Project Link"
+                            class="folio-item__project-link">Project
+                            Link</a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link"
+                                href="../static/images/portfolio/gallery/g-minimalismo.jpg" title="Music Life"
+                                data-size="1050x700">
+                                <img src="../static/images/portfolio/minimalismo.jpg"
+                                    srcset="../static/images/portfolio/minimalismo.jpg 1x, ../static/images/portfolio/minimalismo@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">Frontend Design</div>
+                            <h4 class="folio-item__title">Minimalismo</h4>
+                        </div>
+                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
+                            Link</a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-skaterboy.jpg"
+                                Title="OI Logo" data-size="1050x700">
+                                <img src="../static/images/portfolio/skaterboy.jpg"
+                                    srcset="../static/images/portfolio/skaterboy.jpg 1x, ../static/images/portfolio/skaterboy@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">Product Design</div>
+                            <h4 class="folio-item__title">Skaterboy</h4>
+                        </div>
+                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
+                            Link</a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-rucksack.jpg"
+                                title="Corrugated Sheets" data-size="1050x700">
+                                <img src="../static/images/portfolio/rucksack.jpg"
+                                    srcset="../static/images/portfolio/rucksack.jpg 1x, ../static/images/portfolio/rucksack@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">Frontend Design</div>
+                            <h4 class="folio-item__title">Rucksack</h4>
+                        </div>
+                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
+                            Link</a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-woodcraft.jpg"
+                                title="Sand Dunes" data-size="1050x700">
+                                <img src="../static/images/portfolio/woodcraft.jpg"
+                                    srcset="../static/images/portfolio/woodcraft.jpg 1x, ../static/images/portfolio/woodcraft@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">E-Commerce</div>
+                            <h4 class="folio-item__title">Wooocraft</h4>
+                        </div>
+                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">
+                            Project Link
+                        </a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-lamp.jpg"
+                                title="The Lamp" data-size="1050x700">
+                                <img src="../static/images/portfolio/lamp.jpg"
+                                    srcset="../static/images/portfolio/lamp.jpg 1x, ../static/images/portfolio/lamp@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">Product Design</div>
+                            <h4 class="folio-item__title">The Lamp</h4>
+                        </div>
+                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
+                            Link</a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-grayscale.jpg"
+                                title="The Lamp" data-size="1050x700">
+                                <img src="../static/images/portfolio/grayscale.jpg"
+                                    srcset="../static/images/portfolio/grayscale.jpg 1x, ../static/images/portfolio/grayscale@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">Frontend Design</div>
+                            <h4 class="folio-item__title">Grayscale</h4>
+                        </div>
+                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
+                            Link</a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-shutterbug.jpg"
+                                title="The Red Wheel" data-size="1050x700">
+                                <img src="../static/images/portfolio/shutterbug.jpg"
+                                    srcset="../static/images/portfolio/shutterbug.jpg 1x, ../static/images/portfolio/shutterbug@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">Branding</div>
+                            <h4 class="folio-item__title">Lady Shutterbug</h4>
+                        </div>
+                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
+                            Link</a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <div class="column">
+                    <div class="folio-item" data-animate-el>
+                        <div class="folio-item__thumb">
+                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-fuji.jpg"
+                                title="The Lamp" data-size="1050x700">
+                                <img src="../static/images/portfolio/fuji.jpg"
+                                    srcset="../static/images/portfolio/fuji.jpg 1x, ../static/images/portfolio/fuji@2x.jpg 2x"
+                                    alt="">
+                            </a>
+                        </div>
+                        <div class="folio-item__info">
+                            <div class="folio-item__cat">Frontend Design</div>
+                            <h4 class="folio-item__title">Retro Cam</h4>
+                        </div>
+                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
+                            Link</a>
+                        <div class="folio-item__caption">
+                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
+                                dolorem corrupti neque nisi.</p>
+                        </div>
+                    </div>
+                </div> <!-- end column -->
+                <a href="/" style="margin-top: 20px;">See All Projects</a>
+
+            </div> <!-- folio-list -->
+
+
+        </section>
+
+
+
+    <!-- photoswipe background
+    ================================================== -->
+    <div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+
+        <div class="pswp__bg"></div>
+        <div class="pswp__scroll-wrap">
+
+            <div class="pswp__container">
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+                <div class="pswp__item"></div>
+            </div>
+
+            <div class="pswp__ui pswp__ui--hidden">
+                <div class="pswp__top-bar">
+                    <div class="pswp__counter"></div><button class="pswp__button pswp__button--close"
+                        title="Close (Esc)"></button> <button class="pswp__button pswp__button--share"
+                        title="Share"></button> <button class="pswp__button pswp__button--fs"
+                        title="Toggle fullscreen"></button> <button class="pswp__button pswp__button--zoom"
+                        title="Zoom in/out"></button>
+                    <div class="pswp__preloader">
+                        <div class="pswp__preloader__icn">
+                            <div class="pswp__preloader__cut">
+                                <div class="pswp__preloader__donut"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                    <div class="pswp__share-tooltip"></div>
+                </div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
+                <div class="pswp__caption">
+                    <div class="pswp__caption__center"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div> <!-- end photoSwipe background -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="{{url_for('static', filename='js/plugins.js')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+
+</body>
+
+</html>
