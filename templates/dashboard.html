@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
         integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 </head>
 
 <body id="top">
@@ -86,32 +85,12 @@
 
             <div class="" style="max-width: 500px; margin:auto;">
                 <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Project: </h4>
-                <form>
-                    <div>
-                        <label for="sampleInput">Your email</label>
-                        <input class="u-fullwidth" type="email" placeholder="test@mailbox.com" id="sampleInput">
-                    </div>
-                    <div>
-                        <label for="sampleRecipientInput">Reason for contacting</label>
-                        <div class="ss-custom-select">
-                            <select class="u-fullwidth" id="sampleRecipientInput">
-                                <option value="Option 1">Questions</option>
-                                <option value="Option 2">Report</option>
-                                <option value="Option 3">Others</option>
-                            </select>
-                        </div>
-                    </div>
-                
-                    <label for="exampleMessage">Message</label>
-                    <textarea class="u-fullwidth" placeholder="Your message" id="exampleMessage"></textarea>
-                
-                    <label class="u-add-bottom">
-                        <input type="checkbox">
-                        <span class="label-text">Send a copy to yourself</span>
-                    </label>
-                
-                    <input class="btn--primary u-fullwidth" type="submit" value="Submit">
+                <form method="post" enctype="multipart/form-data">
+                    {{form.hidden_tag()}}
+                    {{form.file()}}
+                    {{form.submit()}}                
                 </form>
+                
             </div>
 
         </section> 
@@ -315,7 +294,7 @@
                         <div class="folio-item__thumb">
                             <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-fuji.jpg"
                                 title="The Lamp" data-size="1050x700">
-                                <img src="../static/images/portfolio/fuji.jpg"
+                                <img src="{{img}}"
                                     srcset="../static/images/portfolio/fuji.jpg 1x, ../static/images/portfolio/fuji@2x.jpg 2x"
                                     alt="">
                             </a>
@@ -387,7 +366,11 @@
     ================================================== -->
     <script src="{{url_for('static', filename='js/plugins.js')}}"></script>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
-
+    <script>
+        function upload() {
+            alert("File has been uploaded")
+        }
+    </script>
 </body>
 
 </html>
