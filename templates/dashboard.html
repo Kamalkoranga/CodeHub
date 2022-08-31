@@ -31,6 +31,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
         integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        input::file-selector-button {
+    color: #24a89b;
+    font-weight: bold;
+    padding: 0.5em;
+    background-color: #2c2c2d;
+    border: 0;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+    </style>
 </head>
 
 <body id="top">
@@ -85,13 +96,15 @@
 
             <div class="" style="max-width: 500px; margin:auto;">
                 <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Project: </h4>
-                <form method="post" enctype="multipart/form-data">
-                    {{form.hidden_tag()}}
-                    {{form.file()}}
-                    {{form.submit()}}                
+                <form action="http://localhost:7000/uploader" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                    <input type="file" name="file" id="inputfile" required style="width: 300px;"/>
+                    <input type="submit" onclick="upload()"/>
                 </form>
-                
             </div>
+
+            <hr>
+            <h5>Code &#128071;: </h5>
+            <pre id="output">File not selected!!</pre>
 
         </section> 
 
@@ -362,9 +375,8 @@
     </div> <!-- end photoSwipe background -->
 
     <div>
-        <p>{{f}}</p>
+        <!-- <p>{{f}}</p> -->
         <hr>
-        <pre id="output"></pre>
     </div>
 
 
@@ -373,12 +385,7 @@
     <script src="{{url_for('static', filename='js/plugins.js')}}"></script>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <script>
-        function upload() {
-            alert("File has been uploaded")
-        }
-        document.getElementById('inputfile')
-                .addEventListener('change', function () {
-
+        document.getElementById('inputfile').addEventListener('change', function () {
                     var fr = new FileReader();
                     fr.onload = function () {
                         document.getElementById('output')
