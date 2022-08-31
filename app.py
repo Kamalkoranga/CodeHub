@@ -17,12 +17,18 @@ from wtforms.validators import InputRequired
 
 import glob
 
+from io import BytesIO
+
+from flask import Flask, render_template, request, send_file
+from flask_sqlalchemy import SQLAlchemy
+
 
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 app.config['UPLOAD_FOLDER'] = 'static/code'
 
@@ -62,6 +68,11 @@ class LoginForm(FlaskForm):
 # class UploadFileForm(FlaskForm):
 #     file = FileField("File", validators=[InputRequired()], render_kw={"style": "padding", 'id': 'inputfile'})
 #     submit = SubmitField("Upload File", render_kw={"onclick": "upload()"})
+
+class Upload(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(50))
+    data = db.Column(db.LargeBinary)
 
 
 def path(folder_path):
@@ -117,7 +128,7 @@ def login():
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    img = '../static/images/portfolio/fuji.jpg' # Fake data that can be fetch from database
+    # img = '../static/images/portfolio/fuji.jpg' # Fake data that can be fetch from database
     # form = UploadFileForm()
     # if form.validate_on_submit():
         # file = form.file.data # First grab the file
@@ -126,17 +137,35 @@ def dashboard():
         # return render_template('uploaded.html')
     # f = view()
     # print(f)
-    files = view()
-        
-    return render_template('dashboard.html', user=user.username.capitalize(), img=img, files=files)
+    # files = view()
+    if request.method == 'POST':
+        file = request.files['file']
 
-@app.route('/uploader', methods = ['GET', 'POST'])
-def upload_file():
-   if request.method == 'POST':
-       f = request.files['file']
-       f.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
-       return 'file uploaded successfully'
+        upload = Upload(filename=file.filename, data=file.read())
+        db.session.add(upload)
+        db.session.commit()
+
+        return f'Uploaded: {file.filename}'
+        
+    return render_template('dashboard.html', user=user.username.capitalize(), files=Upload.query.all())
+
+# @app.route('/uploader', methods = ['GET', 'POST'])
+# def upload_file():
+#    if request.method == 'POST':
+#        f = request.files['file']
+#        f.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
+#        return 'file uploaded successfully'
     #    return None
+    
+@app.route('/dashboard/<filename>')
+def detail(filename):
+    file = Upload.query.filter_by(filename = filename).first()
+    # print(type(file.data))
+    with open(f'static/code/{file.filename}', 'wb') as f:
+        f.write(file.data)
+    fi = open(f'static/code/{file.filename}', 'r')
+    a = fi.read()
+    return render_template('detail.html',f=a, file=file)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

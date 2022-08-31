@@ -96,22 +96,23 @@
 
             <div class="" style="max-width: 500px; margin:auto;">
                 <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Project: </h4>
-                <form action="http://localhost:7000/uploader" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                <form action="/dashboard" method="POST" enctype="multipart/form-data" style="text-align: center;">
                     <input type="file" name="file" id="inputfile" required style="width: 300px;" accept=".py"/>
-                    <input type="submit" onclick="upload()"/>
+                    <input type="submit"/>
                 </form>
             </div>
 
             <hr>
             <h5>Code &#128071;: </h5>
             <pre id="output">File not selected!!</pre>
+            
 
         </section> 
 
 
         <!-- ## works
         ================================================== -->
-        <section id="works" class="s-works target-section">
+        <section id="works" class="s-works target-section" style="padding: 150px 0 400px 0;">
 
             <div class="row section-header section-header--dark has-bottom-sep">
                 <div class="column lg-12">
@@ -123,7 +124,7 @@
             <div style="width:1000px; margin:auto;">
                 <ol>
                     {% for file in files %}
-                        <li><a href="#">{{ file }}</a></li>
+                        <li><a href="/dashboard/{{file.filename}}">{{file.filename}}</a></li>
                     {% endfor %}
                 </ol>
             </div>
@@ -173,11 +174,6 @@
         </div>
 
     </div> <!-- end photoSwipe background -->
-
-    <div>
-        <!-- <p>{{f}}</p> -->
-        <hr>
-    </div>
 
 
     <!-- Java Script
