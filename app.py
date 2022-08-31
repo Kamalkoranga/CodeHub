@@ -15,13 +15,15 @@ from werkzeug.utils import secure_filename
 import os
 from wtforms.validators import InputRequired
 
+import glob
+
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
 app.config['SECRET_KEY'] = 'thisisasecretkey'
-app.config['UPLOAD_FOLDER'] = 'code'
+app.config['UPLOAD_FOLDER'] = 'static/code'
 
 
 login_manager = LoginManager()
@@ -57,9 +59,41 @@ class LoginForm(FlaskForm):
     submit = SubmitField('Login')
 
 class UploadFileForm(FlaskForm):
-    file = FileField("File", validators=[InputRequired()], render_kw={"style": "padding"})
+    file = FileField("File", validators=[InputRequired()], render_kw={"style": "padding", 'id': 'inputfile'})
     submit = SubmitField("Upload File", render_kw={"onclick": "upload()"})
 
+
+def path(folder_path):
+    path = os.getcwd()
+    dir_path = f'{path}/{folder_path}'
+    count = 0
+    for path in os.listdir(dir_path):
+        if os.path.isfile(os.path.join(dir_path, path)):
+            count += 1
+    return count
+
+def view():
+    i = 1
+    fileName = []
+    parent_dir = os.getcwd() + '/static/code'
+    print('All Programs: ')
+    for pdf_file in glob.glob(os.path.join(parent_dir, '*.py')):
+        file = os.path.basename(pdf_file)
+        f_name, f_ext = os.path.splitext(file)
+        print(f'{i}: {f_name}')
+        i += 1
+        fileName.append(file)
+    count = path('static/code')
+    if count >= 1:
+        for i in range(1, count+1):
+            f = open(f'static/code/{fileName[i-1]}', 'r')
+            print('------------------------------------------------------')
+            print(' ')
+            # print(f.read())
+            print('------------------------------------------------------')
+            return f.read()
+    else:
+        print('OOPS! No program is added!!')
 
 @app.route('/')
 def index():
@@ -88,9 +122,10 @@ def dashboard():
         file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename))) # Then save the file
         print(str(file))
         # return render_template('uploaded.html')
-            
+    f = view()
+    print(f)
         
-    return render_template('dashboard.html', user=user.username.capitalize(), form=form, img=img)
+    return render_template('dashboard.html', user=user.username.capitalize(), form=form, img=img, f = f)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():

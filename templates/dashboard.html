@@ -361,6 +361,12 @@
 
     </div> <!-- end photoSwipe background -->
 
+    <div>
+        <p>{{f}}</p>
+        <hr>
+        <pre id="output"></pre>
+    </div>
+
 
     <!-- Java Script
     ================================================== -->
@@ -370,6 +376,17 @@
         function upload() {
             alert("File has been uploaded")
         }
+        document.getElementById('inputfile')
+                .addEventListener('change', function () {
+
+                    var fr = new FileReader();
+                    fr.onload = function () {
+                        document.getElementById('output')
+                            .textContent = fr.result;
+                    }
+
+                    fr.readAsText(this.files[0]);
+                })
     </script>
 </body>
 
