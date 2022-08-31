@@ -1,45 +1,37 @@
-# Imports
-from flask import Flask, render_template
+from io import BytesIO
 
-# Apis
-# https://4u8i9f.deta.dev/
+from flask import Flask, render_template, request, send_file
+from flask_sqlalchemy import SQLAlchemy 
 
-# Database
-fakeDatabase = [
-    {
-        'title': 'First Post',
-        'description': 'This is the first post',
-        'technology': 'Python',
-        'coder': 'John Doe',
-    },
-    {
-        'title': 'Second Post',
-        'description': 'This is the second post',
-        'technology': 'Python, CSV',
-        'coder': 'Kamal',
-    }
-]
-
-# Instances
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = ('postgresql://Kamalkoranga:v2_3thfx_3eBKFkgQfuxXk2awV7N3DDT@db.bit.io/Kamalkoranga/codehub')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False 
+db = SQLAlchemy(app, engine_options={"pool_recycle": 55})
 
-# Routes
-@app.route('/')
+class Upload(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(50))
+    data = db.Column(db.LargeBinary)
+
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    return render_template('index.html')
+    if request.method == 'POST':
+        file = request.files['file']
 
-@app.route('/projects')
-def projects():
-    return render_template('projects.html', db=fakeDatabase)
+        upload = Upload(filename=file.filename, data=file.read())
+        db.session.add(upload)
+        db.session.commit()
 
-@app.route('/add')
-def add():
-    return render_template('add.html')
+        return f'Uploaded: {file.filename}'
+    files = Upload.query.all()
+    return render_template('index.html', files=files)
 
-@app.route('/about')
-def about():
-    return render_template('about.html')
+@app.route('/download/<upload_id>')
+def download(upload_id):
+    upload = Upload.query.filter_by(id=upload_id).first()
+    print(upload)
+    return send_file(BytesIO(upload.data), attachment_filename=upload.filename, as_attachment=True)
 
-# Run
 if __name__ == '__main__':
+    db.create_all()
     app.run(debug=True)

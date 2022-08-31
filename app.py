@@ -81,20 +81,21 @@ def view():
     for pdf_file in glob.glob(os.path.join(parent_dir, '*.py')):
         file = os.path.basename(pdf_file)
         f_name, f_ext = os.path.splitext(file)
-        print(f'{i}: {f_name}')
+        # print(f'{i}: {f_name}')
         i += 1
         fileName.append(file)
-    count = path('static/code')
-    if count >= 1:
-        for i in range(1, count+1):
-            f = open(f'static/code/{fileName[i-1]}', 'r')
-            print('------------------------------------------------------')
-            print(' ')
-            # print(f.read())
-            print('------------------------------------------------------')
-            return f.read()
-    else:
-        print('OOPS! No program is added!!')
+    # count = path('static/code')
+    # if count >= 1:
+    #     for i in range(1, count+1):
+    #         f = open(f'static/code/{fileName[i-1]}', 'r')
+    #         print('------------------------------------------------------')
+    #         print(' ')
+    #         # print(f.read())
+    #         print('------------------------------------------------------')
+    #         return f.read()
+    # else:
+    #     print('OOPS! No program is added!!')
+    return fileName
 
 @app.route('/')
 def index():
@@ -125,8 +126,9 @@ def dashboard():
         # return render_template('uploaded.html')
     # f = view()
     # print(f)
+    files = view()
         
-    return render_template('dashboard.html', user=user.username.capitalize(), img=img)
+    return render_template('dashboard.html', user=user.username.capitalize(), img=img, files=files)
 
 @app.route('/uploader', methods = ['GET', 'POST'])
 def upload_file():
