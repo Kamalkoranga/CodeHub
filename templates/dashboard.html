@@ -31,6 +31,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
         integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        input::file-selector-button {
+    color: #24a89b;
+    font-weight: bold;
+    padding: 0.5em;
+    background-color: #2c2c2d;
+    border: 0;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+    </style>
 </head>
 
 <body id="top">
@@ -85,20 +96,23 @@
 
             <div class="" style="max-width: 500px; margin:auto;">
                 <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Project: </h4>
-                <form method="post" enctype="multipart/form-data">
-                    {{form.hidden_tag()}}
-                    {{form.file()}}
-                    {{form.submit()}}                
+                <form action="/dashboard" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                    <input type="file" name="file" id="inputfile" required style="width: 300px;" accept=".py"/>
+                    <input type="submit"/>
                 </form>
-                
             </div>
+
+            <hr>
+            <h5>Code &#128071;: </h5>
+            <pre id="output">File not selected!!</pre>
+            
 
         </section> 
 
 
         <!-- ## works
         ================================================== -->
-        <section id="works" class="s-works target-section">
+        <section id="works" class="s-works target-section" style="padding: 150px 0 400px 0;">
 
             <div class="row section-header section-header--dark has-bottom-sep">
                 <div class="column lg-12">
@@ -107,213 +121,13 @@
                 </div>
             </div> <!-- end section-header -->
 
-            <div class="row folio-list block-lg-one-third block-tab-one-half block-stack-on-550 collapse"
-                data-animate-block>
-
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-tulips.jpg"
-                                title="The Red Wheel" data-size="1050x700">
-                                <img src="../static/images/portfolio/tulips.jpg"
-                                    srcset="../static/images/portfolio/tulips.jpg 1x, ../static/images/portfolio/tulips@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Project 1</div>
-                            <h4 class="folio-item__title">Flask + Postgresql</h4>
-                        </div>
-                        <a href="https://github.com/Kamalkoranga/flask-postgres" title="Project Link"
-                            class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link"
-                                href="../static/images/portfolio/gallery/g-minimalismo.jpg" title="Music Life"
-                                data-size="1050x700">
-                                <img src="../static/images/portfolio/minimalismo.jpg"
-                                    srcset="../static/images/portfolio/minimalismo.jpg 1x, ../static/images/portfolio/minimalismo@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Frontend Design</div>
-                            <h4 class="folio-item__title">Minimalismo</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-skaterboy.jpg"
-                                Title="OI Logo" data-size="1050x700">
-                                <img src="../static/images/portfolio/skaterboy.jpg"
-                                    srcset="../static/images/portfolio/skaterboy.jpg 1x, ../static/images/portfolio/skaterboy@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Product Design</div>
-                            <h4 class="folio-item__title">Skaterboy</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-rucksack.jpg"
-                                title="Corrugated Sheets" data-size="1050x700">
-                                <img src="../static/images/portfolio/rucksack.jpg"
-                                    srcset="../static/images/portfolio/rucksack.jpg 1x, ../static/images/portfolio/rucksack@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Frontend Design</div>
-                            <h4 class="folio-item__title">Rucksack</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-woodcraft.jpg"
-                                title="Sand Dunes" data-size="1050x700">
-                                <img src="../static/images/portfolio/woodcraft.jpg"
-                                    srcset="../static/images/portfolio/woodcraft.jpg 1x, ../static/images/portfolio/woodcraft@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">E-Commerce</div>
-                            <h4 class="folio-item__title">Wooocraft</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">
-                            Project Link
-                        </a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-lamp.jpg"
-                                title="The Lamp" data-size="1050x700">
-                                <img src="../static/images/portfolio/lamp.jpg"
-                                    srcset="../static/images/portfolio/lamp.jpg 1x, ../static/images/portfolio/lamp@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Product Design</div>
-                            <h4 class="folio-item__title">The Lamp</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-grayscale.jpg"
-                                title="The Lamp" data-size="1050x700">
-                                <img src="../static/images/portfolio/grayscale.jpg"
-                                    srcset="../static/images/portfolio/grayscale.jpg 1x, ../static/images/portfolio/grayscale@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Frontend Design</div>
-                            <h4 class="folio-item__title">Grayscale</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-shutterbug.jpg"
-                                title="The Red Wheel" data-size="1050x700">
-                                <img src="../static/images/portfolio/shutterbug.jpg"
-                                    srcset="../static/images/portfolio/shutterbug.jpg 1x, ../static/images/portfolio/shutterbug@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Branding</div>
-                            <h4 class="folio-item__title">Lady Shutterbug</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-fuji.jpg"
-                                title="The Lamp" data-size="1050x700">
-                                <img src="{{img}}"
-                                    srcset="../static/images/portfolio/fuji.jpg 1x, ../static/images/portfolio/fuji@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Frontend Design</div>
-                            <h4 class="folio-item__title">Retro Cam</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <a href="/" style="margin-top: 20px;">See All Projects</a>
-
-            </div> <!-- folio-list -->
+            <div style="width:1000px; margin:auto;">
+                <ol>
+                    {% for file in files %}
+                        <li><a href="/dashboard/{{file.filename}}">{{file.filename}}</a></li>
+                    {% endfor %}
+                </ol>
+            </div>
 
 
         </section>
@@ -367,9 +181,15 @@
     <script src="{{url_for('static', filename='js/plugins.js')}}"></script>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <script>
-        function upload() {
-            alert("File has been uploaded")
-        }
+        document.getElementById('inputfile').addEventListener('change', function () {
+                    var fr = new FileReader();
+                    fr.onload = function () {
+                        document.getElementById('output')
+                            .textContent = fr.result;
+                    }
+
+                    fr.readAsText(this.files[0]);
+                })
     </script>
 </body>
 
