@@ -118,7 +118,8 @@ def view():
 
 @app.route('/')
 def index():
-	return render_template('index.html')
+    no = len(Upload.query.all())
+    return render_template('index.html', files=Upload.query.all(), no=no)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
