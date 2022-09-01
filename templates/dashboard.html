@@ -124,7 +124,7 @@
             <div style="width:1000px; margin:auto;">
                 <ol>
                     {% for file in files %}
-                        <li><a href="/dashboard/{{file.filename}}">{{file.filename}}</a></li>
+                        <li><a href="/dashboard/{{user}}/{{file.filename}}">{{file.filename}}</a> - <cite>{{user}}</cite></li>
                     {% endfor %}
                 </ol>
             </div>

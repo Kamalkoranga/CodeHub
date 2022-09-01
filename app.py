@@ -162,8 +162,8 @@ def dashboard(username):
 #        return 'file uploaded successfully'
     #    return None
     
-@app.route('/dashboard/<filename>')
-def detail(filename):
+@app.route('/dashboard/<username>/<filename>')
+def detail(username, filename):
     file = Upload.query.filter_by(filename = filename).first()
     # print(type(file.data))
     with open(f'static/code/{file.filename}', 'wb') as f:
