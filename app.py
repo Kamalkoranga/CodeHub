@@ -132,7 +132,7 @@ def login():
                 login_user(user)
                 # print(user.username)
                 return redirect(url_for('dashboard', username=user.username))
-    return render_template('demo1.html', form=form)
+    return render_template('login.html', form=form)
 
 @app.route('/dashboard/<username>', methods=['GET', 'POST'])
 @login_required

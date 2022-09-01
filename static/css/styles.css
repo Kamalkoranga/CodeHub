@@ -3669,6 +3669,7 @@ img.u-pull-left {
  *
  * ------------------------------------------------------------------- */
 .s-works {
+    padding: 0 25px;
     padding-top    : var(--vspace-5);
     /* padding-bottom : var(--vspace-4); */
     /* padding-bottom: 80px; */
