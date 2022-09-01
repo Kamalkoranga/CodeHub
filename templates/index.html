@@ -32,6 +32,91 @@
         integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    <style>
+        table {
+  border-collapse: collapse;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  background-color: #0000;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table th {
+  font-size: .85em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+
+  table caption {
+    font-size: 1.3em;
+  }
+  
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  
+  table tr {
+    display: block;
+    margin-bottom: .625em;
+  }
+  
+  table td {
+    display: block;
+    font-size: .8em;
+    text-align: right;
+  }
+  
+  table td::before {
+    /*
+    * aria-label has no advantage, it won't be read inside a table
+    content: attr(aria-label);
+    */
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+/* general styling */
+body {
+  font-family: "Open Sans", sans-serif;
+  line-height: 1.25;
+}
+    </style>
+
 </head>
 
 <body id="top">
@@ -122,7 +207,7 @@
 
             <div class="row about-stats stats block-lg-one-half block-md-one-half block-mob-whole" data-animate-block>
                 <div class="column stats__item" data-animate-el>
-                    <div class="stats__count" data-counter=0><span>35</span>+</div>
+                    <div class="stats__count" data-counter=9><span>35</span>+</div>
                     <h5>Hours Work</h5>
                     <p>
                         Eleifend donec pretium vulputate sapien nec sagittis
@@ -131,7 +216,7 @@
                     </p>
                 </div>
                 <div class="column stats__item" data-animate-el>
-                    <div class="stats__count" data-counter=0><span>38</span>+</div>
+                    <div class="stats__count" data-counter={{no-1}}><span>38</span>+</div>
                     <h5>Completed Projects</h5>
                     <p>
                         Nulla pharetra diam sit amet nisl suscipit adipiscing
@@ -207,214 +292,29 @@
             <div class="row section-header section-header--dark has-bottom-sep">
                 <div class="column lg-12">
                     <h3 class="text-pretitle">Recent Works</h3>
-                    <h1 class="text-display-title">Here are some of our favorite projects we have done lately. Feel free
+                    <h1 class="text-display-title">Here are some of our projects we have done lately. Feel free
                         to check them out.</h1>
                 </div>
             </div> <!-- end section-header -->
 
-            <div class="row folio-list block-lg-one-third block-tab-one-half block-stack-on-550 collapse"
-                data-animate-block>
-
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-tulips.jpg"
-                                title="The Red Wheel" data-size="1050x700">
-                                <img src="../static/images/portfolio/tulips.jpg"
-                                    srcset="../static/images/portfolio/tulips.jpg 1x, ../static/images/portfolio/tulips@2x.jpg 2x" alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Project 1</div>
-                            <h4 class="folio-item__title">Flask + Postgresql</h4>
-                        </div>
-                        <a href="https://github.com/Kamalkoranga/flask-postgres" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-minimalismo.jpg"
-                                title="Music Life" data-size="1050x700">
-                                <img src="../static/images/portfolio/minimalismo.jpg"
-                                    srcset="../static/images/portfolio/minimalismo.jpg 1x, ../static/images/portfolio/minimalismo@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Frontend Design</div>
-                            <h4 class="folio-item__title">Minimalismo</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-skaterboy.jpg"
-                                Title="OI Logo" data-size="1050x700">
-                                <img src="../static/images/portfolio/skaterboy.jpg"
-                                    srcset="../static/images/portfolio/skaterboy.jpg 1x, ../static/images/portfolio/skaterboy@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Product Design</div>
-                            <h4 class="folio-item__title">Skaterboy</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-rucksack.jpg"
-                                title="Corrugated Sheets" data-size="1050x700">
-                                <img src="../static/images/portfolio/rucksack.jpg"
-                                    srcset="../static/images/portfolio/rucksack.jpg 1x, ../static/images/portfolio/rucksack@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Frontend Design</div>
-                            <h4 class="folio-item__title">Rucksack</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-woodcraft.jpg"
-                                title="Sand Dunes" data-size="1050x700">
-                                <img src="../static/images/portfolio/woodcraft.jpg"
-                                    srcset="../static/images/portfolio/woodcraft.jpg 1x, ../static/images/portfolio/woodcraft@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">E-Commerce</div>
-                            <h4 class="folio-item__title">Wooocraft</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">
-                            Project Link
-                        </a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-lamp.jpg"
-                                title="The Lamp" data-size="1050x700">
-                                <img src="../static/images/portfolio/lamp.jpg"
-                                    srcset="../static/images/portfolio/lamp.jpg 1x, ../static/images/portfolio/lamp@2x.jpg 2x" alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Product Design</div>
-                            <h4 class="folio-item__title">The Lamp</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-grayscale.jpg"
-                                title="The Lamp" data-size="1050x700">
-                                <img src="../static/images/portfolio/grayscale.jpg"
-                                    srcset="../static/images/portfolio/grayscale.jpg 1x, ../static/images/portfolio/grayscale@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Frontend Design</div>
-                            <h4 class="folio-item__title">Grayscale</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-shutterbug.jpg"
-                                title="The Red Wheel" data-size="1050x700">
-                                <img src="../static/images/portfolio/shutterbug.jpg"
-                                    srcset="../static/images/portfolio/shutterbug.jpg 1x, ../static/images/portfolio/shutterbug@2x.jpg 2x"
-                                    alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Branding</div>
-                            <h4 class="folio-item__title">Lady Shutterbug</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <div class="column">
-                    <div class="folio-item" data-animate-el>
-                        <div class="folio-item__thumb">
-                            <a class="folio-item__thumb-link" href="../static/images/portfolio/gallery/g-fuji.jpg"
-                                title="The Lamp" data-size="1050x700">
-                                <img src="../static/images/portfolio/fuji.jpg"
-                                    srcset="../static/images/portfolio/fuji.jpg 1x, ../static/images/portfolio/fuji@2x.jpg 2x" alt="">
-                            </a>
-                        </div>
-                        <div class="folio-item__info">
-                            <div class="folio-item__cat">Frontend Design</div>
-                            <h4 class="folio-item__title">Retro Cam</h4>
-                        </div>
-                        <a href="https://www.behance.net/" title="Project Link" class="folio-item__project-link">Project
-                            Link</a>
-                        <div class="folio-item__caption">
-                            <p>Vero molestiae sed aut natus excepturi. Et tempora numquam. Temporibus iusto quo.Unde
-                                dolorem corrupti neque nisi.</p>
-                        </div>
-                    </div>
-                </div> <!-- end column -->
-                <a href="/" style="margin-top: 20px;">See All Projects</a>
-
+            <div style="width:1000px; margin:auto;">
             </div> <!-- folio-list -->
-
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">Project</th>
+                        <th scope="col">Developer</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for file in files %}
+                    <tr>
+                        <td data-label="Project"><a href="#">{{file.filename}}</a></td>
+                        <td data-label="Developer">{{file.user.username.capitalize()}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
         </section>
 
