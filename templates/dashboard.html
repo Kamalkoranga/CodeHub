@@ -226,7 +226,7 @@ body {
                     {% for file in files %}
                     <tr>
                         {% if file.user.username.capitalize() == user %}
-                            <td data-label="Project"><a href="#">{{file.filename}}</a></td>
+                            <td data-label="Project"><a href="/dashboard/{{user}}/{{file.filename}}">{{file.filename}}</a></td>
                             <td data-label="Developer">{{file.user.username.capitalize()}}</td>
                         {%endif%}
                     </tr>
