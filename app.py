@@ -46,7 +46,19 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
+    uploads = db.relationship('Upload', backref='user')
+    
+    def __repr__(self) -> str:
+        return f'<User {self.username}>'
 
+class Upload(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(50))
+    data = db.Column(db.LargeBinary)
+    user_id = db.Column(db.String(50), db.ForeignKey('user.username'))
+    
+    def __repr__(self) -> str:
+        return f'<Upload {self.filename}>'
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username", "class": "input"})
@@ -69,10 +81,6 @@ class LoginForm(FlaskForm):
 #     file = FileField("File", validators=[InputRequired()], render_kw={"style": "padding", 'id': 'inputfile'})
 #     submit = SubmitField("Upload File", render_kw={"onclick": "upload()"})
 
-class Upload(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(50))
-    data = db.Column(db.LargeBinary)
 
 
 def path(folder_path):
@@ -122,12 +130,12 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
                 # print(user.username)
-                return redirect(url_for('dashboard'))
+                return redirect(url_for('dashboard', username=user.username))
     return render_template('demo1.html', form=form)
 
-@app.route('/dashboard', methods=['GET', 'POST'])
+@app.route('/dashboard/<username>', methods=['GET', 'POST'])
 @login_required
-def dashboard():
+def dashboard(username):
     # img = '../static/images/portfolio/fuji.jpg' # Fake data that can be fetch from database
     # form = UploadFileForm()
     # if form.validate_on_submit():
@@ -138,14 +146,18 @@ def dashboard():
     # f = view()
     # print(f)
     # files = view()
+    # userr = User.query.filter_by(username=username).first()
+    userr = current_user.username
+    # print(userr)
     if request.method == 'POST':
         file = request.files['file']
 
-        upload = Upload(filename=file.filename, data=file.read())
+        upload = Upload(filename=file.filename, data=file.read(), user_id=userr)
         db.session.add(upload)
         db.session.commit()
 
-        return f'Uploaded: {file.filename}'
+        # return f'Uploaded: {file.filename}'
+        return redirect(url_for('dashboard', username=user.username))
         
     return render_template('dashboard.html', user=user.username.capitalize(), files=Upload.query.all())
 
@@ -157,8 +169,8 @@ def dashboard():
 #        return 'file uploaded successfully'
     #    return None
     
-@app.route('/dashboard/<filename>')
-def detail(filename):
+@app.route('/dashboard/<username>/<filename>')
+def detail(username, filename):
     file = Upload.query.filter_by(filename = filename).first()
     # print(type(file.data))
     with open(f'static/code/{file.filename}', 'wb') as f:

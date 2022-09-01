@@ -96,7 +96,7 @@
 
             <div class="" style="max-width: 500px; margin:auto;">
                 <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Project: </h4>
-                <form action="/dashboard" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                <form action="/dashboard/{{user}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
                     <input type="file" name="file" id="inputfile" required style="width: 300px;" accept=".py"/>
                     <input type="submit"/>
                 </form>
@@ -124,7 +124,7 @@
             <div style="width:1000px; margin:auto;">
                 <ol>
                     {% for file in files %}
-                        <li><a href="/dashboard/{{file.filename}}">{{file.filename}}</a></li>
+                        <li><a href="/dashboard/{{user}}/{{file.filename}}">{{file.filename}}</a> - <cite>{{file.user.username.capitalize()}}</cite></li>
                     {% endfor %}
                 </ol>
             </div>
