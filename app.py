@@ -47,12 +47,18 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False, unique=True)
     password = db.Column(db.String(80), nullable=False)
     uploads = db.relationship('Upload', backref='user')
+    
+    def __repr__(self) -> str:
+        return f'<User {self.username}>'
 
 class Upload(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(50))
     data = db.Column(db.LargeBinary)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.String(50), db.ForeignKey('user.username'))
+    
+    def __repr__(self) -> str:
+        return f'<Upload {self.filename}>'
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username", "class": "input"})
@@ -140,12 +146,13 @@ def dashboard(username):
     # f = view()
     # print(f)
     # files = view()
-    userr = User.query.filter_by(username=username).first()
-    print(userr)
+    # userr = User.query.filter_by(username=username).first()
+    userr = current_user.username
+    # print(userr)
     if request.method == 'POST':
         file = request.files['file']
 
-        upload = Upload(filename=file.filename, data=file.read(), user=userr)
+        upload = Upload(filename=file.filename, data=file.read(), user_id=userr)
         db.session.add(upload)
         db.session.commit()
 
