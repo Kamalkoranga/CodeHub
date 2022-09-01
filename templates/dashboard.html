@@ -117,16 +117,41 @@
             <div class="row section-header section-header--dark has-bottom-sep">
                 <div class="column lg-12">
                     <!-- <h3 class="text-pretitle">Recent Projects</h3> -->
-                    <h1 class="text-display-title">All Projects</h1>
+                    <h1 class="text-display-title">Your Projects</h1>
                 </div>
             </div> <!-- end section-header -->
 
             <div style="width:1000px; margin:auto;">
                 <ol>
                     {% for file in files %}
-                        <li><a href="/dashboard/{{user}}/{{file.filename}}">{{file.filename}}</a> - <cite>{{file.user.username.capitalize()}}</cite></li>
+                        {% if file.user.username.capitalize() == user %}
+                            <li><a href="/dashboard/{{user}}/{{file.filename}}">{{file.filename}}</a> - <cite>{{file.user.username.capitalize()}}</cite></li>
+                        {%endif%}
                     {% endfor %}
                 </ol>
+                <!-- OR -->
+                <div class="table-responsive">
+                
+                    <table>
+                        <!-- <thead>
+                            <tr>
+                                <th>Projects</th>
+                                <th>Developer</th>
+                            </tr>
+                        </thead> -->
+                        <tbody>
+                            {% for file in files %}
+                            <tr>
+                                    {% if file.user.username.capitalize() == user %}
+                                        <td><a href="/dashboard/{{user}}/{{file.filename}}">{{file.filename}}</a></td> 
+                                        <td>{{file.user.username.capitalize()}}</td>
+                                    {%endif%}
+                                </tr>
+                                {% endfor %}
+                        </tbody>
+                    </table>
+                
+                </div>
             </div>
 
 
