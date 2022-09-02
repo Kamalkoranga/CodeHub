@@ -1,28 +1,18 @@
 # Imports
 
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, send_file
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, FileField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
-
-from flask import Flask, render_template
-from flask_wtf import FlaskForm
-from wtforms import FileField, SubmitField
 from werkzeug.utils import secure_filename
 import os
-from wtforms.validators import InputRequired
-
 import glob
-
 from io import BytesIO
 
-from flask import Flask, render_template, request, send_file
-from flask_sqlalchemy import SQLAlchemy
-
-
+# Config
 
 app = Flask(__name__)
 db = SQLAlchemy(app)
@@ -31,8 +21,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///login.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 app.config['UPLOAD_FOLDER'] = 'static/code'
-
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -41,7 +29,7 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
+# Models
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable=False, unique=True)
@@ -60,6 +48,7 @@ class Upload(db.Model):
     def __repr__(self) -> str:
         return f'<Upload {self.filename}>'
 
+# Forms
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username", "class": "input"})
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"placeholder": "Password", "class": "input"})
@@ -70,7 +59,6 @@ class RegisterForm(FlaskForm):
             username=username.data).first()
         if existing_user_username:
             raise ValidationError('That username already exists. Please choose a different one.')
-
 
 class LoginForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"autocomplete": "username", "id": "login__username", "type": "text", "class": "form__input", "placeholder": "Username"})
@@ -115,6 +103,8 @@ def view():
     # else:
     #     print('OOPS! No program is added!!')
     return fileName
+
+# Routes
 
 @app.route('/')
 def index():
@@ -204,6 +194,3 @@ def page_not_found(e):
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
-
-if __name__ == '__main__':
-    app.run(debug=True, port=7000)
