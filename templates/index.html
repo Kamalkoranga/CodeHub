@@ -398,26 +398,27 @@ table th {
     <div class="row row-x-center text-center s-contact__content">
         <div class="column lg-12">
             <div class="form">
-                <form>
+                <form action="https://formspree.io/f/xaykqyqg" method="POST">
                     <div>
                         <label for="sampleInput">Your email</label>
-                        <input class="u-fullwidth" type="email" placeholder="test@mailbox.com" id="sampleInput">
+                        <input class="u-fullwidth" type="email" placeholder="test@mailbox.com" id="sampleInput" name="email">
                     </div>
                     <div>
                         <label for="sampleRecipientInput">Reason for contacting</label>
                         <div class="ss-custom-select">
-                            <select class="u-fullwidth" id="sampleRecipientInput">
-                                <option value="Option 1">Work Together</option>
-                                <option value="Option 2">Help</option>
-                                <option value="Option 3">Question</option>
+                            <select class="u-fullwidth" id="sampleRecipientInput" name="reason">
+                                <option value="Work Together">Work Together</option>
+                                <option value="Help">Help</option>
+                                <option value="Question">Question</option>
                             </select>
                         </div>
                     </div>
                 
                     <label for="exampleMessage">Message</label>
-                    <textarea class="u-fullwidth" placeholder="Your message" id="exampleMessage"></textarea>
+                    <textarea class="u-fullwidth" placeholder="Your message" id="exampleMessage" name="message"></textarea>
                 
-                    <input class="btn--primary u-fullwidth" type="submit" value="Submit">
+                    <!-- <input class="btn--primary u-fullwidth" type="submit" value="Submit"> -->
+                    <button class="btn--primary u-fullwidth" type="submit">Submit</button>
                 </form>
             </div>
         </div>

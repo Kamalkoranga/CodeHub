@@ -204,17 +204,6 @@ body {
                 </div>
             </div> <!-- end section-header -->
 
-            <div style="width:1000px; margin:auto;">
-                <ol>
-                    {% for file in files %}
-                        {% if file.user.username.capitalize() == user %}
-                            <li><a href="/dashboard/{{user}}/{{file.filename}}">{{file.filename}}</a> - <cite>{{file.user.username.capitalize()}}</cite></li>
-                        {%endif%}
-                    {% endfor %}
-                </ol>
-                <!-- OR -->
-                
-            </div>
             <table>
                 <thead>
                     <tr>
