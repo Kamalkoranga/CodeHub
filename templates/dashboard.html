@@ -166,7 +166,7 @@ body {
                     </ul>
                 </nav>
 
-                <a class="s-header__social" href="{{url_for('profile', username=user)}}">{{user}}</a>
+                <a class="s-header__social" href="{{url_for('profile', username=userr.username)}}">{{user}}</a>
             </div> <!-- end s-header__nav-wrap -->
 
         </header> <!-- end s-header -->
@@ -215,14 +215,70 @@ body {
                     {% for file in files %}
                     <tr>
                         {% if file.user.username.capitalize() == user %}
-                            <td data-label="Project"><a href="/dashboard/{{user}}/{{file.filename}}">{{file.filename}}</a></td>
+                            <td data-label="Project"><a href="/dashboard/{{userr.username}}/{{file.filename}}">{{file.filename}}</a></td>
                             <td data-label="Developer">{{file.user.username.capitalize()}}</td>
                         {%endif%}
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+        </section>
 
+<section id="contact" class="s-contact target-section" style="padding-top:0px;">
+<footer class="s-footer">
+        
+            <div class="row s-footer__top">
+                <div class="column lg-5 md-8 stack-on-700 s-footer__block contact-address">
+                    <h4 class="h6" style="font-size: 0.5em;">Where to Find Us</h4>
+        
+                    <p style="font-size: 0.6em;">
+                        ST Lamart School, Satsang Aashram, <br>
+                        Shantipuri No-2, Udham Singh Nagar, <br>
+                        Uttarakhand-263148
+                    </p>
+                </div>
+        
+                <div class="column lg-3 md-4 stack-on-700 s-footer__block contact-social">
+                    <h4 class="h6" style="font-size: 0.5em;">Follow Us</h4>
+        
+                    <ul class="contact-list" style="font-size: 0.6em;">
+                        <li><a href="#0">Facebook</a></li>
+                        <li><a href="#0">Twitter</a></li>
+                        <li><a href="#0">Instagram</a></li>
+                    </ul>
+                </div>
+        
+                <div class="column lg-3 md-12 s-footer__block contact-number">
+                    <h4 class="h6" style="font-size: 0.5em;">Contact Us</h4>
+        
+                    <ul class="contact-list" style="font-size: 0.6em;">
+                        <li><a href="mailto:#0">st.lamart_123@yahoo.com</a></li>
+                        <li><a href="tel:197-543-2345">+91 9410561937</a></li>
+                        <li><a href="tel:197-123-9876">+91 9670011603</a></li>
+                    </ul>
+                </div>
+            </div> <!-- end s-footer__top -->
+        
+            <div class="row s-footer__bottom">
+                <div class="column ss-copyright">
+                    <span>© 2022 CodeHub, Inc.</span>
+                    <span>By <a href="https://www.styleshout.com/">CS batch 2022-2023</a></span>
+                </div>
+        
+                <div class="ss-go-top">
+                    <a class="smoothscroll" title="Back to Top" href="#top">
+                        <span class="ss-go-top__icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                style="fill:rgba(0, 0, 0, 1);transform:rotate(90deg);-ms-filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1)">
+                                <path d="M6 4H18V6H6zM11 14L11 20 13 20 13 14 18 14 12 8 6 14z"></path>
+                            </svg>
+                        </span>
+                        <span class="ss-go-top__text">Back to Top</span>
+                    </a>
+                </div>
+            </div> <!-- end s-footer__top -->
+        
+        </footer>
 
         </section>
 
