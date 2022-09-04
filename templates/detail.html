@@ -1,18 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!--- basic page needs
+        ================================================== -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <script>
+        document.documentElement.classList.remove('no-js');
+        document.documentElement.classList.add('js');
+    </script>
+    
+    <!-- CSS
+        ================================================== -->
+    <link rel="stylesheet" href="{{url_for('static', filename='css/vendor.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/teams.css')}}">
+    
+    <!-- favicons
+        ================================================== -->
+    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='images/1.png')}}">
+    <link rel="shortcut icon" href="../static/images/1.ico" type="image/x-icon">
+    <link rel="manifest" href="{{url_for('static', filename='site.webmanifest')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>{{file.filename}}</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-</head>
+        .content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-<body>
-    <h1>{{ file.filename }}</h1>
-    <pre>
-        <code>{{f}}</code>
-    </pre>
-</body>
+        pre{
+            border-radius: 10px;
+            min-width: 600px;
+        }
+        code {
+            padding: 10px;
+        }
+    </style>
+  </head>
 
+  <body>
+    <div class="content">
+      <div class="child">
+        <h1 style="text-align:center;">{{ file.filename.capitalize() }}</h1>
+        <pre>
+            <code>{{f}}</code>
+        </pre>
+      </div>
+    </div>
+
+    <script src="{{url_for('static', filename='js/plugins.js')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+
+  </body>
 </html>

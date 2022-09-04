@@ -1,16 +1,14 @@
 # Imports
 
-from flask import Flask, render_template, url_for, redirect, request, send_file
+from flask import Flask, render_template, url_for, redirect, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import UserMixin, login_user, LoginManager, login_required, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, FileField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Length, ValidationError
 from flask_bcrypt import Bcrypt
-from werkzeug.utils import secure_filename
 import os
 import glob
-from io import BytesIO
 
 # Config
 
@@ -65,12 +63,6 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators=[InputRequired(), Length(min=8, max=20)], render_kw={"id": "login__password", "type": "password", "class": "form__input", "placeholder": "Password"})
     submit = SubmitField('Login')
 
-# class UploadFileForm(FlaskForm):
-#     file = FileField("File", validators=[InputRequired()], render_kw={"style": "padding", 'id': 'inputfile'})
-#     submit = SubmitField("Upload File", render_kw={"onclick": "upload()"})
-
-
-
 def path(folder_path):
     path = os.getcwd()
     dir_path = f'{path}/{folder_path}'
@@ -88,20 +80,8 @@ def view():
     for pdf_file in glob.glob(os.path.join(parent_dir, '*.py')):
         file = os.path.basename(pdf_file)
         f_name, f_ext = os.path.splitext(file)
-        # print(f'{i}: {f_name}')
         i += 1
         fileName.append(file)
-    # count = path('static/code')
-    # if count >= 1:
-    #     for i in range(1, count+1):
-    #         f = open(f'static/code/{fileName[i-1]}', 'r')
-    #         print('------------------------------------------------------')
-    #         print(' ')
-    #         # print(f.read())
-    #         print('------------------------------------------------------')
-    #         return f.read()
-    # else:
-    #     print('OOPS! No program is added!!')
     return fileName
 
 # Routes
@@ -127,19 +107,7 @@ def login():
 @app.route('/dashboard/<username>', methods=['GET', 'POST'])
 @login_required
 def dashboard(username):
-    # img = '../static/images/portfolio/fuji.jpg' # Fake data that can be fetch from database
-    # form = UploadFileForm()
-    # if form.validate_on_submit():
-        # file = form.file.data # First grab the file
-        # file.save(os.path.join(os.path.abspath(os.path.dirname(__file__)),app.config['UPLOAD_FOLDER'],secure_filename(file.filename))) # Then save the file
-        # print(str(file))
-        # return render_template('uploaded.html')
-    # f = view()
-    # print(f)
-    # files = view()
-    # userr = User.query.filter_by(username=username).first()
     userr = current_user.username
-    # print(userr)
     if request.method == 'POST':
         file = request.files['file']
 
@@ -150,15 +118,7 @@ def dashboard(username):
         # return f'Uploaded: {file.filename}'
         return redirect(url_for('dashboard', username=user.username))
         
-    return render_template('dashboard.html', user=user.username.capitalize(), files=Upload.query.all())
-
-# @app.route('/uploader', methods = ['GET', 'POST'])
-# def upload_file():
-#    if request.method == 'POST':
-#        f = request.files['file']
-#        f.save(os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config['UPLOAD_FOLDER'], secure_filename(f.filename)))
-#        return 'file uploaded successfully'
-    #    return None
+    return render_template('dashboard.html', user=user.username.capitalize(), files=Upload.query.all(), userr=user)
     
 @app.route('/dashboard/<username>/<filename>')
 def detail(username, filename):
@@ -185,12 +145,15 @@ def register():
 
 @app.route('/dashboard/<username>/profile')
 def profile(username):
-    return render_template('profile.html', user=username)
+    return render_template('profile.html', user=username.capitalize())
 
 @app.errorhandler(404)
 def page_not_found(e): 
-    return render_template('404.html'), 404
+    return render_template('404.html', user=user), 404
 
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
+
+if __name__ == '__main__':
+    app.run(debug=True)
