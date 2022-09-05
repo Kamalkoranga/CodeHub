@@ -178,7 +178,7 @@ body {
         <section id="intro" class="s-intro target-section" style="padding: 150px 50px;">
 
             <div class="" style="max-width: 500px; margin:auto;">
-                <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Project: </h4>
+                <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Program: </h4>
                 <form action="/dashboard/{{user}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
                     <input type="file" name="file" id="inputfile" required style="width: 300px;" accept=".py"/>
                     <input type="submit"/>
@@ -200,10 +200,10 @@ body {
             <div class="row section-header section-header--dark has-bottom-sep">
                 <div class="column lg-12">
                     <!-- <h3 class="text-pretitle">Recent Projects</h3> -->
-                    <h1 class="text-display-title">Your Projects</h1>
+                    <h1 class="text-display-title">Your Programs</h1>
                 </div>
             </div> <!-- end section-header -->
-
+            {% if files %}
             <table>
                 <thead>
                     <tr>
@@ -222,6 +222,9 @@ body {
                     {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+            <p style="text-align: center;">No Program</p>
+            {% endif %}
         </section>
 
 <section id="contact" class="s-contact target-section" style="padding-top:0px;">
