@@ -242,7 +242,7 @@
                 <div class="column lg-12">
                     <h3 class="text-pretitle">What We Do</h3>
                     <h1 class="text-display-title">
-                        We make coding projects or programs and maintain them
+                        We make coding programs and maintain them
                     </h1>
                 </div>
             </div> <!-- end section-header -->
@@ -296,13 +296,14 @@
             <div class="row section-header section-header--dark has-bottom-sep">
                 <div class="column lg-12">
                     <h3 class="text-pretitle">Recent Works</h3>
-                    <h1 class="text-display-title">Here are some of our projects we have done lately. Feel free
+                    <h1 class="text-display-title">Here are some of our programs we have done lately. Feel free
                         to check them out.</h1>
                 </div>
             </div> <!-- end section-header -->
 
             <div style="width:1000px; margin:auto;">
             </div> <!-- folio-list -->
+            {% if files %}
             <table>
                 <thead>
                     <tr>
@@ -319,6 +320,10 @@
                     {% endfor %}
                 </tbody>
             </table>
+            {% else %}
+            <p style="text-align: center;">Work in progress !</p>
+            {% endif %}
+
 
         </section>
 
@@ -326,7 +331,7 @@
 
             <div class="row section-header section-header--dark has-bottom-sep">
                 <div class="column lg-12">
-                    <h1 class="text-display-title">Our Members</h1>
+                    <h1 class="text-display-title">Meet our team</h1>
                 </div>
             </div>
             <div class="teams">

@@ -147,6 +147,14 @@ def register():
 def profile(username):
     return render_template('profile.html', user=username.capitalize())
 
+@app.route('/delete/<filename>')
+def delete_file(filename):
+    file = Upload.query.filter_by(filename=filename).first()
+    userr = file.user
+    db.session.delete(file)
+    db.session.commit()
+    return redirect(url_for('dashboard', username=userr.username))
+
 @app.errorhandler(404)
 def page_not_found(e): 
     return render_template('404.html', user=user), 404
