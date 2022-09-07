@@ -1,349 +1,180 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
+{% extends 'base.html' %}
 
-<head>
+{% block title %} Codehub {% endblock title %}
 
-    <!--- basic page needs
-    ================================================== -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CodeHub</title>
-
-    <script>
-        document.documentElement.classList.remove('no-js');
-        document.documentElement.classList.add('js');
-    </script>
-
-    <!-- CSS
-    ================================================== -->
-    <link rel="stylesheet" href="{{url_for('static', filename='css/vendor.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/teams.css')}}">
-
-    <!-- favicons
-    ================================================== -->
-    <link rel="apple-touch-icon" sizes="180x180" href="{{url_for('static', filename='images/1.png')}}">
-    <!-- <link rel="icon" type="image/png" sizes="32x32" href="{{url_for('static', filename='images/1.png')}}"> -->
-    <!-- <link rel="icon" type="image/png" sizes="32x32" href="1.png"> -->
-    <!-- <link rel="icon" type="image/png" sizes="16x16" href="1.png"> -->
-    <link rel="shortcut icon" href="../static/images/1.ico" type="image/x-icon">
-    <link rel="manifest" href="{{url_for('static', filename='site.webmanifest')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
-        integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% block style %}
     <style>
         input::file-selector-button {
-    color: #24a89b;
-    font-weight: bold;
-    padding: 0.5em;
-    background-color: #2c2c2d;
-    border: 0;
-    border-radius: 3px;
-    margin-right: 10px;
-}
-
-table {
-  border-collapse: collapse;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  table-layout: fixed;
-}
-
-table caption {
-  font-size: 1.5em;
-  margin: .5em 0 .75em;
-}
-
-table tr {
-  background-color: #0000;
-  padding: .35em;
-}
-
-table th,
-table td {
-  padding: .625em;
-  text-align: center;
-}
-
-table th {
-  font-size: .85em;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
-
-@media screen and (max-width: 600px) {
-  table {
-    border: 0;
-  }
-
-  table caption {
-    font-size: 1.3em;
-  }
-  
-  table thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-  }
-  
-  table tr {
-    display: block;
-    margin-bottom: .625em;
-  }
-  
-  table td {
-    display: block;
-    font-size: .8em;
-    text-align: right;
-  }
-  
-  table td::before {
-    /*
-    * aria-label has no advantage, it won't be read inside a table
-    content: attr(aria-label);
-    */
-    content: attr(data-label);
-    float: left;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-  
-  table td:last-child {
-    border-bottom: 0;
-  }
-}
-
-/* general styling */
-body {
-  font-family: "Open Sans", sans-serif;
-  line-height: 1.25;
-}
+            color: #24a89b;
+            font-weight: bold;
+            padding: 0.5em;
+            background-color: #2c2c2d;
+            border: 0;
+            border-radius: 3px;
+            margin-right: 10px;
+        }
+    
+        table {
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+    
+        table caption {
+            font-size: 1.5em;
+            margin: .5em 0 .75em;
+        }
+    
+        table tr {
+            background-color: #0000;
+            padding: .35em;
+        }
+    
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+    
+        table th {
+            font-size: .85em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+    
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+    
+            table caption {
+                font-size: 1.3em;
+            }
+    
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+    
+            table tr {
+                display: block;
+                margin-bottom: .625em;
+            }
+    
+            table td {
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+    
+            table td::before {
+                /*
+        * aria-label has no advantage, it won't be read inside a table
+        content: attr(aria-label);
+        */
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+    
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+    
+        /* general styling */
+        body {
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.25;
+        }
     </style>
-</head>
+{% endblock style %}
 
-<body id="top">
+{% block nav %}
+    <nav class="s-header__nav">
+        <ul>
+            <li class="current"><a href="#intro" class="smoothscroll">Create</a></li>
+            <li><a href="#works" class="smoothscroll">All Projects</a></li>
+        </ul>
+    </nav>
+    
+    <a class="s-header__social" href="{{url_for('profile', username=userr.username)}}">{{user}}</a>
+{% endblock nav %}
 
-
-    <!-- preloader
-    ================================================== -->
-    <div id="preloader">
-        <div id="loader">
+{% block content %}
+    <section id="intro" class="s-intro target-section" style="padding: 150px 50px;">
+    
+        <div class="" style="max-width: 500px; margin:auto;">
+            <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Program: </h4>
+            <form action="/dashboard/{{user}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
+                <input type="file" name="file" id="inputfile" required style="width: 300px;" accept=".py" />
+                <input type="submit" />
+            </form>
         </div>
-    </div>
-
-
-    <!-- page wrap
-    ================================================== -->
-    <div class="s-pagewrap">
-
-
-
-        <!-- # site header 
-        ================================================== -->
-        <header class="s-header">
-
-            <div class="s-header__block">
-                <div class="s-header__logo">
-                    <a class="logo logo1" href="/">
-                        <img src="{{url_for('static', filename='images/3.png')}}" alt="Homepage">
-                    </a>
-                </div>
-
-                <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
-            </div> <!-- end s-header__block -->
-
-            <div class="row s-header__nav-wrap">
-                <nav class="s-header__nav">
-                    <ul>
-                        <li class="current"><a href="#intro" class="smoothscroll">Create</a></li>
-                        <li><a href="#works" class="smoothscroll">All Projects</a></li>
-                    </ul>
-                </nav>
-
-                <a class="s-header__social" href="{{url_for('profile', username=userr.username)}}">{{user}}</a>
-            </div> <!-- end s-header__nav-wrap -->
-
-        </header> <!-- end s-header -->
-
-
-
-        <!-- # intro 
-        ================================================== -->
-        <section id="intro" class="s-intro target-section" style="padding: 150px 50px;">
-
-            <div class="" style="max-width: 500px; margin:auto;">
-                <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Program: </h4>
-                <form action="/dashboard/{{user}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
-                    <input type="file" name="file" id="inputfile" required style="width: 300px;" accept=".py"/>
-                    <input type="submit"/>
-                </form>
+    
+        <hr>
+        <h5>Code &#128071;: </h5>
+        <pre id="output">File not selected!!</pre>
+    
+    
+    </section>
+    
+    
+    <!-- ## works
+            ================================================== -->
+    <section id="works" class="s-works target-section" style="padding: 150px 50px;">
+    
+        <div class="row section-header section-header--dark has-bottom-sep">
+            <div class="column lg-12">
+                <!-- <h3 class="text-pretitle">Recent Projects</h3> -->
+                <h1 class="text-display-title">Your Programs</h1>
             </div>
+        </div> <!-- end section-header -->
+        {% if files %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Project</th>
+                    <th>Developer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files %}
+                <tr>
+                    {% if file.user.username.capitalize() == user %}
+                    <td data-label="Project"><a href="/dashboard/{{userr.username}}/{{file.filename}}">{{file.filename}}</a>
+                    </td>
+                    <td data-label="Developer">{{file.user.username.capitalize()}}</td>
+                    {%endif%}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align: center;">No Program</p>
+        {% endif %}
+    </section>
+{% endblock content %}
 
-            <hr>
-            <h5>Code &#128071;: </h5>
-            <pre id="output">File not selected!!</pre>
-            
-
-        </section> 
-
-
-        <!-- ## works
-        ================================================== -->
-        <section id="works" class="s-works target-section" style="padding: 150px 50px;">
-
-            <div class="row section-header section-header--dark has-bottom-sep">
-                <div class="column lg-12">
-                    <!-- <h3 class="text-pretitle">Recent Projects</h3> -->
-                    <h1 class="text-display-title">Your Programs</h1>
-                </div>
-            </div> <!-- end section-header -->
-            {% if files %}
-            <table>
-                <thead>
-                    <tr>
-                        <th>Project</th>
-                        <th>Developer</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for file in files %}
-                    <tr>
-                        {% if file.user.username.capitalize() == user %}
-                            <td data-label="Project"><a href="/dashboard/{{userr.username}}/{{file.filename}}">{{file.filename}}</a></td>
-                            <td data-label="Developer">{{file.user.username.capitalize()}}</td>
-                        {%endif%}
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-            {% else %}
-            <p style="text-align: center;">No Program</p>
-            {% endif %}
-        </section>
-
-<section id="contact" class="s-contact target-section" style="padding-top:0px;">
-<footer class="s-footer">
-        
-            <div class="row s-footer__top">
-                <div class="column lg-5 md-8 stack-on-700 s-footer__block contact-address">
-                    <h4 class="h6">Where to Find Us</h4>
-        
-                    <p>
-                        ST Lamart School, Satsang Aashram, <br>
-                        Shantipuri No-2, Udham Singh Nagar, <br>
-                        Uttarakhand-263148
-                    </p>
-                </div>
-        
-                <div class="column lg-3 md-4 stack-on-700 s-footer__block contact-social">
-                    <h4 class="h6">Follow Us</h4>
-        
-                    <ul class="contact-list">
-                        <li><a href="#0">Facebook</a></li>
-                        <li><a href="#0">Twitter</a></li>
-                        <li><a href="#0">Instagram</a></li>
-                    </ul>
-                </div>
-        
-                <div class="column lg-3 md-12 s-footer__block contact-number">
-                    <h4 class="h6">Contact Us</h4>
-        
-                    <ul class="contact-list">
-                        <li><a href="mailto:#0">st.lamart_123@yahoo.com</a></li>
-                        <li><a href="tel:197-543-2345">+91 9410561937</a></li>
-                        <li><a href="tel:197-123-9876">+91 9670011603</a></li>
-                    </ul>
-                </div>
-            </div> <!-- end s-footer__top -->
-        
-            <div class="row s-footer__bottom">
-                <div class="column ss-copyright">
-                    <span>© 2022 CodeHub, Inc.</span>
-                    <span>By <a href="https://www.styleshout.com/">CS batch 2022-2023</a></span>
-                </div>
-        
-                <div class="ss-go-top">
-                    <a class="smoothscroll" title="Back to Top" href="#top">
-                        <span class="ss-go-top__icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                style="fill:rgba(0, 0, 0, 1);transform:rotate(90deg);-ms-filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=1)">
-                                <path d="M6 4H18V6H6zM11 14L11 20 13 20 13 14 18 14 12 8 6 14z"></path>
-                            </svg>
-                        </span>
-                        <span class="ss-go-top__text">Back to Top</span>
-                    </a>
-                </div>
-            </div> <!-- end s-footer__top -->
-        
-        </footer>
-
-        </section>
-
-
-
-    <!-- photoswipe background
-    ================================================== -->
-    <div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
-
-        <div class="pswp__bg"></div>
-        <div class="pswp__scroll-wrap">
-
-            <div class="pswp__container">
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-                <div class="pswp__item"></div>
-            </div>
-
-            <div class="pswp__ui pswp__ui--hidden">
-                <div class="pswp__top-bar">
-                    <div class="pswp__counter"></div><button class="pswp__button pswp__button--close"
-                        title="Close (Esc)"></button> <button class="pswp__button pswp__button--share"
-                        title="Share"></button> <button class="pswp__button pswp__button--fs"
-                        title="Toggle fullscreen"></button> <button class="pswp__button pswp__button--zoom"
-                        title="Zoom in/out"></button>
-                    <div class="pswp__preloader">
-                        <div class="pswp__preloader__icn">
-                            <div class="pswp__preloader__cut">
-                                <div class="pswp__preloader__donut"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                    <div class="pswp__share-tooltip"></div>
-                </div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
-                <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button>
-                <div class="pswp__caption">
-                    <div class="pswp__caption__center"></div>
-                </div>
-            </div>
-
-        </div>
-
-    </div> <!-- end photoSwipe background -->
-
-
-    <!-- Java Script
-    ================================================== -->
-    <script src="{{url_for('static', filename='js/plugins.js')}}"></script>
-    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+{% block script %}
     <script>
         document.getElementById('inputfile').addEventListener('change', function () {
-                    var fr = new FileReader();
-                    fr.onload = function () {
-                        document.getElementById('output')
-                            .textContent = fr.result;
-                    }
+            var fr = new FileReader();
+            fr.onload = function () {
+                document.getElementById('output')
+                    .textContent = fr.result;
+            }
 
-                    fr.readAsText(this.files[0]);
-                })
+            fr.readAsText(this.files[0]);
+        })
     </script>
-</body>
-
-</html>
+{% endblock script %}
