@@ -7,6 +7,22 @@
         .s-header__logo {
             top: 1rem;
         }
+
+        #intro {
+            padding: 50px;
+            max-width:1200px;
+            margin:auto;
+        }
+
+        @media screen and (max-width:600px) {
+            #intro {
+                margin: 0;
+            }
+
+            .s-header__logo {
+                top: 2rem;
+            }
+        }
     </style>
 {% endblock style %}
 
@@ -15,7 +31,7 @@
 {% endblock nav %}
 
 {% block content %}
-    <section id="intro" class="s-intro target-section" style="padding: 50px; max-width:1200px; margin:auto;">
+    <section id="intro" class="s-intro target-section">
     
         <div class="content">
             <div class="child">
