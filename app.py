@@ -117,8 +117,12 @@ def dashboard(username):
 
         # return f'Uploaded: {file.filename}'
         return redirect(url_for('dashboard', username=user.username))
+    no = 0
+    for file in Upload.query.all():
+        if file.user.username == username:
+            no += 1
         
-    return render_template('dashboard.html', user=user.username.capitalize(), files=Upload.query.all(), userr=user)
+    return render_template('dashboard.html', user=user.username.capitalize(), files=Upload.query.all(), userr=user, no=no)
     
 @app.route('/dashboard/<username>/<filename>')
 def detail(username, filename):
