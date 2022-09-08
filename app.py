@@ -1,6 +1,6 @@
 # Imports
 
-from flask import Flask, render_template, url_for, redirect, request
+from flask import Flask, render_template, url_for, redirect, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user
 from flask_wtf import FlaskForm
@@ -101,6 +101,7 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
                 # print(user.username)
+                flash('Successfully Logged In')
                 return redirect(url_for('dashboard', username=user.username))
     return render_template('login.html', form=form)
 
@@ -116,13 +117,14 @@ def dashboard(username):
         db.session.commit()
 
         # return f'Uploaded: {file.filename}'
-        return redirect(url_for('dashboard', username=user.username))
+        flash('Programme Added')
+        return redirect(url_for('dashboard', username=username.lower()))
     no = 0
     for file in Upload.query.all():
         if file.user.username == username:
             no += 1
         
-    return render_template('dashboard.html', user=user.username.capitalize(), files=Upload.query.all(), userr=user, no=no)
+    return render_template('dashboard.html', user=userr.capitalize(), files=Upload.query.all(), userr=userr, no=no)
     
 @app.route('/dashboard/<username>/<filename>')
 def detail(username, filename):
@@ -157,11 +159,12 @@ def delete_file(filename):
     userr = file.user
     db.session.delete(file)
     db.session.commit()
+    flash('Programme removed')
     return redirect(url_for('dashboard', username=userr.username))
 
 @app.errorhandler(404)
 def page_not_found(e): 
-    return render_template('404.html', user=user), 404
+    return render_template('404.html'), 404
 
 @app.errorhandler(500)
 def internal_server_error(e):

@@ -4,6 +4,13 @@
 
 {% block style %}
     <style>
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
         input::file-selector-button {
             color: #24a89b;
             font-weight: bold;
@@ -43,8 +50,19 @@
             letter-spacing: .1em;
             text-transform: uppercase;
         }
+
+        @media screen and (min-width:600px) {
+            input[type='submit'], input[type='file'] {
+                margin-bottom: 0;
+            }
+        }
     
         @media screen and (max-width: 600px) {
+            form {
+                flex-wrap: wrap;
+            }
+
+
             table {
                 border: 0;
             }
@@ -73,6 +91,8 @@
                 display: block;
                 font-size: .8em;
                 text-align: right;
+                padding-left: 0;
+                padding-right: 0;
             }
     
             table td::before {
@@ -111,14 +131,32 @@
 {% endblock nav %}
 
 {% block content %}
-    <section id="intro" class="s-intro target-section" style="padding: 150px 50px;">
-    
+    <section id="intro" class="s-intro target-section" style="padding: 150px 50px 100px;">
+        {% for message in get_flashed_messages() %}
+        {% if message == 'Successfully Logged In' %}
+            
+        
+        <div class="alert-box alert-box--success">
+            <p style="margin-bottom: 0;">{{ message }}</p>
+            <span class="alert-box__close"></span>
+        </div>
+        {% endif %}
+        {% endfor %}
+
         <div class="" style="max-width: 500px; margin:auto;">
             <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Program: </h4>
             <form action="/dashboard/{{user}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
-                <input type="file" name="file" id="inputfile" required style="width: 300px;" accept=".py" />
-                <input type="submit" />
+                <input type="file" name="file" id="inputfile" required style="width: 300px; width:100%;" accept=".py" />
+                <input type="submit"/>
             </form>
+            {% for message in get_flashed_messages() %}
+            {% if message == 'Programme Added' %}
+            <div class="alert-box alert-box--success">
+                <p style="margin-bottom: 0;">{{ message }}</p>
+                <span class="alert-box__close"></span>
+            </div>
+            {% endif %}
+            {% endfor %}
         </div>
     
         <hr>
@@ -131,7 +169,7 @@
     
     <!-- ## works
             ================================================== -->
-    <section id="works" class="s-works target-section" style="padding: 150px 50px;">
+    <section id="works" class="s-works target-section" style="padding: 100px 50px 150px;">
     
         <div class="row section-header section-header--dark has-bottom-sep">
             <div class="column lg-12">
@@ -151,7 +189,7 @@
                 {% for file in files %}
                 <tr>
                     {% if file.user.username.capitalize() == user %}
-                    <td data-label="Project"><a href="/dashboard/{{userr.username}}/{{file.filename}}">{{file.filename}}</a>
+                    <td data-label="Project"><a href="/dashboard/{{userr}}/{{file.filename}}">{{file.filename}}</a>
                     </td>
                     <td data-label="Developer">{{file.user.username.capitalize()}}</td>
                     {%endif%}
@@ -162,6 +200,16 @@
         {% else %}
         <p style="text-align: center;">No Program</p>
         {% endif %}
+        {% for message in get_flashed_messages() %}
+        {% if message == 'Programme removed' %}
+        
+        
+        <div class="alert-box alert-box--success" style="margin-top:50px;">
+            <p style="margin-bottom: 0;">{{ message }}</p>
+            <span class="alert-box__close"></span>
+        </div>
+        {% endif %}
+        {% endfor %}
     </section>
 {% endblock content %}
 
