@@ -19,7 +19,6 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/vendor.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/styles.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/teams.css')}}">
-    <link rel="stylesheet" href="{{url_for('static', filename='css/account.css')}}">
 
     <!-- favicons
     ================================================== -->
@@ -103,7 +102,7 @@
     
                 <div class="row s-footer__bottom">
                     <div class="column ss-copyright">
-                        <span>© 2022 CodeHub, Inc.</span>
+                        <span>© <span id="current-year"></span> CodeHub, Inc.</span>
                         <span>By <a href="https://www.styleshout.com/">CS batch 2022-2023</a></span>
                     </div>
     
@@ -172,6 +171,11 @@
     ================================================== -->
     <script src="{{url_for('static', filename='js/plugins.js')}}"></script>
     <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script>
+        const year = document.querySelector('#current-year')
+        year.innerHTML = new Date().getFullYear()
+        console.log('hqy')
+    </script>
     {% block script %}{% endblock script %}
 
 </body>
