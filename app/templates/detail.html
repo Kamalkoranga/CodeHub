@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ file.user.username.capitalize() }} - {{ file.filename }}{% endblock title %}
+
+{% block style %}
+<style>
+    .s-header__logo {
+        top: 1rem;
+    }
+
+    #intro {
+        padding: 50px;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    @media screen and (max-width:600px) {
+        #intro {
+            margin: 0;
+        }
+
+        .s-header__logo {
+            top: 2rem;
+        }
+    }
+</style>
+{% endblock style %}
+
+{% block nav %}
+<a href="{{url_for('profile', username=file.user.username)}}"
+    class="s-header__social">{{file.user.username|capitalize}}</a>
+{% endblock nav %}
+
+{% block content %}
+<section id="intro" class="s-intro target-section">
+
+    <div class="content">
+        <div class="child">
+            <h1 style="text-align:center; margin-bottom: 50px;">{{ file.filename.capitalize() }}</h1>
+            <pre>
+                <code>{{f}}</code>
+            </pre>
+            <a href="{{ url_for('delete_file', filename=file.filename) }}">Delete</a>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="code">
+        <h3 style="margin-bottom: 20px;">Run &#128071; : </h3>
+        <iframe frameborder="0" width="100%" height="600px" src="https://create.withcode.uk/"><a target="_blank"
+                href="https://create.withcode.uk/">create.withcode.uk</a></iframe>
+    </div>
+</section>
+{% endblock content %}
