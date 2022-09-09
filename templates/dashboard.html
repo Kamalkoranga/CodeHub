@@ -127,7 +127,7 @@
         </ul>
     </nav>
     
-    <a class="s-header__social" href="{{url_for('profile', username=userr.username)}}">{{user}}</a>
+    <a class="s-header__social" href="{{url_for('profile', username=userr.lower())}}">{{user}}</a>
 {% endblock nav %}
 
 {% block content %}
