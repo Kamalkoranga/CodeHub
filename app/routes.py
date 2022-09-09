@@ -51,9 +51,9 @@ def detail(username, filename):
     print(app.root_path)
     file = Upload.query.filter_by(filename = filename).first()
     # print(type(file.data))
-    with open(f'code/{file.filename}', 'wb') as f:
+    with open(f'app/static/code/{file.filename}', 'wb') as f:
         f.write(file.data)
-    fi = open(f'code/{file.filename}', 'r')
+    fi = open(f'app/static/code/{file.filename}', 'r')
     a = fi.read()
     return render_template('detail.html',f=a, file=file)
 
