@@ -1,8 +1,10 @@
+import os
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db, bcrypt
 from app.forms import LoginForm, RegisterForm
 from flask_login import login_user, current_user, login_required, logout_user
 from app.models import User, Upload
+from config import basedir
 
 @app.route('/')
 def index():
@@ -48,9 +50,9 @@ def dashboard(username):
 def detail(username, filename):
     file = Upload.query.filter_by(filename = filename).first()
     # print(type(file.data))
-    with open(f'app/static/code/{file.filename}', 'wb') as f:
+    with open(os.path.join(basedir, f'app/static/code/{file.filename}'), 'wb') as f:
         f.write(file.data)
-    fi = open(f'app/static/code/{file.filename}', 'r')
+    fi = open(os.path.join(basedir, f'app/static/code/{file.filename}'), 'r')
     a = fi.read()
     return render_template('detail.html',f=a, file=file)
 
