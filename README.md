@@ -4,8 +4,9 @@
 
 # Codehub - Final year project
 
-This is final year project .i.e Codehub by CS students of ST Lamart School. This is a type of code saving service, something like [Github](https://github.com) which is also a code tracking service. This project do only CRUD operations of file from database and we will try to add more operations in future updates. 
+This is final year project .i.e Codehub by CS students of ST Lamart School. This is a type of code saving service, something like [Github](https://github.com) which is also a code tracking service. This project do only CRUD operations of file from database and we will try to add more operations in future updates.
 
+## **Now live at [here](https://codehub.gq)**
 
 ## Features
 
