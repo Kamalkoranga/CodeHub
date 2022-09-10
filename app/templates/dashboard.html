@@ -129,10 +129,11 @@
     </ul>
 </nav>
 
-<a class="s-header__social" href="{{url_for('profile', username=userr.lower())}}" style="align-items:center;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 448 512" style="margin-right: 10px;">
-    <path
-        d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
-</svg>{{user}}</a>
+<a class="s-header__social" href="{{url_for('profile', username=userr.lower())}}" style="align-items:center;"><svg
+        xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 448 512" style="margin-right: 10px;">
+        <path
+            d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0S96 57.3 96 128s57.3 128 128 128zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z" />
+    </svg>{{user}}</a>
 {% endblock nav %}
 
 {% block content %}
@@ -206,26 +207,26 @@
     <p style="text-align: center;">No Program</p>
     {% endif %}
     {% for message in get_flashed_messages() %}
-        {% if message == 'Programme removed' %}
-            <div class="alert-box alert-box--success" style="margin-top:50px;">
-                <p style="margin-bottom: 0;">{{ message }}</p>
-                <span class="alert-box__close"></span>
-            </div>
-        {% endif %}
+    {% if message == 'Programme removed' %}
+    <div class="alert-box alert-box--success" style="margin-top:50px;">
+        <p style="margin-bottom: 0;">{{ message }}</p>
+        <span class="alert-box__close"></span>
+    </div>
+    {% endif %}
     {% endfor %}
 </section>
 {% endblock content %}
 
 {% block script %}
 <script>
-        document.getElementById('inputfile').addEventListener('change', function () {
-            var fr = new FileReader();
-            fr.onload = function () {
-                document.getElementById('output')
-                    .textContent = fr.result;
-            }
+    document.getElementById('inputfile').addEventListener('change', function () {
+        var fr = new FileReader();
+        fr.onload = function () {
+            document.getElementById('output')
+                .textContent = fr.result;
+        }
 
-            fr.readAsText(this.files[0]);
-        })
+        fr.readAsText(this.files[0]);
+    })
 </script>
 {% endblock script %}

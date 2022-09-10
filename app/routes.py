@@ -1,10 +1,8 @@
-import os
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db, bcrypt
 from app.forms import LoginForm, RegisterForm
 from flask_login import login_user, current_user, login_required, logout_user
 from app.models import User, Upload
-from config import basedir
 
 @app.route('/')
 def index():

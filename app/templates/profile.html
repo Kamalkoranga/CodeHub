@@ -4,85 +4,95 @@
 {% block title %}{{ user }}'s Profile{% endblock title %}
 
 {% block style %}
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .parent {
-            height: 90vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    .parent {
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cardd {
+        box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
+        max-width: 300px;
+        text-align: center;
+        font-family: arial;
+        background: #000;
+        border-radius: 10px;
+    }
+
+    .title {
+        color: grey;
+        font-size: 18px;
+    }
+
+    button {
+        border: none;
+        outline: 0;
+        display: inline-block;
+        padding: 8px;
+        color: rgb(0, 0, 0);
+        background-color: rgb(255, 255, 255);
+        text-align: center;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        padding: 0;
+
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 22px;
+        color: rgb(255, 255, 255);
+    }
+
+    button:hover,
+    a:hover {
+        opacity: 0.7;
+    }
+
+    img,
+    h1,
+    p {
+        margin: 0;
+    }
+
+    img {
+        border-radius: 10px;
+
+    }
+
+    .s-header__logo {
+        top: 1rem;
+    }
+
+    @media screen and (max-width:600px) {
+        .s-header__logo {
+            top: 2rem;
         }
-    
-        .cardd {
-            box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%);
-            max-width: 300px;
-            text-align: center;
-            font-family: arial;
-            background: #000;
-            border-radius: 10px;
-        }
-    
-        .title {
-            color: grey;
-            font-size: 18px;
-        }
-    
-        button {
-            border: none;
-            outline: 0;
-            display: inline-block;
-            padding: 8px;
-            color: rgb(0, 0, 0);
-            background-color: rgb(255, 255, 255);
-            text-align: center;
-            cursor: pointer;
-            width: 100%;
-            font-size: 18px;
-            padding: 0;
-    
-        }
-    
-        a {
-            text-decoration: none;
-            font-size: 22px;
-            color: rgb(255, 255, 255);
-        }
-    
-        button:hover,
-        a:hover {
-            opacity: 0.7;
-        }
-    
-        img,
-        h1,
-        p {
-            margin: 0;
-        }
-    
-        img {
-            border-radius: 10px;
-    
-        }
-    </style>
+    }
+</style>
 {% endblock style %}
 
 {% block nav %}
-    <a class="s-header__social" href="{{url_for('logout')}}">Logout</a>
+<a class="s-header__social" href="{{url_for('logout')}}">Logout</a>
 {% endblock nav %}
 
-{% block content %}    
-    <div class="parent">
-        <div class="cardd">
-            <img src="{{url_for('static', filename='images/team1.jpg')}}" alt="John" style="width:100%">
-            <h1 style="color: #fff;">{{user}}</h1>
-            <p class="title">Developer, Student</p>
-            <p style="color: #fff;">ST Lamart school</p>
-            <div style="margin: 24px 0;">
-                <a href="#"><i class="fa fa-instagram"></i></a>
-                <a href="#"><i class="fa fa-twitter"></i></a>
-                <a href="#"><i class="fa fa-facebook"></i></a>
-            </div>
-            <p><button>Contact</button></p>
+{% block content %}
+<div class="parent">
+    <div class="cardd">
+        <img src="{{url_for('static', filename='images/team1.jpg')}}" alt="John" style="width:100%">
+        <h1 style="color: #fff;">{{user}}</h1>
+        <p class="title">Developer, Student</p>
+        <p style="color: #fff;">ST Lamart school</p>
+        <div style="margin: 24px 0;">
+            <a href="#"><i class="fa fa-instagram"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-facebook"></i></a>
         </div>
+        <p><button>Contact</button></p>
     </div>
+</div>
 {% endblock content %}
