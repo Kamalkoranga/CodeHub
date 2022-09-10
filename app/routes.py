@@ -20,7 +20,6 @@ def login():
         if user:
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
-                # print(user.username)
                 flash('Successfully Logged In')
                 return redirect(url_for('dashboard', username=user.username))
     return render_template('login.html', form=form)
@@ -36,7 +35,6 @@ def dashboard(username):
         db.session.add(upload)
         db.session.commit()
 
-        # return f'Uploaded: {file.filename}'
         flash('Programme Added')
         return redirect(url_for('dashboard', username=username.lower()))
     no = 0
@@ -50,7 +48,6 @@ def dashboard(username):
 def detail(username, filename):
     print(app.root_path)
     file = Upload.query.filter_by(filename = filename).first()
-    # print(type(file.data))
     with open(f'app/static/code/{file.filename}', 'wb') as f:
         f.write(file.data)
     fi = open(f'app/static/code/{file.filename}', 'r')
