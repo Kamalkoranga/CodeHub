@@ -7,7 +7,9 @@ from app.models import User, Upload
 @app.route('/')
 def index():
     no = len(Upload.query.all())
-    return render_template('index.html', files=Upload.query.all(), no=no)
+    members=User.query.all()
+    members.reverse()
+    return render_template('index.html', files=Upload.query.all(), no=no, members=members)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

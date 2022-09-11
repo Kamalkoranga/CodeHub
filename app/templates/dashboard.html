@@ -140,9 +140,12 @@
 <section id="intro" class="s-intro target-section" style="padding: 150px 50px 100px;">
     {% for message in get_flashed_messages() %}
     {% if message == 'Successfully Logged In' %}
-
-
     <div class="alert-box alert-box--success">
+        <p style="margin-bottom: 0;">{{ message }}</p>
+        <span class="alert-box__close"></span>
+    </div>
+    {% elif message == 'Programme removed' %}
+    <div class="alert-box alert-box--success" style="margin-top:50px;">
         <p style="margin-bottom: 0;">{{ message }}</p>
         <span class="alert-box__close"></span>
     </div>
@@ -206,14 +209,6 @@
     {% else %}
     <p style="text-align: center;">No Program</p>
     {% endif %}
-    {% for message in get_flashed_messages() %}
-    {% if message == 'Programme removed' %}
-    <div class="alert-box alert-box--success" style="margin-top:50px;">
-        <p style="margin-bottom: 0;">{{ message }}</p>
-        <span class="alert-box__close"></span>
-    </div>
-    {% endif %}
-    {% endfor %}
 </section>
 {% endblock content %}
 

@@ -34,6 +34,21 @@
         text-transform: uppercase;
     }
 
+    cite {
+        font-weight: 400;
+        font-family: var(--font-1);
+        border: none;
+        display: inline-block;
+        color: var(--color-text-light);
+        font-size: var(--text-sm);
+        line-height: var(--vspace-0_75);
+        font-style: normal;
+    }
+
+    .members {
+        list-style-type: circle;
+    }
+
     @media screen and (min-width: 600px) {
         .s-header__logo {
             top: 1rem;
@@ -75,10 +90,6 @@
         }
 
         table td::before {
-            /*
-        * aria-label has no advantage, it won't be read inside a table
-        content: attr(aria-label);
-        */
             content: attr(data-label);
             float: left;
             font-weight: bold;
@@ -98,7 +109,7 @@
         <li class="current"><a href="#intro" class="smoothscroll">Intro</a></li>
         <li><a href="#services" class="smoothscroll">What We Do</a></li>
         <li><a href="#works" class="smoothscroll">Our Works</a></li>
-        <li><a href="#teamss" class="smoothscroll">Our Members</a></li>
+        <li><a href="#teamss" class="smoothscroll">Our Teams</a></li>
         <li><a href="#contact" class="smoothscroll">Get In Touch</a></li>
     </ul>
 </nav>
@@ -106,7 +117,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 448 512" style="margin-right: 10px;">
         <path
             d="M272 304h-96C78.8 304 0 382.8 0 480c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32C448 382.8 369.2 304 272 304zM48.99 464C56.89 400.9 110.8 352 176 352h96c65.16 0 119.1 48.95 127 112H48.99zM224 256c70.69 0 128-57.31 128-128c0-70.69-57.31-128-128-128S96 57.31 96 128C96 198.7 153.3 256 224 256zM224 48c44.11 0 80 35.89 80 80c0 44.11-35.89 80-80 80S144 172.1 144 128C144 83.89 179.9 48 224 48z" />
-    </svg>Account
+    </svg> Login
 </a>
 {% endblock nav %}
 
@@ -141,17 +152,18 @@
         <div class="column s-intro__about">
             <h2 class="s-intro__about-title">Hello, Welcome to CodeHub.</h2>
 
-            <p style="text-align: center;">
-                <strong>[ This is Final year project by CS students of ST Lamart School ]</strong><br>
-                This is a project management website.
+            <p>
+                This is final year project .i.e Codehub by CS students of ST Lamart School. This is a type of code
+                saving website, something like Github which is also a type of code saving website. Now this project do only CRUD
+                operations of file from database and we will try to add more operations in future updates.
             </p>
 
         </div>
     </div>
 
-    <div class="row about-stats stats block-lg-one-half block-md-one-half block-mob-whole" data-animate-block>
+    <div class="row about-stats stats block-lg-one-fourth block-md-one-half block-mob-whole" data-animate-block>
         <div class="column stats__item" data-animate-el>
-            <div class="stats__count" data-counter=18><span>35</span>+</div>
+            <div class="stats__count" data-counter=19><span>35</span>+</div>
             <h5>Hours Work</h5>
             <p>
                 Eleifend donec pretium vulputate sapien nec sagittis
@@ -160,15 +172,34 @@
             </p>
         </div>
         <div class="column stats__item" data-animate-el>
+            <div class="stats__count" data-counter=95><span>95</span>+</div>
+            <h5>Performance</h5>
+            <p>
+                Volutpat commodo sed egestas egestas fringilla phasellus faucibus scelerisque. Est velit egestas dui id ornare. Leo urna
+                molestie at elementum.
+            </p>
+        </div>
+        <div class="column stats__item" data-animate-el>
+            <div class="stats__count" data-counter={{members|length}}><span>{{members|length}}</span>+</div>
+            <h5>Memmbers Joinded</h5>
+            <p>
+            <ul class="members">
+                {% for member in members[0:4] %}
+                <li>{{ member.username|capitalize }} <cite>... recently joined</cite></li>
+                {% endfor %}
+            </ul>
+            <span>.... {{ members|length - 4 }} + other members</span>
+            </p>
+        </div>
+        <div class="column stats__item" data-animate-el>
             <div class="stats__count" data-counter={{no-1}}><span>38</span>+</div>
-            <h5>Completed Projects</h5>
+            <h5>Saved Projects</h5>
             <p>
                 Nulla pharetra diam sit amet nisl suscipit adipiscing
                 bibendum est. Quis risus sed vulputate odio ut.
                 Lectus arcu bibendum at varius vel eu facilisis.
             </p>
         </div>
-
     </div>
 </section>
 
@@ -178,10 +209,10 @@
         <div class="column lg-12">
             <h3 class="text-pretitle">What We Do</h3>
             <h1 class="text-display-title">
-                We make coding programs and maintain them
+                We make coding programs and manage them
             </h1>
         </div>
-    </div> <!-- end section-header -->
+    </div>
 
     <div class="row services-list block-lg-one-half block-tab-whole" data-animate-block>
 
@@ -190,7 +221,11 @@
                 <span class="service-icon service-icon--product-design"></span>
             </div>
             <div class="service-text">
-                <h3 class="h4">In python, java, html, css, etc</h3>
+                <h3 class="h4">In python, java, c++, etc</h3>
+                <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium.
+                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
+                    Sunt suscipit voluptas ipsa in tempora esse soluta sint aliquam rhoncus elit.
+                </p>
             </div>
         </div>
 
@@ -200,6 +235,10 @@
             </div>
             <div class="service-text">
                 <h3 class="h4">Fast development</h3>
+                <p>Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Quis risus sed vulputate
+                    odio ut. Lectus arcu bibendum at varius vel. Lorem ipsum dolor sit amet consectetur adipiscing
+                    elit pellentesque. In nulla posuere sollicitudin aliquam ultrices.
+                </p>
             </div>
         </div>
 
@@ -209,6 +248,10 @@
             </div>
             <div class="service-text">
                 <h3 class="h4">Accessible from anywhere</h3>
+                <p>Eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada. Eu scelerisque felis
+                    imperdiet proin fermentum leo. Cursus turpis massa tincidunt dui. Quis commodo odio aenean sed
+                    adipiscing diam donec adipiscing. Congue mauris rhoncus elit.
+                </p>
             </div>
         </div>
 
@@ -218,15 +261,17 @@
             </div>
             <div class="service-text">
                 <h3 class="h4">Human Readable Code</h3>
+                <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium.
+                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
+                    Sunt suscipit voluptas ipsa in tempora esse soluta sint donec adipiscing.
+                </p>
             </div>
         </div>
 
-    </div> <!-- end services-list -->
+    </div>
 
 </section>
 
-<!-- ## works
-            ================================================== -->
 <section id="works" class="s-works target-section">
 
     <div class="row section-header section-header--dark has-bottom-sep">
@@ -235,10 +280,8 @@
             <h1 class="text-display-title">Here are some of our programs we have done lately. Feel free
                 to check them out.</h1>
         </div>
-    </div> <!-- end section-header -->
+    </div>
 
-    <div style="width:1000px; margin:auto;">
-    </div> <!-- folio-list -->
     {% if files %}
     <table>
         <thead>
@@ -281,9 +324,9 @@
                 <a href="#">
                     <i class="fa fa-linkedin" aria-hidden="true"></i>
                 </a>
-                <h3>James Ford</h3>
+                <h3>Kamal Koranga</h3>
                 <div class="textIcon">
-                    <h4 class="h4">Director General</h4>
+                    <h4 class="h4">Director General, Developer</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -293,33 +336,14 @@
         <div class="card">
             <div class="circle">
                 <div class="imgBox">
-                    <img src="{{url_for('static', filename='images/team2.jpg')}}" alt="">
+                    <img src="{{url_for('static', filename='images/team1.jpg')}}" alt="">
                 </div>
             </div>
             <div class="content">
                 <a href="#">
                     <i class="fa fa-linkedin" aria-hidden="true"></i>
                 </a>
-                <h3>Ann Brown</h3>
-                <div class="textIcon">
-                    <h4>Mannager</h4>
-                    <a href="#">
-                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div class="circle">
-                <div class="imgBox">
-                    <img src="{{url_for('static', filename='images/team3.jpg')}}" alt="">
-                </div>
-            </div>
-            <div class="content">
-                <a href="#">
-                    <i class="fa fa-linkedin" aria-hidden="true"></i>
-                </a>
-                <h3>Ben Jason</h3>
+                <h3>Harish Joshi</h3>
                 <div class="textIcon">
                     <h4>Developer</h4>
                     <a href="#">
@@ -338,7 +362,26 @@
                 <a href="#">
                     <i class="fa fa-linkedin" aria-hidden="true"></i>
                 </a>
-                <h3>Ben Jason</h3>
+                <h3>Shivansh Chaursia</h3>
+                <div class="textIcon">
+                    <h4>Developer</h4>
+                    <a href="#">
+                        <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="circle">
+                <div class="imgBox">
+                    <img src="{{url_for('static', filename='images/team3.jpg')}}" alt="">
+                </div>
+            </div>
+            <div class="content">
+                <a href="#">
+                    <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+                <h3>Saurav Karki</h3>
                 <div class="textIcon">
                     <h4>Developer</h4>
                     <a href="#">
@@ -357,7 +400,7 @@
     <div class="row section-header section-header--dark"">
                     <div class=" column lg-12">
         <h3 class="text-pretitle">Get In Touch</h3>
-        <h1 class="text-display-title">Do you have an idea or an epic project in mind? Let’s work together.</h1>
+        <h1 class="text-display-title">Do you have an idea, question, help? Let’s connect.</h1>
     </div>
     </div>
 
@@ -377,7 +420,6 @@
                                 <option value="Work Together">Work Together</option>
                                 <option value="Help">Help</option>
                                 <option value="Question">Question</option>
-                                <option value="Feedback">Feedback</option>
                             </select>
                         </div>
                     </div>
