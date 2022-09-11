@@ -47,7 +47,7 @@
         <div class="child">
             <h1 style="text-align:center; margin-bottom: 50px;">{{ file.filename.capitalize() }}</h1>
             <pre>
-                <code>{{f}}</code>
+                <code class="language-python">{{f}}</code>
             </pre>
             <a href="{{ url_for('delete_file', filename=file.filename) }}">Delete</a>
         </div>
