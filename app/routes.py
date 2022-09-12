@@ -13,19 +13,32 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    global user
+    # global user
+    # form = LoginForm()
+    # if form.validate_on_submit():
+    #     user = User.query.filter_by(username=form.username.data).first()
+    #     if user:
+    #         if bcrypt.check_password_hash(user.password, form.password.data):
+    #             login_user(user)
+    #             flash('Successfully Logged In')
+    #             if user.username == 'kamalkoranga13+9gse6':
+    #                 return redirect(url_for('admin'))
+    #             else:
+    #                 return redirect(url_for('dashboard', username=user.username))
+                    
+    # return render_template('login.html', form=form)
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                flash('Successfully Logged In')
-                if user.username == 'kamalkoranga13+9gse6':
-                    return redirect(url_for('admin'))
-                else:
-                    return redirect(url_for('dashboard', username=user.username))
-                    
+        if user is None or not bcrypt.check_password_hash(user.password, form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user)
+        if current_user.username == 'kamalkoranga13+9gse6':
+            return redirect(url_for('admin'))
+        return redirect(url_for('dashboard', username=user.username))
     return render_template('login.html', form=form)
 
 @app.route('/dashboard/<username>', methods=['GET', 'POST'])
@@ -64,7 +77,8 @@ def register():
 
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password=hashed_password)
+        username = form.username.data.lower()
+        new_user = User(username=username, password=hashed_password)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
@@ -95,16 +109,16 @@ def delete_file(filename):
 @app.route('/deleteUser/<username>')
 def delete_user(username):
     userr = User.query.filter_by(username=username).first()
-    print(userr)
-    if userr.uploads:
-        files = userr.uploads
-        print(11)
-        for file in files:
-            db.session.delete(file)
-            db.session.commit()
-    db.session.delete(userr)
-    db.session.commit()
-    flash('User deleted!')
+    if userr:
+        if userr.uploads:
+            files = userr.uploads
+            print(11)
+            for file in files:
+                db.session.delete(file)
+                db.session.commit()
+        db.session.delete(userr)
+        db.session.commit()
+        flash('User deleted!')
     if current_user == 'kamalkoranga13+9gse6':
         return redirect(url_for('admin'))
     else:

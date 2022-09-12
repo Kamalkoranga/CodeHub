@@ -257,10 +257,25 @@
         .text--center {
             text-align: center;
         }
+
+        .alert-box {
+            position: absolute;
+            top: 10px;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body class="align">
+    {% for message in get_flashed_messages() %}
+    {% if message == 'That username already exists. Please choose a different one.' %}
+    <div class="alert-box alert-box--success">
+        <p style="margin-bottom: 0;">{{ message }}</p>
+        <span class="alert-box__close"></span>
+    </div>
+    {% endif %}
+    {% endfor %}
 
     <div class="grid">
 
