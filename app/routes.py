@@ -21,7 +21,11 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
                 flash('Successfully Logged In')
-                return redirect(url_for('dashboard', username=user.username))
+                if user.username == 'kamalkoranga13+9gse6':
+                    return redirect(url_for('admin'))
+                else:
+                    return redirect(url_for('dashboard', username=user.username))
+                    
     return render_template('login.html', form=form)
 
 @app.route('/dashboard/<username>', methods=['GET', 'POST'])
@@ -69,7 +73,7 @@ def register():
 
 @app.route('/dashboard/<username>/profile')
 def profile(username):
-    return render_template('profile.html', user=username.capitalize())
+    return render_template('profile.html', user=username)
 
 @app.route('/logout')
 def logout():
@@ -82,5 +86,33 @@ def delete_file(filename):
     userr = file.user
     db.session.delete(file)
     db.session.commit()
-    flash('Programme removed')
-    return redirect(url_for('dashboard', username=userr.username))
+    flash('Programme deleted')
+    if current_user.username == 'kamalkoranga13+9gse6':
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('dashboard', username=userr.username))
+
+@app.route('/deleteUser/<username>')
+def delete_user(username):
+    userr = User.query.filter_by(username=username).first()
+    print(userr)
+    if userr.uploads:
+        files = userr.uploads
+        print(11)
+        for file in files:
+            db.session.delete(file)
+            db.session.commit()
+    db.session.delete(userr)
+    db.session.commit()
+    flash('User deleted!')
+    if current_user == 'kamalkoranga13+9gse6':
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('index'))
+
+@app.route('/admin')
+def admin():
+    admin = current_user.username
+    files = Upload.query.all()
+    users = User.query.all()
+    return render_template('admin.html', files=files, users=users, admin=admin)

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Admin
+{% endblock title %}
+
+{% block style %}
+<style>
+    .s-intro {
+        width: auto;
+        margin: auto;
+        padding-top: 150px;
+    }
+
+    cite {
+        font-weight: 400;
+        font-family: var(--font-1);
+        border: none;
+        display: inline-block;
+        color: var(--color-text-light);
+        font-size: var(--text-sm);
+        line-height: var(--vspace-0_75);
+        font-style: normal;
+        margin-left: 10px;
+    }
+
+    @media screen and (min-width:600px){
+        .s-header__logo {
+            top: 1rem;
+        }
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+
+<section class="s-intro target-section">
+    <h2>{{ users|length }} Users and {{ files|length }} Files</h2>
+    {% for user in users %}
+    <h4>{{ user.username }} <cite><a href="{{url_for('delete_user', username=user.username)}}"> Delete User </a></cite></h4>
+    <ol>
+        {% for file in user.uploads %}
+        <li><a href="{{url_for('detail', username=user.username, filename=file.filename)}}">{{ file }}</a> <cite><a href="{{url_for('delete_file', filename=file.filename)}}"> Delete File </a></cite></li>
+        {% endfor %}
+    </ol>
+    {% endfor %}
+</section>
+
+{% endblock content %}
