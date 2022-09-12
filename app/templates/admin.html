@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block title %}
+    Admin
+{% endblock title %}
+
 {% block style %}
 <style>
     .s-intro {
@@ -19,18 +23,24 @@
         font-style: normal;
         margin-left: 10px;
     }
+
+    @media screen and (min-width:600px){
+        .s-header__logo {
+            top: 1rem;
+        }
+    }
 </style>
 {% endblock style %}
 
 {% block content %}
 
 <section class="s-intro target-section">
-    <h1>Users and their files</h1>
+    <h2>{{ users|length }} Users and {{ files|length }} Files</h2>
     {% for user in users %}
-    <h3>{{ user.username }} <cite><a href=""> Delete User </a></cite></h3>
+    <h4>{{ user.username }} <cite><a href="{{url_for('delete_user', username=user.username)}}"> Delete User </a></cite></h4>
     <ol>
         {% for file in user.uploads %}
-        <li>{{ file }} <cite><a href="{{url_for('delete_file', filename=file.filename)}}"> Delete File </a></cite></li>
+        <li><a href="{{url_for('detail', username=user.username, filename=file.filename)}}">{{ file }}</a> <cite><a href="{{url_for('delete_file', filename=file.filename)}}"> Delete File </a></cite></li>
         {% endfor %}
     </ol>
     {% endfor %}

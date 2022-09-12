@@ -123,6 +123,14 @@
 
 {% block content %}
 <section id="intro" class="s-intro target-section">
+    {% for message in get_flashed_messages() %}
+    {% if message == 'User deleted!' %}
+    <div class="alert-box alert-box--success" style="margin-top: 50px;">
+        <p style="margin-bottom: 0;">{{ message }}</p>
+        <span class="alert-box__close"></span>
+    </div>
+    {% endif %}
+    {% endfor %}
     <div class="row">
         <div class="column">
             <div class="s-intro__top-block">
@@ -188,11 +196,13 @@
                 <li>{{ member.username|capitalize }} <cite>... recently joined</cite></li>
                 {% endfor %}
             </ul>
-            <span>.... {{ members|length - 4 }} + other members</span>
+            {% if members|length >=5 %}
+                <span>.... {{ members|length - 4 }} + other members</span>
+            {% endif %}
             </p>
         </div>
         <div class="column stats__item" data-animate-el>
-            <div class="stats__count" data-counter={{no-1}}><span>38</span>+</div>
+            <div class="stats__count" data-counter={{no}}><span>38</span>+</div>
             <h5>Saved Projects</h5>
             <p>
                 Nulla pharetra diam sit amet nisl suscipit adipiscing
@@ -326,7 +336,7 @@
                 </a>
                 <h3>Kamal Koranga</h3>
                 <div class="textIcon">
-                    <h4 class="h4">Director General, Developer</h4>
+                    <h4 class="h4">CEO, Developer</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -364,7 +374,7 @@
                 </a>
                 <h3>Shivansh Chaursia</h3>
                 <div class="textIcon">
-                    <h4>Developer</h4>
+                    <h4>Designer</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -383,7 +393,7 @@
                 </a>
                 <h3>Saurav Karki</h3>
                 <div class="textIcon">
-                    <h4>Developer</h4>
+                    <h4>Designer</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>

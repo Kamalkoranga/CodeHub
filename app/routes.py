@@ -73,7 +73,7 @@ def register():
 
 @app.route('/dashboard/<username>/profile')
 def profile(username):
-    return render_template('profile.html', user=username.capitalize())
+    return render_template('profile.html', user=username)
 
 @app.route('/logout')
 def logout():
@@ -86,11 +86,29 @@ def delete_file(filename):
     userr = file.user
     db.session.delete(file)
     db.session.commit()
-    flash('Programme removed')
+    flash('Programme deleted')
     if current_user.username == 'kamalkoranga13+9gse6':
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('dashboard', username=userr.username))
+
+@app.route('/deleteUser/<username>')
+def delete_user(username):
+    userr = User.query.filter_by(username=username).first()
+    print(userr)
+    if userr.uploads:
+        files = userr.uploads
+        print(11)
+        for file in files:
+            db.session.delete(file)
+            db.session.commit()
+    db.session.delete(userr)
+    db.session.commit()
+    flash('User deleted!')
+    if current_user == 'kamalkoranga13+9gse6':
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('index'))
 
 @app.route('/admin')
 def admin():
