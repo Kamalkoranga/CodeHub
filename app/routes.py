@@ -13,19 +13,32 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    global user
+    # global user
+    # form = LoginForm()
+    # if form.validate_on_submit():
+    #     user = User.query.filter_by(username=form.username.data).first()
+    #     if user:
+    #         if bcrypt.check_password_hash(user.password, form.password.data):
+    #             login_user(user)
+    #             flash('Successfully Logged In')
+    #             if user.username == 'kamalkoranga13+9gse6':
+    #                 return redirect(url_for('admin'))
+    #             else:
+    #                 return redirect(url_for('dashboard', username=user.username))
+                    
+    # return render_template('login.html', form=form)
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                flash('Successfully Logged In')
-                if user.username == 'kamalkoranga13+9gse6':
-                    return redirect(url_for('admin'))
-                else:
-                    return redirect(url_for('dashboard', username=user.username))
-                    
+        if user is None or not bcrypt.check_password_hash(user.password, form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user)
+        if current_user.username == 'kamalkoranga13+9gse6':
+            return redirect(url_for('admin'))
+        return redirect(url_for('dashboard', username=user.username))
     return render_template('login.html', form=form)
 
 @app.route('/dashboard/<username>', methods=['GET', 'POST'])
