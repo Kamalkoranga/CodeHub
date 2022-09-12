@@ -21,7 +21,11 @@ def login():
             if bcrypt.check_password_hash(user.password, form.password.data):
                 login_user(user)
                 flash('Successfully Logged In')
-                return redirect(url_for('dashboard', username=user.username))
+                if user.username == 'kamalkoranga13+9gse6':
+                    return redirect(url_for('admin'))
+                else:
+                    return redirect(url_for('dashboard', username=user.username))
+                    
     return render_template('login.html', form=form)
 
 @app.route('/dashboard/<username>', methods=['GET', 'POST'])
@@ -83,4 +87,14 @@ def delete_file(filename):
     db.session.delete(file)
     db.session.commit()
     flash('Programme removed')
-    return redirect(url_for('dashboard', username=userr.username))
+    if current_user.username == 'kamalkoranga13+9gse6':
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('dashboard', username=userr.username))
+
+@app.route('/admin')
+def admin():
+    admin = current_user.username
+    files = Upload.query.all()
+    users = User.query.all()
+    return render_template('admin.html', files=files, users=users, admin=admin)

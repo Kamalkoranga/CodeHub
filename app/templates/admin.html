@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block style %}
+<style>
+    .s-intro {
+        width: auto;
+        margin: auto;
+        padding-top: 150px;
+    }
+
+    cite {
+        font-weight: 400;
+        font-family: var(--font-1);
+        border: none;
+        display: inline-block;
+        color: var(--color-text-light);
+        font-size: var(--text-sm);
+        line-height: var(--vspace-0_75);
+        font-style: normal;
+        margin-left: 10px;
+    }
+</style>
+{% endblock style %}
+
+{% block content %}
+
+<section class="s-intro target-section">
+    <h1>Users and their files</h1>
+    {% for user in users %}
+    <h3>{{ user.username }} <cite><a href=""> Delete User </a></cite></h3>
+    <ol>
+        {% for file in user.uploads %}
+        <li>{{ file }} <cite><a href="{{url_for('delete_file', filename=file.filename)}}"> Delete File </a></cite></li>
+        {% endfor %}
+    </ol>
+    {% endfor %}
+</section>
+
+{% endblock content %}
