@@ -1,5 +1,6 @@
 body {
     background: #101112;
+    font-family: sans-serif;
 }
 
 #join-btn {
@@ -60,4 +61,25 @@ img {
     position: absolute;
     top: 20px;
     left: 20px;
+}
+
+.chat {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    color: white;
+    border: 1px solid white;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.chat input {
+    border-radius: 10px;
+    border: 0;
+    padding: 10px;
+}
+
+.chat #messages {
+    padding: 10px;
+    height: 300px;
 }

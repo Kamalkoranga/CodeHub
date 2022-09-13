@@ -1,5 +1,5 @@
 from flask import render_template, flash, redirect, url_for, request
-from app import app, db, bcrypt
+from app import app, db, bcrypt, socketio, send
 from app.forms import LoginForm, RegisterForm
 from flask_login import login_user, current_user, login_required, logout_user
 from app.models import User, Upload
@@ -88,6 +88,12 @@ def register():
 @app.route('/dashboard/<username>/profile')
 def profile(username):
     return render_template('profile.html', user=username)
+
+@socketio.on('message')
+def handle_message(message):
+    print("Received message: " + message)
+    if message != 'User connected!':
+        send(message, broadcast=True)
 
 @app.route('/group')
 def group():
