@@ -1,7 +1,5 @@
 body {
-    background: #0F2027;
-    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
-    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    background: #101112;
 }
 
 #join-btn {
@@ -35,12 +33,13 @@ body {
 
 button {
     border: none;
-    background-color: cadetblue;
+    background-color: #1f9388;
     color: #fff;
     padding: 10px 20px;
     font-size: 16px;
     margin: 2px;
     cursor: pointer;
+    border-radius: 10px;
 }
 
 #stream-controls {
@@ -54,4 +53,11 @@ button {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
         width: 95%;
     }
+}
+
+img {
+    width: 150px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
 }

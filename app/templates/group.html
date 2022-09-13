@@ -7,9 +7,16 @@
     <title>Codehub Stream</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' href="{{url_for('static', filename='css/group.css')}}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/5.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/2.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/4.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
 </head>
 
 <body>
+    <a href="{{url_for('dashboard', username=current_user.username)}}">
+        <img src="{{url_for('static', filename='images/3.png')}}" alt="">
+    </a>
 
     <button id="join-btn">Join Stream</button>
 
