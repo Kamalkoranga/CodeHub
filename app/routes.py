@@ -89,6 +89,10 @@ def register():
 def profile(username):
     return render_template('profile.html', user=username)
 
+@app.route('/group')
+def group():
+    return render_template('group.html')
+
 @app.route('/logout')
 def logout():
     logout_user()
