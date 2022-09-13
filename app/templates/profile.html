@@ -63,6 +63,14 @@
 {% endblock style %}
 
 {% block nav %}
+<nav class="s-header__nav">
+    <ul>
+        <li><a href="{{url_for('index')}}">Home</a></li>
+        <li><a href="{{url_for('dashboard', username=user)}}">Dashboard</a></li>
+        <li class="current"><a href="{{url_for('profile', username=user)}}">Profile</a></li>
+    </ul>
+</nav>
+
 <a class="s-header__social" href="{{url_for('logout')}}">Logout</a>
 {% endblock nav %}
 

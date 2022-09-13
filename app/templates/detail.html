@@ -33,6 +33,12 @@
 {% endblock style %}
 
 {% block nav %}
+<nav class="s-header__nav">
+    <ul>
+        <li><a href="{{url_for('index')}}">Home</a></li>
+        <li><a href="{{url_for('dashboard', username=current_user.username)}}">Dashboard</a></li>
+    </ul>
+</nav>
 <a class="s-header__social" href="{{url_for('profile', username=file.user.username)}}" style="align-items:center;"><svg
         xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 448 512" style="margin-right: 10px;">
         <path
