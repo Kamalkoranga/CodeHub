@@ -109,7 +109,7 @@
         {% if not current_user.is_anonymous %}
             <li class="current"><a href="{{url_for('index')}}">Home</a></li>
             <li><a href="{{url_for('dashboard', username=current_user.username)}}">Dashboard</a></li>
-            <li><a href="{{url_for('profile', username=user)}}">Profile</a></li>
+            <li><a href="{{url_for('profile', username=current_user.username)}}">Profile</a></li>
         {%else%}
             <li class="current"><a href="#intro" class="smoothscroll">Intro</a></li>
             <li><a href="#services" class="smoothscroll">What We Do</a></li>
