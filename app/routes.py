@@ -89,8 +89,8 @@ def register():
 def profile(username):
     return render_template('profile.html', user=username)
 
-@app.route('/group')
-def group():
+@app.route('/group_video_chat/<username>')
+def group_video_chat(username):
     return render_template('group.html')
 
 @app.route('/logout')

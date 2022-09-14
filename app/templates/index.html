@@ -109,7 +109,7 @@
         {% if not current_user.is_anonymous %}
             <li class="current"><a href="{{url_for('index')}}">Home</a></li>
             <li><a href="{{url_for('dashboard', username=current_user.username)}}">Dashboard</a></li>
-            <li><a href="{{url_for('profile', username=current_user.username)}}">Profile</a></li>
+            <li><a href="{{url_for('group_video_chat', username=current_user.username)}}">Group Video Chat</a></li>
         {%else%}
             <li class="current"><a href="#intro" class="smoothscroll">Intro</a></li>
             <li><a href="#services" class="smoothscroll">What We Do</a></li>
@@ -346,7 +346,7 @@
                 </a>
                 <h3>Kamal Koranga</h3>
                 <div class="textIcon">
-                    <h4 class="h4">CEO, Developer</h4>
+                    <h4 class="h4">CEO, Co Founder</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>

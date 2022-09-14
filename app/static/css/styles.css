@@ -1788,7 +1788,6 @@ ol,
 dl,
 form,
 img,
-.video-container,
 .ss-custom-select {
     margin-bottom : var(--vspace-1);
 }
@@ -2686,13 +2685,13 @@ img.u-pull-left {
 
 /* responsive video container
  */
-.video-container {
+/* .video-container {
     --aspect-ratio : 16/9;
     position       : relative;
     height         : 0;
     overflow       : hidden;
     padding-bottom : calc(100%/(var(--aspect-ratio)));
-}
+} */
 
 .video-container iframe,
 .video-container object,
