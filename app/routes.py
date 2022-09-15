@@ -9,7 +9,27 @@ def index():
     no = len(Upload.query.all())
     members=User.query.all()
     members.reverse()
-    return render_template('index.html', files=Upload.query.all(), no=no, members=members)
+    timeline = [
+        {
+            'date': '6 September 2022',
+            'heading': 'Beginning',
+            'paragraph': 'Project Started'
+        },
+        
+        {
+            'date': '12 September 2022',
+            'heading': 'Deployed',
+            'paragraph': 'Project Deployed Online at codehub.gq'
+        },
+        
+        {
+            'date': '14 September 2022',
+            'heading': 'Group Video Call Feature',
+            'paragraph': 'Added a group video call feature. You can check them out at dashboard after creating account.'
+        }
+    ]
+    timeline.reverse()
+    return render_template('index.html', files=Upload.query.all(), no=no, members=members, timeline=timeline)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -89,8 +109,8 @@ def register():
 def profile(username):
     return render_template('profile.html', user=username)
 
-@app.route('/group')
-def group():
+@app.route('/group_video_chat/<username>')
+def group_video_chat(username):
     return render_template('group.html')
 
 @app.route('/logout')

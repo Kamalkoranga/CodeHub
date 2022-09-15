@@ -71,8 +71,7 @@
 
         :root {
             --htmlFontSize: 100%;
-
-            --bodyBackgroundColor: #2c3338;
+            --bodyBackgroundColor: #101112;
             --bodyColor: var(--baseColor);
             --bodyFontFamily: "Open Sans";
             --bodyFontFamilyFallback: sans-serif;
@@ -183,14 +182,14 @@
             --loginBorderRadus: 0.25rem;
             --loginColor: #eee;
 
-            --loginInputBackgroundColor: #3b4148;
-            --loginInputHoverBackgroundColor: #434a52;
+            --loginInputBackgroundColor: #101112;
+            --loginInputHoverBackgroundColor: #101112;
 
-            --loginLabelBackgroundColor: #363b41;
+            --loginLabelBackgroundColor: #101112;
 
-            --loginSubmitBackgroundColor: #ea4c88;
+            --loginSubmitBackgroundColor: #24a89b;
             --loginSubmitColor: #eee;
-            --loginSubmitHoverBackgroundColor: #d44179;
+            --loginSubmitHoverBackgroundColor: #1f9388;
         }
 
         .login {
@@ -232,6 +231,11 @@
             background-color: var(--loginInputHoverBackgroundColor);
         }
 
+        .login input[type='password']:focus,
+        .login input[type='text']:focus {
+            border-bottom: #24a89b 1px solid;
+        }
+        
         .login input[type="submit"] {
             background-color: #ea4c88;
             background-color: var(--loginSubmitBackgroundColor);

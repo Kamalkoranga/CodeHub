@@ -56,9 +56,14 @@ button {
     }
 }
 
-img {
-    width: 150px;
+.nav {
+    /* width: 150px; */
     position: absolute;
     top: 20px;
     left: 20px;
+    color: white;
+}
+
+.nav img {
+    width: 100px;
 }
