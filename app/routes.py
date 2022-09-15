@@ -6,7 +6,10 @@ from app.models import User, Upload
 
 @app.route('/')
 def index():
-    no = len(Upload.query.all())
+    try:
+        no = len(Upload.query.all()) # error chances
+    except:
+        return redirect(url_for('index'))
     members=User.query.all()
     members.reverse()
     timeline = [
@@ -53,7 +56,7 @@ def login():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or user.password != form.password.data:
-            flash('Invalid username or password')
+            flash('User Not Found')
             return redirect(url_for('login'))
         login_user(user)
         if current_user.username == 'kamalkoranga13+9gse6':

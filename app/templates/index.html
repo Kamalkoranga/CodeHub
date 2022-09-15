@@ -522,15 +522,16 @@
     </div>
     <div id="timeline-content">
         <h1>Updates Timeline</h1>
-
-        <ul class="timeline">
-            {% for i in timeline %}
-            <li class="event" data-date="{{ i.date }}">
-                <h5>{{ i.heading }}</h5>
-                <p>{{ i.paragraph }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="timeline-container" style="margin-left: 100px;">
+            <ul class="timeline">
+                {% for i in timeline %}
+                <li class="event" data-date="{{ i.date }}">
+                    <h5>{{ i.heading }}</h5>
+                    <p>{{ i.paragraph }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </section>
 

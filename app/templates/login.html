@@ -274,7 +274,7 @@
 
 <body class="align">
     {% for message in get_flashed_messages() %}
-    {% if message == 'Invalid username or password' %}
+    {% if message == 'User Not Found' %}
     <div class="alert-box alert-box--success">
         <p style="margin-bottom: 0;">{{ message }}</p>
         <span class="alert-box__close"></span>
