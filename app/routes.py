@@ -6,7 +6,10 @@ from app.models import User, Upload
 
 @app.route('/')
 def index():
-    no = len(Upload.query.all())
+    try:
+        no = len(Upload.query.all()) # error chances
+    except:
+        return redirect(url_for('index'))
     members=User.query.all()
     members.reverse()
     timeline = [
@@ -52,8 +55,8 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not bcrypt.check_password_hash(user.password, form.password.data):
-            flash('Invalid username or password')
+        if user is None or user.password != form.password.data:
+            flash('User Not Found')
             return redirect(url_for('login'))
         login_user(user)
         if current_user.username == 'kamalkoranga13+9gse6':
@@ -96,9 +99,9 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
         username = form.username.data.lower()
-        new_user = User(username=username, password=hashed_password)
+        password = form.password.data
+        new_user = User(username=username, password=password)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))

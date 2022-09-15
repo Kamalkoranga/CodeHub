@@ -479,7 +479,7 @@
 
     <div class="row about-stats stats block-lg-one-fourth block-md-one-half block-mob-whole" data-animate-block>
         <div class="column stats__item" data-animate-el>
-            <div class="stats__count" data-counter=22><span>22</span>+</div>
+            <div class="stats__count" data-counter=24><span>24</span>+</div>
             <h5>Hours Work</h5>
             <p>
                 Eleifend donec pretium vulputate sapien nec sagittis
@@ -522,15 +522,16 @@
     </div>
     <div id="timeline-content">
         <h1>Updates Timeline</h1>
-
-        <ul class="timeline">
-            {% for i in timeline %}
-            <li class="event" data-date="{{ i.date }}">
-                <h5>{{ i.heading }}</h5>
-                <p>{{ i.paragraph }}</p>
-            </li>
-            {% endfor %}
-        </ul>
+        <div class="timeline-container" style="margin-left: 100px;">
+            <ul class="timeline">
+                {% for i in timeline %}
+                <li class="event" data-date="{{ i.date }}">
+                    <h5>{{ i.heading }}</h5>
+                    <p>{{ i.paragraph }}</p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 </section>
 
