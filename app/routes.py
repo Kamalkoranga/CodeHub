@@ -52,7 +52,7 @@ def login():
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user is None or not bcrypt.check_password_hash(user.password, form.password.data):
+        if user is None or user.password != form.password.data:
             flash('Invalid username or password')
             return redirect(url_for('login'))
         login_user(user)
@@ -96,9 +96,9 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
         username = form.username.data.lower()
-        new_user = User(username=username, password=hashed_password)
+        password = form.password.data
+        new_user = User(username=username, password=password)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
