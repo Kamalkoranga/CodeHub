@@ -338,7 +338,7 @@
         list-style: none;
         text-align: left;
         font-weight: 100;
-        max-width: 30%;
+        max-width: 50%;
     }
 
     .timeline h1 {
@@ -396,6 +396,35 @@
         width: 11px;
         content: "";
         top: 5px;
+    }
+
+
+    @media screen and (min-width:900px) {
+        .timeline-container {
+            margin-left: 100px;
+        }
+    }
+
+    @media screen and (max-width:900px) {
+        .timeline {
+            padding: 10px;
+            border: 0;
+            max-width: unset;
+        }
+
+        .timeline .event:before {
+            left: 0;
+            top: -35px;
+        }
+
+        .timeline .event:after {
+            content: unset;
+        }
+
+        .timeline-container {
+            margin-left: unset;
+            padding: 20px;
+        }
     }
 </style>
 {% endblock style %}
@@ -522,7 +551,7 @@
     </div>
     <div id="timeline-content">
         <h1>Updates Timeline</h1>
-        <div class="timeline-container" style="margin-left: 100px;">
+        <div class="timeline-container" >
             <ul class="timeline">
                 {% for i in timeline %}
                 <li class="event" data-date="{{ i.date }}">
