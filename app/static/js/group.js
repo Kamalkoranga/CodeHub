@@ -1,5 +1,5 @@
 const APP_ID = "c622859e7853450ea35dd1a0f0f9b417";
-const TOKEN ="007eJxTYHj6VWpTaV3Grm9bvScEqQmaGq88uPJYyrR/Zuvfm0bJnXmjwJBsZmRkYWqZam5hamxiapCaaGyakmKYaJBmkGaZZGJoHj9VIfn+M8XkQod6ZkYGCATx2RmS81NSM0qTGBgATEckAQ==";
+const TOKEN = "007eJxTYGj/UK5t9HTFtJc7ze/LPNLNWMpx7mbDduNXeTf5zjckdlUoMCSbGRlZmFqmmluYGpuYGqQmGpumpBgmGqQZpFkmmRiafy9SSi4/opysyZvOwAiFID47Q3J+SmpGaRIDAwBHSSL+";
 const CHANNEL = "codehub";
 
 const client = AgoraRTC.createClient({ mode: "rtc", codec: "vp8" });

@@ -21,10 +21,11 @@
    position: relative;
    width: 340px;
    height: 450px;
-   background: #fff;
+   background: #101112;
    overflow: hidden;
    border-radius: 10px;
    margin: 20px;
+   border: 0.1em solid #fff;
 }
 .card .circle
 {
@@ -93,7 +94,6 @@
 .content h3
 {
    font-size: 1.4em;
-   color: #333;
    margin-top: 7px;
    margin-bottom: 2px;
    line-height: initial;
