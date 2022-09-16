@@ -159,7 +159,7 @@
 
     <div class="" style="max-width: 500px; margin:auto;">
         <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Program: </h4>
-        <form action="/dashboard/{{user}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
+        <form action="{{url_for('dashboard', username=current_user.username)}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
             <input type="file" name="file" id="inputfile" required style="width: 300px; width:100%;" accept=".py" />
             <input type="submit" />
         </form>
@@ -202,7 +202,7 @@
         <tbody>
             {% for file in files %}
             <tr>
-                {% if file.user.username.capitalize() == user %}
+                {% if file.user.username == current_user.username %}
                 <td data-label="Project"><a href="{{ url_for('detail', username=current_user.username, filename=file.filename) }}">{{file.filename}}</a>
                 </td>
                 <td data-label="Developer">{{file.user.username.capitalize()}}</td>

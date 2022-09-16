@@ -3,7 +3,9 @@ from app import app, db, bcrypt
 from app.forms import LoginForm, RegisterForm
 from flask_login import login_user, current_user, login_required, logout_user
 from app.models import User, Upload
+from werkzeug.urls import url_parse
 
+@app.route('/index')
 @app.route('/')
 def index():
     try:
@@ -50,19 +52,21 @@ def login():
     #                 return redirect(url_for('dashboard', username=user.username))
                     
     # return render_template('login.html', form=form)
+    
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('dashboard', username=current_user.username))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
-        if user is None or user.password != form.password.data:
-            flash('User Not Found')
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
             return redirect(url_for('login'))
-        login_user(user)
-        if current_user.username == 'kamalkoranga13+9gse6':
-            return redirect(url_for('admin'))
-        return redirect(url_for('dashboard', username=user.username))
-    return render_template('login.html', form=form)
+        login_user(user, remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('dashboard', username=current_user.username)
+        return redirect(url_for('dashboard', username=current_user.username))
+    return render_template('login.html', title='Sign In', form=form)
 
 @app.route('/dashboard/<username>', methods=['GET', 'POST'])
 @login_required
@@ -82,7 +86,7 @@ def dashboard(username):
         if file.user.username == username:
             no += 1
         
-    return render_template('dashboard.html', user=userr.capitalize(), files=Upload.query.all(), userr=userr, no=no)
+    return render_template('dashboard.html', files=Upload.query.all(), no=no)
 
 @app.route('/dashboard/<username>/<filename>')
 def detail(username, filename):
@@ -96,23 +100,37 @@ def detail(username, filename):
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    # form = RegisterForm()
+
+    # if form.validate_on_submit():
+    #     username = form.username.data.lower()
+    #     password = form.password.data
+    #     new_user = User(username=username, password=password)
+    #     db.session.add(new_user)
+    #     db.session.commit()
+    #     return redirect(url_for('login'))
+
+    # return render_template('register.html', form=form)
+    
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = RegisterForm()
-
     if form.validate_on_submit():
-        username = form.username.data.lower()
-        password = form.password.data
-        new_user = User(username=username, password=password)
-        db.session.add(new_user)
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
         db.session.commit()
+        flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
-
-    return render_template('register.html', form=form)
+    return render_template('register.html', title='Register', form=form)
 
 @app.route('/dashboard/<username>/profile')
+@login_required
 def profile(username):
     return render_template('profile.html', user=username)
 
 @app.route('/group_video_chat/<username>')
+@login_required
 def group_video_chat(username):
     return render_template('group.html')
 
@@ -152,6 +170,7 @@ def delete_user(username):
         return redirect(url_for('index'))
 
 @app.route('/admin')
+@login_required
 def admin():
     admin = current_user.username
     files = Upload.query.all()

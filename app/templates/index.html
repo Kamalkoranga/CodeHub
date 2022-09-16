@@ -3,6 +3,7 @@
 {% block title %} Codehub {% endblock title %}
 
 {% block style %}
+<link rel="stylesheet" href="{{url_for('static', filename='css/teams.css')}}">
 <style>
     table {
         border-collapse: collapse;
@@ -553,7 +554,7 @@
         <h1>Updates Timeline</h1>
         <div class="timeline-container" >
             <ul class="timeline">
-                {% for i in timeline %}
+                {% for i in timeline[0:3] %}
                 <li class="event" data-date="{{ i.date }}">
                     <h5>{{ i.heading }}</h5>
                     <p>{{ i.paragraph }}</p>
@@ -742,7 +743,7 @@
                 <a href="#">
                     <i class="fa fa-linkedin" aria-hidden="true"></i>
                 </a>
-                <h3>Saurav Karki</h3>
+                <h3>Saurabh Karki</h3>
                 <div class="textIcon">
                     <h4>Designer</h4>
                     <a href="#">
