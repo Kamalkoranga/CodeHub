@@ -46,7 +46,9 @@
     </table>
     <hr>
     {% for file in files %}
+    {% if file.user.username == current_user.username %}
     {% include '_upload.html' %}
+    {% endif %}
     {% endfor %}
 </div>
 {% endblock %}
