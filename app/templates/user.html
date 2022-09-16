@@ -1,15 +1,52 @@
 {% extends "base.html" %}
+
+{% block title %}
+{{ current_user.username|capitalize }}'s Profile
+{% endblock title %}
+
+{% block style %}
+    <style>
+        @media screen and (min-width: 600px) {
+            
+            .s-header__logo{
+                top: 1rem;
+            }
+        }
+    </style>
+{% endblock style %}
+
+{% block nav %}
+<nav class="s-header__nav">
+    <ul>
+        <li><a href="{{url_for('index')}}">Home</a></li>
+        <li><a href="{{url_for('dashboard', username=user)}}">Dashboard</a></li>
+        <li><a href="{{url_for('group_video_chat', username=current_user.username)}}">Group Video Chat</a></li>
+    </ul>
+</nav>
+
+<a class="s-header__social" href="{{url_for('logout')}}">Logout</a>
+    
+{% endblock nav %}
+
 {% block content %}
-<table>
-    <tr valign="top">
-        <td><img src="{{ user.avatar(128) }}"></td>
-        <td>
-            <h1>User: {{ user.username }}</h1>
-        </td>
-    </tr>
-</table>
-<hr>
-{% for post in posts %}
-{% include '_upload.html' %}
-{% endfor %}
+<div class="content" style="margin: 100px auto; padding:50px;">
+    <table>
+        <tr valign="top" style="display: flex; align-items:center; border-bottom:0; flex-wrap:wrap; justify-content:center;">
+            <td style="border-bottom:0;"><img src="{{ user.avatar(128) }}"></td>
+            <td style="border-bottom:0;">
+                <h1>User: {{ user.username }}</h1>
+                {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
+                {% if user.last_seen %}<p>Last seen on: {{ user.last_seen }}</p>{% endif %}
+                {% if user == current_user %}
+                <p><a href="{{ url_for('edit_profile') }}">Edit your profile</a></p>
+                <p><a href="{{url_for('delete_user', username=current_user.username)}}">Delete your profile</a></p>
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+    <hr>
+    {% for file in files %}
+    {% include '_upload.html' %}
+    {% endfor %}
+</div>
 {% endblock %}

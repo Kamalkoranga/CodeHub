@@ -451,7 +451,7 @@
     {% if current_user.is_anonymous %}
     <li><a href="{{url_for('login')}}">login</a></li>
     {% else %}
-    <li><a href="{{ url_for('profile', username=current_user.username) }}">{{ current_user.username }}</a></li>
+    <li><a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }}</a></li>
     <li>|</li>
     <li><a href="{{url_for('logout')}}">logout</a></li>
     {% endif %}
