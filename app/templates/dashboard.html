@@ -132,7 +132,7 @@
 
 <ul class="s-header__social">
     <li>
-        <a href="{{url_for('profile', username=current_user.username)}}" style="align-items:center;">{{current_user.username}}</a>
+        <a href="{{url_for('user', username=current_user.username)}}" style="align-items:center;">{{current_user.username}}</a>
     </li>
     <li>|</li>
     <li><a href="{{url_for('logout')}}">logout</a></li>
