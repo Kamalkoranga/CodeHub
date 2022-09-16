@@ -163,14 +163,6 @@
             <input type="file" name="file" id="inputfile" required style="width: 300px; width:100%;" accept=".py" />
             <input type="submit" />
         </form>
-        {% for message in get_flashed_messages() %}
-        {% if message == 'Programme Added' %}
-        <div class="alert-box alert-box--success" style="margin-top: 50px;">
-            <p style="margin-bottom: 0;">{{ message }}</p>
-            <span class="alert-box__close"></span>
-        </div>
-        {% endif %}
-        {% endfor %}
     </div>
 
     <hr>
