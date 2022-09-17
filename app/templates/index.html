@@ -532,7 +532,7 @@
             <p>
             <ul class="members">
                 {% for member in members[0:4] %}
-                <li>{{ member.username|capitalize }} <cite>... recently joined</cite></li>
+                <li>{{ member.username }} <cite>... recently joined</cite></li>
                 {% endfor %}
             </ul>
             {% if members|length >=5 %}

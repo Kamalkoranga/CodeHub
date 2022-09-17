@@ -14,7 +14,8 @@ def index():
     except:
         return redirect(url_for('index'))
     members=User.query.all()
-    members.reverse()
+    # print(members)
+    # members.reverse()
     timeline = [
         {
             'date': '6 September 2022',
