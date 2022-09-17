@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ current_user.username|capitalize }}'s Profile
+{{ username|capitalize }}'s Profile
 {% endblock title %}
 
 {% block style %}
@@ -46,7 +46,7 @@
     </table>
     <hr>
     {% for file in files|reverse %}
-    {% if file.user.username == current_user.username %}
+    {% if file.user.username == username %}
     {% include '_upload.html' %}
     {% endif %}
     {% endfor %}

@@ -532,7 +532,7 @@
             <p>
             <ul class="members">
                 {% for member in members[0:4] %}
-                <li>{{ member.username }} <cite>... recently joined</cite></li>
+                <li><a href="{{url_for('user', username=member.username)}}">{{ member.username }}</a> <cite>... recently joined</cite></li>
                 {% endfor %}
             </ul>
             {% if members|length >=5 %}
@@ -689,7 +689,7 @@
                 <h3>Kamal Koranga</h3>
                 <div class="textIcon">
                     <h4 class="h4">CEO, Co Founder</h4>
-                    <a href="#">
+                    <a href="{{url_for('user', username='kamal')}}">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>

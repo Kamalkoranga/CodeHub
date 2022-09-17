@@ -131,7 +131,7 @@ def register():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     files = Upload.query.all()
-    return render_template('user.html', user=user, files=files)
+    return render_template('user.html', user=user, files=files, username=username)
 
 @app.before_request
 def before_request():
