@@ -1,6 +1,6 @@
 <table>
     <tr valign="top">
         <td><img src="{{ user.avatar(36) }}"></td>
-        <td>{{ file.user.username }} coded: <br> {{ file.filename }}</td>
+        <td><a href="{{ url_for('user', username=file.user.username) }}">{{ file.user.username }}</a> coded {{ moment(file.timestamp).fromNow() }}: <br> {{ file.filename }}</td>
     </tr>
 </table>

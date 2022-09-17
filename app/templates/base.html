@@ -69,7 +69,7 @@
 
         {% with messages = get_flashed_messages() %}
         {% if messages %}
-        <ul style="margin: 100px auto 0;">
+        <ul style="margin: 100px auto 0; position:absolute; width:100%; text-align:center; list-style-position:inside;">
             {% for message in messages %}
             <li>{{ message }}</li>
             {% endfor %}
@@ -190,7 +190,7 @@
         year.innerHTML = new Date().getFullYear()
     </script>
     {% block script %}{% endblock script %}
-
+    {{ moment.include_moment() }}
 </body>
 
 </html>
