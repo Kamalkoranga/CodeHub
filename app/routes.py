@@ -88,6 +88,12 @@ def dashboard(username):
         
     return render_template('dashboard.html', files=Upload.query.all(), no=no)
 
+@app.route('/explore')
+@login_required
+def explore():
+    uploads = Upload.query.order_by(Upload.timestamp.desc()).all()
+    return render_template('explore.html', title='Explore', files=uploads)
+
 @app.route('/file/<filename>', methods=['GET', 'POST'])
 @login_required
 def detail(filename):
@@ -188,7 +194,6 @@ def delete_user(username):
     if userr:
         if userr.uploads:
             files = userr.uploads
-            print(11)
             for file in files:
                 db.session.delete(file)
                 db.session.commit()
