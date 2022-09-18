@@ -33,6 +33,7 @@ class Upload(db.Model):
     data = db.Column(db.LargeBinary)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.String(64), db.ForeignKey('user.username'))
+    comments = db.relationship('Comment', backref='upload')
     
     def __repr__(self) -> str:
         return f'<Upload {self.filename}>'
@@ -40,3 +41,13 @@ class Upload(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+class Comment(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String(100))
+    content = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    upload_id = db.Column(db.Integer, db.ForeignKey('upload.id'))
+
+    def __repr__(self):
+        return f'<Comment "{self.content[:20]}...">'

@@ -55,3 +55,8 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
+
+class CommentForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    comment = TextAreaField('Comment', validators=[Length(min=0, max=200)])
+    submit = SubmitField('Comment')

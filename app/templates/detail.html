@@ -60,6 +60,43 @@
             <cite> - {{ file.filename }}</cite>
             {% endif %}
         </div>
+        <hr>
+        <h3>{{ file.comments|length }} Comments</h3>
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p id="hide">
+                {{ form.username.label }}<br>
+                {{ form.username(size=50, readonly=true, style="width:100%;") }}<br>
+                {% for error in form.username.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.comment(placeholder="Add a comment ...", style='width:100%; min-height:0;') }}<br>
+                {% for error in form.comment.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            <p>{{ form.submit(class='btn--primary u-fullwidth') }}</p>
+        </form>
+        {% for comment in file.comments|reverse %}
+        <div class="comment">
+            <strong style="color: #fff; margin-right: 0.5em;">{{ comment.author }}</strong><small>{{ moment(comment.timestamp).fromNow() }}</small>
+            <p>{{ comment.content }}</p>
+            {% if current_user.username == username %}
+                <form method="POST" action="{{ url_for('delete_comment', comment_id=comment.id) }}">
+                    <input type="submit" value="Delete Comment" onclick="return confirm('Are you sure you want to delete this comment?')">
+                </form>
+            {% endif %}
+            <hr>
+        </div>
+        {% endfor %}
     </div>
 </section>
 {% endblock content %}
+
+{% block script %}
+<script>
+    document.getElementById('hide').style.display = 'none';
+</script>
+{% endblock script %}

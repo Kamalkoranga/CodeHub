@@ -1,8 +1,9 @@
+from distutils.command.upload import upload
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db, bcrypt
-from app.forms import LoginForm, RegisterForm, EditProfileForm
+from app.forms import LoginForm, RegisterForm, EditProfileForm, CommentForm
 from flask_login import login_user, current_user, login_required, logout_user
-from app.models import User, Upload
+from app.models import User, Upload, Comment
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -87,7 +88,7 @@ def dashboard(username):
         
     return render_template('dashboard.html', files=Upload.query.all(), no=no)
 
-@app.route('/file/<filename>')
+@app.route('/file/<filename>', methods=['GET', 'POST'])
 @login_required
 def detail(filename):
     print(app.root_path)
@@ -96,7 +97,19 @@ def detail(filename):
         f.write(file.data)
     fi = open(f'app/static/code/{file.filename}', 'r')
     a = fi.read()
-    return render_template('detail.html',f=a, file=file, username=file.user.username)
+    form = CommentForm()
+    if form.validate_on_submit():
+        # comment = Comment(author= request.form['author'], content=request.form['content'], upload_id=file.id)
+        username = form.username.data
+        comment = form.comment.data
+        comments = Comment(author = username, content=comment, upload_id=file.id)
+        db.session.add(comments)
+        db.session.commit()
+        return redirect(url_for('detail', filename=file.filename))
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        
+    return render_template('detail.html',f=a, file=file, username=file.user.username, form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -186,6 +199,14 @@ def delete_user(username):
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('index'))
+    
+@app.post('/comments/<int:comment_id>/delete')
+def delete_comment(comment_id):
+    comment = Comment.query.get_or_404(comment_id)
+    filename = comment.upload.filename
+    db.session.delete(comment)
+    db.session.commit()
+    return redirect(url_for('detail', filename=filename))
 
 @app.route('/admin')
 @login_required
