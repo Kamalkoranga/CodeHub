@@ -9,10 +9,7 @@ from datetime import datetime
 @app.route('/index')
 @app.route('/')
 def index():
-    try:
-        no = len(Upload.query.all()) # error chances
-    except:
-        return redirect(url_for('index'))
+    no = len(Upload.query.all()) # error chances
     members=User.query.all()
     # print(members)
     # members.reverse()
@@ -90,15 +87,16 @@ def dashboard(username):
         
     return render_template('dashboard.html', files=Upload.query.all(), no=no)
 
-@app.route('/dashboard/<username>/<filename>')
-def detail(username, filename):
+@app.route('/file/<filename>')
+@login_required
+def detail(filename):
     print(app.root_path)
     file = Upload.query.filter_by(filename = filename).first()
     with open(f'app/static/code/{file.filename}', 'wb') as f:
         f.write(file.data)
     fi = open(f'app/static/code/{file.filename}', 'r')
     a = fi.read()
-    return render_template('detail.html',f=a, file=file)
+    return render_template('detail.html',f=a, file=file, username=file.user.username)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -153,11 +151,6 @@ def edit_profile():
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
-
-@app.route('/group_video_chat/<username>')
-@login_required
-def group_video_chat(username):
-    return render_template('group.html')
 
 @app.route('/logout')
 def logout():

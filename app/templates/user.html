@@ -18,13 +18,20 @@
 {% block nav %}
 <nav class="s-header__nav">
     <ul>
-        <li><a href="{{url_for('index')}}">Home</a></li>
         <li><a href="{{url_for('dashboard', username=user)}}">Dashboard</a></li>
-        <li><a href="{{url_for('group_video_chat', username=current_user.username)}}">Group Video Chat</a></li>
     </ul>
 </nav>
 
-<a class="s-header__social" href="{{url_for('logout')}}">Logout</a>
+<ul class="s-header__social">
+    {% if user != current_user  %}
+        <li><a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }}</a></li>
+        <li>|</li>
+    {% endif %}
+    <li>
+        <a href="{{url_for('logout')}}">logout</a>
+    </li>
+</ul>
+
     
 {% endblock nav %}
 
@@ -45,10 +52,16 @@
         </tr>
     </table>
     <hr>
-    {% for file in files|reverse %}
-    {% if file.user.username == username %}
-    {% include '_upload.html' %}
-    {% endif %}
-    {% endfor %}
+    <div class="table-responsive">
+        <table>
+            <tbody>
+                {% for file in files|reverse %}
+                {% if file.user.username == username %}
+                {% include '_upload.html' %}
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
 {% endblock %}

@@ -35,13 +35,11 @@
 {% block nav %}
 <nav class="s-header__nav">
     <ul>
-        <li><a href="{{url_for('index')}}">Home</a></li>
         <li class="current"><a href="{{url_for('dashboard', username=current_user.username)}}">Dashboard</a></li>
-        <li><a href="{{url_for('group_video_chat', username=current_user.username)}}">Group Video Chat</a></li>
     </ul>
 </nav>
 <ul class="s-header__social">
-    <li><a href="{{url_for('user', username=file.user.username)}}" style="align-items:center;">{{file.user.username}}</a></li>
+    <li><a href="{{url_for('user', username=file.user.username)}}" style="align-items:center;">{{current_user.username}}</a></li>
     <li>|</li>
     <li><a href="{{url_for('logout')}}">logout</a></li>
 </ul>
@@ -56,7 +54,11 @@
             <pre>
                 <code class="language-python">{{f}}</code>
             </pre>
+            {% if current_user.username == username %}
             <a href="{{ url_for('delete_file', filename=file.filename) }}">Delete</a>
+            {% else %}
+            <cite> - {{ file.filename }}</cite>
+            {% endif %}
         </div>
     </div>
 </section>

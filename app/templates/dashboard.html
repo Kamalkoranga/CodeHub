@@ -124,9 +124,7 @@
 {% block nav %}
 <nav class="s-header__nav">
     <ul>
-        <li><a href="{{url_for('index')}}">Home</a></li>
         <li class="current"><a href="{{url_for('dashboard', username=current_user.username)}}">Dashboard</a></li>
-        <li><a href="{{url_for('group_video_chat', username=current_user.username)}}">Group Video Chat</a></li>
     </ul>
 </nav>
 
@@ -189,7 +187,7 @@
             {% for file in files %}
             <tr>
                 {% if file.user.username == current_user.username %}
-                <td data-label="Project"><a href="{{ url_for('detail', username=current_user.username, filename=file.filename) }}">{{file.filename}}</a>
+                <td data-label="Project"><a href="{{ url_for('detail', filename=file.filename) }}">{{file.filename}}</a>
                 </td>
                 <td data-label="Developer">{{file.user.username.capitalize()}}</td>
                 {%endif%}

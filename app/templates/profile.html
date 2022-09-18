@@ -65,9 +65,7 @@
 {% block nav %}
 <nav class="s-header__nav">
     <ul>
-        <li><a href="{{url_for('index')}}">Home</a></li>
         <li><a href="{{url_for('dashboard', username=user)}}">Dashboard</a></li>
-        <li><a href="{{url_for('group_video_chat', username=current_user.username)}}">Group Video Chat</a></li>
     </ul>
 </nav>
 
