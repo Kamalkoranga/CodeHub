@@ -28,10 +28,16 @@ def index():
         },
         
         {
-            'date': '14 September 2022',
-            'heading': 'Group Video Call Feature',
-            'paragraph': 'Added a group video call feature. You can check them out at dashboard after creating account.'
-        }
+            'date': '16 September 2022',
+            'heading': 'UI updated',
+            'paragraph': 'Updated webapp ui'
+        },
+        
+        {
+            'date': '18 September 2022',
+            'heading': 'Explore Page, Profile Page and Comment Section !!',
+            'paragraph': "Explore the programs made by other developers, Check Profile to know about that particular developer at ''username'' and at last but not the least Comment section where you can appericiate about their code or suggest some easy methods at ''Explore page'' -> ''filename.py''"
+        },
     ]
     timeline.reverse()
     return render_template('index.html', files=Upload.query.all(), no=no, members=members, timeline=timeline)
