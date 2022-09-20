@@ -118,6 +118,19 @@
         font-family: "Open Sans", sans-serif;
         line-height: 1.25;
     }
+
+    .head {
+        position: absolute;
+        background: #8a8a8b1a;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        top: -79px;
+        /* width: 90%; */
+        left: 0px;
+        padding: 10px 0;
+        right: 0px;
+    }
 </style>
 {% endblock style %}
 
@@ -131,7 +144,8 @@
 
 <ul class="s-header__social">
     <li>
-        <a href="{{url_for('user', username=current_user.username)}}" style="align-items:center;">{{current_user.username}}</a>
+        <a href="{{url_for('user', username=current_user.username)}}"
+            style="align-items:center;">{{current_user.username}}</a>
     </li>
     <li>|</li>
     <li><a href="{{url_for('logout')}}" onclick="return confirm('Are you sure you want to logout?')">logout</a></li>
@@ -140,45 +154,16 @@
 {% endblock nav %}
 
 {% block content %}
-<section id="intro" class="s-intro target-section" style="padding: 150px 50px 100px;">
-    {% for message in get_flashed_messages() %}
-    {% if message == 'Successfully Logged In' %}
-        <div class="alert-box alert-box--success">
-            <p style="margin-bottom: 0;">{{ message }}</p>
-            <span class="alert-box__close"></span>
-        </div>
-    {%endif%}
-    {% endfor %}
-
-    <div class="" style="max-width: 500px; margin:auto;">
-        <h4 class="text-display-title" style="text-align: center; padding-bottom :50px">Add Program: </h4>
-        <form action="{{url_for('dashboard', username=current_user.username)}}" method="POST" enctype="multipart/form-data" style="text-align: center;">
-            <input type="file" name="file" id="inputfile" required style="width: 300px; width:100%;" accept=".py" />
-            <input type="submit" />
-        </form>
-    </div>
-
-    <div class="code" style="margin: 0 auto; max-width:1200px;">
-        <h5>Code &#128071;: </h5>
-        <pre id="output">File not selected!!</pre>
-        <hr>
-    </div>
-
-</section>
-
 
 <!-- ## works
             ================================================== -->
-<section id="works" class="s-works target-section" style="padding: 100px 50px 150px;">
-
-    <div class="row section-header section-header--dark has-bottom-sep">
-        <div class="column lg-12">
-            <!-- <h3 class="text-pretitle">Recent Projects</h3> -->
-            <h1 class="text-display-title">Your Programs</h1>
-        </div>
-    </div> <!-- end section-header -->
+<section id="works" class="s-works target-section" style="padding: 100px 50px; margin: 150px auto; position:relative; width:100%;">
+    <div class="head">
+        <h4 style="font-size: medium; margin: 0; padding: 0;">PROGRAMS</h4>
+        <a href="{{url_for('new')}}" class="btn btn--stroke" style="margin: 0; display:flex; padding:0 20px; height:40px; align-items:center;">New</a>
+    </div>
     {% if no >= 1 %}
-    <table>
+    <table style="font-size: large;">
         <thead>
             <tr>
                 <th>Project</th>

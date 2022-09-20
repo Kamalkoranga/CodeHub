@@ -16,11 +16,17 @@
                 top: 1rem;
             }
         }
+
+        @media screen and (max-width:540px) {
+            .content{
+                max-width: 420px;
+            }
+        }
     </style>
 {% endblock style %}
 
 {% block content %}
-<div class="content" style="margin: 100px auto; padding:50px; max-width: 420px;">
+<div class="content" style="margin: 100px auto; padding: 0 50px;">
     <h1>Edit Profile</h1>
     <form action="" method="post">
         {{ form.hidden_tag() }}

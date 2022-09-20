@@ -29,7 +29,9 @@ class User(db.Model, UserMixin):
     
 class Upload(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    filename = db.Column(db.String(50))
+    title = db.Column(db.String(50))
+    description = db.Column(db.Text)
+    filename = db.Column(db.String(50), unique=True)
     data = db.Column(db.LargeBinary)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.String(64), db.ForeignKey('user.username'))
