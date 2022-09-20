@@ -46,27 +46,12 @@ def index():
         }
     ]
     timeline.reverse()
-    return render_template('index.html', files=Upload.query.all(), no=no, members=members, timeline=timeline)
+    return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all())
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
-    # global user
-    # form = LoginForm()
-    # if form.validate_on_submit():
-    #     user = User.query.filter_by(username=form.username.data).first()
-    #     if user:
-    #         if bcrypt.check_password_hash(user.password, form.password.data):
-    #             login_user(user)
-    #             flash('Successfully Logged In')
-    #             if user.username == 'kamalkoranga13+9gse6':
-    #                 return redirect(url_for('admin'))
-    #             else:
-    #                 return redirect(url_for('dashboard', username=user.username))
-                    
-    # return render_template('login.html', form=form)
-    
+def login():    
     if current_user.is_authenticated:
-        return redirect(url_for('dashboard', username=current_user.username))
+        return redirect(url_for('index'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -76,29 +61,29 @@ def login():
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('dashboard', username=current_user.username)
-        return redirect(url_for('dashboard', username=current_user.username))
+            next_page = url_for('index')
+        return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
 
-@app.route('/dashboard/<username>', methods=['GET', 'POST'])
-@login_required
-def dashboard(username):
-    userr = current_user.username
-    if request.method == 'POST':
-        file = request.files['file']
+# @app.route('/dashboard/<username>', methods=['GET', 'POST'])
+# @login_required
+# def dashboard(username):
+#     userr = current_user.username
+#     if request.method == 'POST':
+#         file = request.files['file']
 
-        upload = Upload(filename=file.filename, data=file.read(), user_id=userr)
-        db.session.add(upload)
-        db.session.commit()
+#         upload = Upload(filename=file.filename, data=file.read(), user_id=userr)
+#         db.session.add(upload)
+#         db.session.commit()
 
-        flash('Programme Added')
-        return redirect(url_for('dashboard', username=username.lower()))
-    no = 0
-    for file in Upload.query.all():
-        if file.user.username == username:
-            no += 1
+#         flash('Programme Added')
+#         return redirect(url_for('dashboard', username=username.lower()))
+#     no = 0
+#     for file in Upload.query.all():
+#         if file.user.username == username:
+#             no += 1
         
-    return render_template('dashboard.html', files=Upload.query.all(), no=no)
+#     return render_template('dashboard.html', files=Upload.query.all(), no=no)
 
 @app.route('/new', methods=['GET', 'POST'])
 @login_required
@@ -112,15 +97,15 @@ def new():
         upload = Upload(title = title, description = description, filename = file.filename, data = file.read(), user_id=userr)
         db.session.add(upload)
         db.session.commit()
-        return redirect(url_for('dashboard', username=current_user.username))
+        return redirect(url_for('index'))
         
     return render_template('new.html', form=form)
 
-@app.route('/explore')
-@login_required
-def explore():
-    uploads = Upload.query.order_by(Upload.timestamp.desc()).all()
-    return render_template('explore.html', title='Explore', files=uploads)
+# @app.route('/explore')
+# @login_required
+# def explore():
+#     uploads = Upload.query.order_by(Upload.timestamp.desc()).all()
+#     return render_template('explore.html', title='Explore', files=uploads)
 
 @app.route('/file/<filename>', methods=['GET', 'POST'])
 @login_required
@@ -146,19 +131,7 @@ def detail(filename):
     return render_template('detail.html',f=a, file=file, username=file.user.username, form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
-def register():
-    # form = RegisterForm()
-
-    # if form.validate_on_submit():
-    #     username = form.username.data.lower()
-    #     password = form.password.data
-    #     new_user = User(username=username, password=password)
-    #     db.session.add(new_user)
-    #     db.session.commit()
-    #     return redirect(url_for('login'))
-
-    # return render_template('register.html', form=form)
-    
+def register():    
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = RegisterForm()

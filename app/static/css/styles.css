@@ -2963,6 +2963,7 @@ img.u-pull-left {
     position   : absolute;
     top        : calc(50% - .2rem);
     right      : 2rem;
+    align-items: center;
 }
 
 .s-header__social li {
