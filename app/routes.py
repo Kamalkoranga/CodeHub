@@ -43,7 +43,13 @@ def index():
             'date': '20 September 2022',
             'heading': 'Title and Descriptions',
             'paragraph': 'Now you can give a stunning title and description about your program to others and fixed some ui bugs.'
-        }
+        },
+        
+        {
+            'date': '21 September 2022',
+            'heading': 'A new UI',
+            'paragraph': 'A new ui of homepage after login that is responsive and looks like github.'
+        },
     ]
     timeline.reverse()
     return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all())
@@ -128,7 +134,7 @@ def detail(filename):
     elif request.method == 'GET':
         form.username.data = current_user.username
         
-    return render_template('detail.html',f=a, file=file, username=file.user.username, form=form)
+    return render_template('detail.html',f=a, file=file, username=file.user.username, form=form, users=User.query.all())
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():    
