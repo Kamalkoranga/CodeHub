@@ -29,6 +29,18 @@
             max-width: 500px;
         }
     }
+
+    @media screen and (min-width:900px) {
+        .content {
+            max-width: 800px;
+        }
+    }
+
+    @media screen and (min-width: 1300px) {
+        .content {
+            max-width: 1200px;
+        }
+    }
 </style>
 {% endblock style %}
 
@@ -55,6 +67,10 @@
             <pre style="border-radius: 20px;">
                 <code class="language-python">{{f}}</code>
             </pre>
+            <div class="about">
+                <h3><strong>Title:</strong> {{ file.title }}</h3>
+                <p><strong>Description: </strong> {{ file.description }}</p>
+            </div>
             {% if current_user.username == username %}
             <a href="{{ url_for('delete_file', filename=file.filename) }}" onclick="return confirm('Are you sure you want to delete this file?')">Delete</a>
             {% else %}
@@ -63,7 +79,7 @@
         </div>
         <hr>
         <h3>{{ file.comments|length }} Comments</h3>
-        <form action="" method="post">
+        <form action="" method="post" style="display: flex; justify-content: space-between; gap: 10px; margin-bottom: 0;">
             {{ form.hidden_tag() }}
             <p id="hide">
                 {{ form.username.label }}<br>
@@ -72,7 +88,7 @@
                 <span style="color: red;">[{{ error }}]</span>
                 {% endfor %}
             </p>
-            <p>
+            <p style="flex-grow: 4;">
                 {{ form.comment(placeholder="Add a comment ...", style='width:100%; min-height:0;') }}<br>
                 {% for error in form.comment.errors %}
                 <span style="color: red;">[{{ error }}]</span>

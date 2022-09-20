@@ -1,7 +1,7 @@
 from distutils.command.upload import upload
 from flask import render_template, flash, redirect, url_for, request
 from app import app, db, bcrypt
-from app.forms import LoginForm, RegisterForm, EditProfileForm, CommentForm
+from app.forms import LoginForm, RegisterForm, EditProfileForm, CommentForm, UploadFile
 from flask_login import login_user, current_user, login_required, logout_user
 from app.models import User, Upload, Comment
 from werkzeug.urls import url_parse
@@ -38,6 +38,12 @@ def index():
             'heading': 'Explore Page, Profile Page and Comment Section !!',
             'paragraph': "Explore the programs made by other developers, Check Profile to know about that particular developer at ''username'' and at last but not the least Comment section where you can appericiate about their code or suggest some easy methods at ''Explore page'' -> ''filename.py''"
         },
+        
+        {
+            'date': '20 September 2022',
+            'heading': 'Title and Descriptions',
+            'paragraph': 'Now you can give a stunning title and description about your program to others and fixed some ui bugs.'
+        }
     ]
     timeline.reverse()
     return render_template('index.html', files=Upload.query.all(), no=no, members=members, timeline=timeline)
@@ -93,6 +99,22 @@ def dashboard(username):
             no += 1
         
     return render_template('dashboard.html', files=Upload.query.all(), no=no)
+
+@app.route('/new', methods=['GET', 'POST'])
+@login_required
+def new():
+    userr = current_user.username
+    form = UploadFile()
+    if form.validate_on_submit():
+        title =  form.title.data
+        description = form.description.data
+        file = form.file.data
+        upload = Upload(title = title, description = description, filename = file.filename, data = file.read(), user_id=userr)
+        db.session.add(upload)
+        db.session.commit()
+        return redirect(url_for('dashboard', username=current_user.username))
+        
+    return render_template('new.html', form=form)
 
 @app.route('/explore')
 @login_required
