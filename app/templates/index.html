@@ -824,13 +824,13 @@
 
 <div class="parent" style="margin-top: 74px;">
     <aside style="border-right: 2px solid #ffffff0d; padding:30px;">
-        <a href="" style="display: flex;
+        <a href="{{url_for('user', username=current_user.username)}}" style="display: flex;
     align-items: center;
-    gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px">
+    gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff">
             <img src="{{ current_user.avatar(22) }}" alt="" style="margin: 0; border-radius:50%;">
             {{ current_user.username }}
         </a>
-        <div style="display: flex; align-items: center; justify-content: space-between; padding:20px">
+        <div style="display: flex; align-items: center; justify-content: space-between; padding:20px 0; gap:10px;">
             <h6 style="margin: 0;">Programs</h6>
             <a href="{{url_for('new')}}" class="btn btn--primary" style="height: 40px; padding: 0 20px; display: flex; align-items: center; margin: 0;"><i class="fa-regular fa-square-plus"></i>New</a>
         </div>

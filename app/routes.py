@@ -193,7 +193,7 @@ def delete_file(filename):
     if current_user.username == 'kamalkoranga13+9gse6':
         return redirect(url_for('admin'))
     else:
-        return redirect(url_for('dashboard', username=userr.username))
+        return redirect(url_for('index'))
 
 @app.route('/deleteUser/<username>')
 def delete_user(username):
