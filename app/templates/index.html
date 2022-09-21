@@ -440,6 +440,10 @@
         font-size: 12px;
     }
 
+    .activeTab {
+        border-bottom: 1px solid #fff;
+    }
+
     @media screen and (max-width:1010px) {
         .parent {
             grid-template-columns: 1fr 3fr;
@@ -847,11 +851,22 @@
     </aside>
 
     <main style="padding:50px;">
-        <h2 style="margin: 0; font-size:25px; font-weight:bolder;">Explore</h2>
-        <hr style="margin: 30px 0;">
-        {% for file in files %}
-        {% include '_upload.html' %}
-        {% endfor %}
+        <div>
+            <span class="tablink activeTab" style="margin: 0; font-size:20px; font-weight:bolder; color:#fff; cursor:pointer; padding:10px;" onclick="container(event, 'explore')">Explore</span>
+            <span class="tablink" style="padding:10px; margin: 0; font-size:20px; font-weight:bolder; color:#fff; cursor:pointer;" onclick="container(event, 'following')">Following</span>
+        </div>
+
+        <div id="explore" class="container">
+            <hr style="margin: 7px 0 30px;">
+            {% for file in files %}
+            {% include '_upload.html' %}
+            {% endfor %}
+        </div>
+
+        <div id="following" class="container" style="display:none">
+            <h1>Hello {{ current_user.username }},</h1>
+            <p>Work in progress...</p>
+        </div>
     </main>
 
     <aside style="padding:50px;" class="updates">
@@ -871,3 +886,21 @@
 </div>
 {% endif %}
 {% endblock content %}
+
+{% block script %}
+    <script>
+        function container(evt, containerName) {
+            var i, x, tablinks;
+            var x = document.getElementsByClassName("container");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablink");
+            for (i = 0; i < x.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" activeTab", "");
+            }
+            document.getElementById(containerName).style.display = "block";
+            evt.currentTarget.className += " activeTab";
+        }
+    </script>
+{% endblock script %}
