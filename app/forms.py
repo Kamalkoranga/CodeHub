@@ -66,3 +66,6 @@ class UploadFile(FlaskForm):
     description = TextAreaField('Description', validators=[Length(min=0 ,max=200)])
     file = FileField('File')
     submit = SubmitField('Add')
+    
+class EmptyForm(FlaskForm):
+    submit = SubmitField('Submit')
