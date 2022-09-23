@@ -444,6 +444,10 @@
         border-bottom: 2px solid #24a89b;
     }
 
+    #left ul a:hover {
+        text-decoration: underline;
+    }
+
     @media screen and (max-width:1010px) {
         .parent {
             grid-template-columns: 1fr 3fr;
@@ -827,7 +831,7 @@
 {% else %}
 
 <div class="parent" style="margin-top: 74px;">
-    <aside style="border-right: 2px solid #ffffff0d; padding:30px;">
+    <aside style="border-right: 2px solid #ffffff0d; padding:30px;" id="left">
         <a href="{{url_for('user', username=current_user.username)}}" style="display: flex;
     align-items: center;
     gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff">
@@ -859,13 +863,19 @@
             <div id="following" class="container">
                 <hr style="margin: 7px 0 30px;">
                 {% if fuser %}    
-                {% for i in fuser %}
+                {% for i in posts1 %}
                 {% for file in files %}
                     {% if file.user.username == i.username %}
                         {% include '_upload.html' %}
                     {% endif %}
                 {% endfor %}
                 {% endfor %}
+                {% if prev_url1 %}
+                <a href="{{ prev_url1 }}">Newer posts</a>
+                {% endif %}
+                {% if next_url1 %}
+                <a href="{{ next_url1 }}">Older posts</a>
+                {% endif %}
 
                 {% else %}
                 <p>You doesn't follow anyone... Explore in next tab</p>
@@ -874,9 +884,15 @@
 
             <div id="explore" class="container" style="display:none">
                 <hr style="margin: 7px 0 30px;">
-                {% for file in files %}
+                {% for file in posts2 %}
                 {% include '_upload.html' %}
                 {% endfor %}
+                {% if prev_url2 %}
+                <a href="{{ prev_url2 }}">Newer posts</a>
+                {% endif %}
+                {% if next_url2 %}
+                <a href="{{ next_url2 }}">Older posts</a>
+                {% endif %}
             </div>
     
     </main>

@@ -17,7 +17,7 @@ def index():
     if current_user.is_anonymous:
         f_users = []
     else:
-        f_users = current_user.followed.all() if current_user else None
+        f_users = current_user.followed.all()
     timeline = [
         {
             'date': '6 September 2022',
@@ -56,7 +56,21 @@ def index():
         },
     ]
     timeline.reverse()
-    return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users)
+    
+    page1 = request.args.get('page', 1, type=int)
+    posts1 = current_user.followed.paginate(page1, app.config['POSTS_PER_PAGE'], False)
+    
+    page2 = request.args.get('page', 1, type=int)
+    posts2 = Upload.query.order_by(Upload.timestamp.desc()).paginate(page2, app.config['POSTS_PER_PAGE'], False)
+    
+
+    next_url1 = url_for('index', page=posts1.next_num) if posts1.has_next else None
+    prev_url1 = url_for('index', page=posts1.prev_num) if posts1.has_prev else None
+    
+    next_url2 = url_for('index', page=posts2.next_num) if posts2.has_next else None
+    prev_url2 = url_for('index', page=posts2.prev_num) if posts2.has_prev else None
+    
+    return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users, posts1=posts1.items, posts2=posts2.items, next_url1=next_url1, prev_url1=prev_url1, next_url2=next_url2, prev_url2=prev_url2)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():    
@@ -159,7 +173,11 @@ def register():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     files = Upload.query.all()
-    return render_template('user.html', user=user, files=files, username=username, form = EmptyForm())
+    page = request.args.get('page', 1, type=int)
+    posts = user.uploads.order_by(Upload.timestamp.desc()).paginate(page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('user', username=user.username, page=posts.next_num) if posts.has_next else None
+    prev_url = url_for('user', username=user.username, page=posts.prev_num) if posts.has_prev else None
+    return render_template('user.html', user=user, files=files, username=username, form = EmptyForm(), posts=posts.items, next_url=next_url, prev_url=prev_url)
 
 @app.before_request
 def before_request():
