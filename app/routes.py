@@ -14,6 +14,10 @@ def index():
     members=User.query.all()
     # print(members)
     # members.reverse()
+    if current_user.is_anonymous:
+        f_users = []
+    else:
+        f_users = current_user.followed.all() if current_user else None
     timeline = [
         {
             'date': '6 September 2022',
@@ -52,7 +56,7 @@ def index():
         },
     ]
     timeline.reverse()
-    return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all())
+    return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():    

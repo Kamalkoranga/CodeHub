@@ -441,7 +441,7 @@
     }
 
     .activeTab {
-        border-bottom: 1px solid #fff;
+        border-bottom: 2px solid #24a89b;
     }
 
     @media screen and (max-width:1010px) {
@@ -852,21 +852,33 @@
 
     <main style="padding:50px;">
             <div>
-                <span class="tablink activeTab" style="margin: 0; font-size:20px; font-weight:bolder; color:#fff; cursor:pointer; padding:10px;" onclick="container(event, 'explore')">Explore</span>
-                <span class="tablink" style="padding:10px; margin: 0; font-size:20px; font-weight:bolder; color:#fff; cursor:pointer;" onclick="container(event, 'following')">Following</span>
+                <span class="tablink activeTab" style="padding:12px; margin: 0; font-size:14px; font-weight:600; color:#fff; cursor:pointer;" onclick="container(event, 'following')" title="Programs of followed users!">Following</span>
+                <span class="tablink" style="margin: 0; font-size:14px; font-weight:600; color:#fff; cursor:pointer; padding:12px;" onclick="container(event, 'explore')" title="Programs of all users!">Explore</span>
             </div>
     
-            <div id="explore" class="container">
+            <div id="following" class="container">
+                <hr style="margin: 7px 0 30px;">
+                {% if fuser %}    
+                {% for i in fuser %}
+                {% for file in files %}
+                    {% if file.user.username == i.username %}
+                        {% include '_upload.html' %}
+                    {% endif %}
+                {% endfor %}
+                {% endfor %}
+
+                {% else %}
+                <p>You doesn't follow anyone... Explore in next tab</p>
+                {% endif %}
+            </div>
+
+            <div id="explore" class="container" style="display:none">
                 <hr style="margin: 7px 0 30px;">
                 {% for file in files %}
                 {% include '_upload.html' %}
                 {% endfor %}
             </div>
     
-            <div id="following" class="container" style="display:none">
-                <h1>Hello {{ current_user.username }},</h1>
-                <p>Work in progress...</p>
-            </div>
     </main>
 
     <aside style="padding:50px;" class="updates">
