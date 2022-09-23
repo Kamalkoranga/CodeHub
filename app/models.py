@@ -10,6 +10,7 @@ followers = db.Table('followers',
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+# The User class is a database model that inherits from db.Model and UserMixin
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -50,12 +51,24 @@ class User(db.Model, UserMixin):
             followers.c.followed_id == user.id).count() > 0
 
     def followed_posts(self):
+        """
+        "Return a query object that contains all the posts of the users that the current user is
+        following, as well as the current user's own posts, ordered by timestamp."
+        
+        The first line of the function is a query object that contains all the posts of the users that
+        the current user is following. The second line is a query object that contains the current
+        user's own posts. The third line combines the two query objects into one, and orders the posts
+        by timestamp
+        :return: The followed.union(own) is returning a union of the two queries.
+        """
         followed = Upload.query.join(
             followers, (followers.c.followed_id == Upload.user_id)).filter(
                 followers.c.follower_id == self.id)
         own = Upload.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Upload.timestamp.desc())
     
+# The Upload class is a database model that represents a file upload. It has a title, description,
+# filename, data, timestamp, user_id, and comments
 class Upload(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
@@ -73,6 +86,10 @@ class Upload(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+# It defines a table named comment, with four columns, id, author, content, and timestamp. The id
+# column is an integer and is the primary key of the table. The author column is a string with a
+# maximum length of 100 characters. The content column is a text column. The timestamp column is a
+# datetime column
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String(100))
