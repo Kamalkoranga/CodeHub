@@ -534,7 +534,7 @@
 
     <div class="row about-stats stats block-lg-one-fourth block-md-one-half block-mob-whole" data-animate-block>
         <div class="column stats__item" data-animate-el>
-            <div class="stats__count" data-counter=24><span>24</span>+</div>
+            <div class="stats__count" data-counter=28><span>28</span>+</div>
             <h5>Hours Work</h5>
             <p>
                 Eleifend donec pretium vulputate sapien nec sagittis
@@ -844,45 +844,45 @@
             <li><a href="{{ url_for('detail', filename=file.filename) }}"
                     style="display: flex; gap: 10px; align-items: center; font-size:14px;"><img
                         style="margin-bottom: 0; border-radius:50%;" src="{{ file.user.avatar(20) }}" alt="">{{
-                    current_user.username }}/{{ file.filename }}</a></li>
+                    current_user.username }}/{{ file.title.replace(" ", "_") }}</a></li>
             {% endif %}
             {% endfor %}
         </ul>
     </aside>
 
     <main style="padding:50px;">
-        <div>
-            <span class="tablink activeTab" style="margin: 0; font-size:20px; font-weight:bolder; color:#fff; cursor:pointer; padding:10px;" onclick="container(event, 'explore')">Explore</span>
-            <span class="tablink" style="padding:10px; margin: 0; font-size:20px; font-weight:bolder; color:#fff; cursor:pointer;" onclick="container(event, 'following')">Following</span>
-        </div>
-
-        <div id="explore" class="container">
-            <hr style="margin: 7px 0 30px;">
-            {% for file in files %}
-            {% include '_upload.html' %}
-            {% endfor %}
-        </div>
-
-        <div id="following" class="container" style="display:none">
-            <h1>Hello {{ current_user.username }},</h1>
-            <p>Work in progress...</p>
-        </div>
+            <div>
+                <span class="tablink activeTab" style="margin: 0; font-size:20px; font-weight:bolder; color:#fff; cursor:pointer; padding:10px;" onclick="container(event, 'explore')">Explore</span>
+                <span class="tablink" style="padding:10px; margin: 0; font-size:20px; font-weight:bolder; color:#fff; cursor:pointer;" onclick="container(event, 'following')">Following</span>
+            </div>
+    
+            <div id="explore" class="container">
+                <hr style="margin: 7px 0 30px;">
+                {% for file in files %}
+                {% include '_upload.html' %}
+                {% endfor %}
+            </div>
+    
+            <div id="following" class="container" style="display:none">
+                <h1>Hello {{ current_user.username }},</h1>
+                <p>Work in progress...</p>
+            </div>
     </main>
 
     <aside style="padding:50px;" class="updates">
-        <h4 style="margin: 0; font-size:20px; font-weight:bolder;">Updates Timeline</h4>
-        <div>
-            <ul>
-                {% for i in timeline[0:3] %}
-                <li class="event" data-date="{{ i.date }}">
-                    <h5 style="margin-bottom: 0; font-size: 14px; font-weight: bolder;">{{ i.heading }}</h5>
-                    <small><strong>{{ i.date }}</strong></small>
-                    <p style="margin-top: 20px; font-size: 14px; line-height:1.5em;">{{ i.paragraph }}</p>
-                </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </aside>
+            <h4 style="margin: 0; font-size:20px; font-weight:bolder;">Updates Timeline</h4>
+            <div>
+                <ul>
+                    {% for i in timeline[0:3] %}
+                    <li class="event" data-date="{{ i.date }}">
+                        <h5 style="margin-bottom: 0; font-size: 14px; font-weight: bolder;">{{ i.heading }}</h5>
+                        <small><strong>{{ i.date }}</strong></small>
+                        <p style="margin-top: 20px; font-size: 14px; line-height:1.5em;">{{ i.paragraph }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </aside>
 </div>
 {% endif %}
 {% endblock content %}

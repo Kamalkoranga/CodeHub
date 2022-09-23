@@ -32,6 +32,27 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% block style %}{% endblock style %}
     <style>
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background-color: #101112;
+        }
+
+        ::-webkit-scrollbar-thumb{
+            background-color: #24a89b;
+        }
+
+        ::-webkit-scrollbar-thumb:hover{
+            background-color: #fff;
+        }
+
+        ::selection {
+            background-color: white;
+            color: #24a89b;
+        }
+
         .s-header__social a {
             color: #fff;
             font-weight: 500;
