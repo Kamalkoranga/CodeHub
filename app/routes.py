@@ -51,26 +51,34 @@ def index():
         
         {
             'date': '21 September 2022',
-            'heading': 'A new UI',
-            'paragraph': 'A new ui of homepage after login that is responsive and looks like github.'
+            'heading': 'A new and modern UI',
+            'paragraph': 'A new ui of homepage and dashboard after login, that is responsive and looks like github.'
+        },
+        {
+            'date': '24 September 2022',
+            'heading': 'Follow and Unfollow other developers',
+            'paragraph': 'Follow other developers to see their programs in seprate "Following" tab which helps to find their programs easily also you can unfollow others.'
         },
     ]
     timeline.reverse()
-    
-    page1 = request.args.get('page', 1, type=int)
-    posts1 = current_user.followed.paginate(page1, app.config['POSTS_PER_PAGE'], False)
-    
-    page2 = request.args.get('page', 1, type=int)
-    posts2 = Upload.query.order_by(Upload.timestamp.desc()).paginate(page2, app.config['POSTS_PER_PAGE'], False)
-    
+    if current_user.is_anonymous:
+        return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users)
+    else:
 
-    next_url1 = url_for('index', page=posts1.next_num) if posts1.has_next else None
-    prev_url1 = url_for('index', page=posts1.prev_num) if posts1.has_prev else None
+        page1 = request.args.get('page', 1, type=int)
+        posts1 = current_user.followed.paginate(page1, app.config['POSTS_PER_PAGE'], False)
+        
+        page2 = request.args.get('page', 1, type=int)
+        posts2 = Upload.query.order_by(Upload.timestamp.desc()).paginate(page2, app.config['POSTS_PER_PAGE'], False)
+        
+
+        next_url1 = url_for('index', page=posts1.next_num) if posts1.has_next else None
+        prev_url1 = url_for('index', page=posts1.prev_num) if posts1.has_prev else None
+        
+        next_url2 = url_for('index', page=posts2.next_num) if posts2.has_next else None
+        prev_url2 = url_for('index', page=posts2.prev_num) if posts2.has_prev else None
     
-    next_url2 = url_for('index', page=posts2.next_num) if posts2.has_next else None
-    prev_url2 = url_for('index', page=posts2.prev_num) if posts2.has_prev else None
-    
-    return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users, posts1=posts1.items, posts2=posts2.items, next_url1=next_url1, prev_url1=prev_url1, next_url2=next_url2, prev_url2=prev_url2)
+        return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users, posts1=posts1.items, posts2=posts2.items, next_url1=next_url1, prev_url1=prev_url1, next_url2=next_url2, prev_url2=prev_url2)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():    

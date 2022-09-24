@@ -832,26 +832,39 @@
 
 <div class="parent" style="margin-top: 74px;">
     <aside style="border-right: 2px solid #ffffff0d; padding:30px;" id="left">
-        <a href="{{url_for('user', username=current_user.username)}}" style="display: flex;
-    align-items: center;
-    gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff">
+        <a href="{{url_for('user', username=current_user.username)}}" style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff">
             <img src="{{ current_user.avatar(22) }}" alt="" style="margin: 0; border-radius:50%;">
             {{ current_user.username }}
         </a>
         <div style="display: flex; align-items: center; justify-content: space-between; padding:20px 0; gap:10px;">
-            <h6 style="margin: 0;">Programs</h6>
-            <a href="{{url_for('new')}}" class="btn btn--primary" style="height: 40px; padding: 0 20px; display: flex; align-items: center; margin: 0;"><i class="fa-regular fa-square-plus"></i>New</a>
+            <h6 style="margin: 0; text-transform: capitalize; letter-spacing: 0;">Recent Programs</h6>
+            <a href="{{url_for('new')}}" class="btn btn--primary" style="height: 30px; padding: 10px; display: flex; align-items: center; margin: 0; letter-spacing:0; text-transform:capitalize"><i class="fa-regular fa-square-plus" style="margin-right: 5px;"></i>New</a>
         </div>
-        <ul style="list-style-type: none;">
+        <ul style="list-style-type: none; margin-left: 0;">
             {% for file in files %}
             {% if file.user.username == current_user.username %}
-            <li><a href="{{ url_for('detail', filename=file.filename) }}"
-                    style="display: flex; gap: 10px; align-items: center; font-size:14px;"><img
-                        style="margin-bottom: 0; border-radius:50%;" src="{{ file.user.avatar(20) }}" alt="">{{
-                    current_user.username }}/{{ file.title.replace(" ", "_") }}</a></li>
+            <li>
+                <a href="{{ url_for('detail', filename=file.filename) }}" style="display: flex; gap: 10px; align-items: center; font-size:14px;">
+                    <img style="margin-bottom: 0; border-radius:50%;" src="{{ file.user.avatar(20) }}" alt="">
+                    {{current_user.username }}/{{ file.title.replace(" ", "_") }}
+                </a>
+            </li>
             {% endif %}
             {% endfor %}
         </ul>
+        <hr style="margin: 20px;">
+        <h5 style="font-size: 16px; font-weight:600; margin:0; padding:10px 0;">Recent Memmbers </h5>
+            <ul class="members" style="font-size: 14px;">
+                {% for member in members[0:10] %}
+                <li>
+                    <a href="{{url_for('user', username=member.username)}}">{{ member.username }}</a>
+                    <cite>... recently joined</cite>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if members|length >=11 %}
+                <span>.... {{ members|length - 10 }} + other members</span>
+            {% endif %}
     </aside>
 
     <main style="padding:50px;">
