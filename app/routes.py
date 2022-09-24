@@ -94,6 +94,8 @@ def login():
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
+        if user.username == 'aman':
+            return redirect(url_for('admin'))
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
 
@@ -258,7 +260,7 @@ def delete_file(filename):
     db.session.delete(file)
     db.session.commit()
     flash('Programme deleted')
-    if current_user.username == 'kamalkoranga13+9gse6':
+    if current_user.username == 'aman':
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('index'))
@@ -275,7 +277,7 @@ def delete_user(username):
         db.session.delete(userr)
         db.session.commit()
         flash('User deleted!')
-    if current_user == 'kamalkoranga13+9gse6':
+    if current_user.username == 'aman':
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('index'))
@@ -294,4 +296,4 @@ def admin():
     admin = current_user.username
     files = Upload.query.all()
     users = User.query.all()
-    return render_template('admin.html', files=files, users=users, admin=admin)
+    return render_template('index.html', files=files, users=users, admin=admin, members=users)
