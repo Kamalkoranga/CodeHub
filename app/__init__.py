@@ -7,6 +7,7 @@ from flask_bcrypt import Bcrypt
 from flask_moment import Moment
 import logging
 from logging.handlers import SMTPHandler
+from flask_mail import Mail
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -16,6 +17,7 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 moment = Moment(app)
+mail = Mail(app)
 
 from app import routes, models, errors
 
