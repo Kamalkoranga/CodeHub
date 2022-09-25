@@ -20,7 +20,7 @@ This is final year project .i.e Codehub by CS students of ST Lamart School. This
 
 **Client:** HTML, CSS, JS
 
-**Server:** FLASK, SQLITE
+**Server:** FLASK, POSTGRESQL
 
 
 ## Authors
