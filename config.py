@@ -5,6 +5,7 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI = 'postgresql://codehubv0_1_user:vJYFkroV6xLWocjgxKW7MrQ4t9RsZpzs@dpg-cci6ulpa6gdiindmmaug-a.singapore-postgres.render.com/codehubv0_1'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SQLALCHEMY_ENABLE_POOL_PRE_PING = True
     POSTS_PER_PAGE = 30
     MAIL_SERVER = os.environ.get('MAIL_SERVER')
     MAIL_PORT = int(os.environ.get('MAIL_PORT') or 25)
