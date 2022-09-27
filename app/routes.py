@@ -15,8 +15,6 @@ from app.forms import ResetPasswordForm
 def index():
     no = len(Upload.query.all()) # error chances
     members=User.query.all()
-    # print(members)
-    # members.reverse()
     if current_user.is_anonymous:
         f_users = []
     else:
@@ -102,16 +100,7 @@ def login():
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
 
-# @app.route('/dashboard/<username>', methods=['GET', 'POST'])
-# @login_required
-# def dashboard(username):
-#     userr = current_user.username
-#     if request.method == 'POST':
-#         file = request.files['file']
 
-#         upload = Upload(filename=file.filename, data=file.read(), user_id=userr)
-#         db.session.add(upload)
-#         db.session.commit()
 
 #         flash('Programme Added')
 #         return redirect(url_for('dashboard', username=username.lower()))
@@ -138,11 +127,6 @@ def new():
         
     return render_template('new.html', form=form)
 
-# @app.route('/explore')
-# @login_required
-# def explore():
-#     uploads = Upload.query.order_by(Upload.timestamp.desc()).all()
-#     return render_template('explore.html', title='Explore', files=uploads)
 
 @app.route('/file/<filename>', methods=['GET', 'POST'])
 @login_required
@@ -155,7 +139,6 @@ def detail(filename):
     a = fi.read()
     form = CommentForm()
     if form.validate_on_submit():
-        # comment = Comment(author= request.form['author'], content=request.form['content'], upload_id=file.id)
         username = form.username.data
         comment = form.comment.data
         comments = Comment(author = username, content=comment, upload_id=file.id)

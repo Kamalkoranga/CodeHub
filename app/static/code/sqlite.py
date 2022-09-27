@@ -13,7 +13,6 @@ c.execute('''CREATE TABLE data (
 
 # DATATYPES - NULL, INTEGER, REAL, TEXT, BLOB(MEDIA)
 
-# c.execute("INSERT INTO customers VALUES ('Prince', 'Koranga', 'prince@koranga')")
 
 # commit our command
 conn.commit()
