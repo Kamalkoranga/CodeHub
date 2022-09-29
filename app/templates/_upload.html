@@ -1,11 +1,11 @@
 <div style="gap: 0.5em;
     display: flex;
     align-items: center;">
-    <a href="{{ url_for('user', username=file.user.username) }}" style="display: flex;">
+    <a href="{{ url_for('main.user', username=file.user.username) }}" style="display: flex;">
         <img style="margin-bottom: 0; border-radius:50%;" src="{{ file.user.avatar(26) }}" alt="">
     </a>
     <h5 style="margin: 0; font-size:14px;">
-        <a href="{{ url_for('user', username=file.user.username) }}">{{ file.user.username }}</a> coded <a href="{{url_for('detail', filename=file.filename)}}">{{ file.user.username }}/{{ file.title.replace(" ", "_") }}</a> <small style="color:#8a8a8b; margin:0 10px;">{{ moment(file.timestamp).fromNow() }}</small>
+        <a href="{{ url_for('main.user', username=file.user.username) }}">{{ file.user.username }}</a> coded <a href="{{url_for('main.detail', filename=file.filename)}}">{{ file.user.username }}/{{ file.title.replace(" ", "_") }}</a> <small style="color:#8a8a8b; margin:0 10px;">{{ moment(file.timestamp).fromNow() }}</small>
     </h5>
 </div>
 <div class="body" style="padding: 20px;
@@ -17,7 +17,7 @@
     gap:10px;
 
 ">
-    <a href="{{url_for('detail', filename=file.filename)}}" style="font-weight: 600; font-size:16px;">{{ file.user.username }}/{{ file.title.replace(" ", "_") }}</a>
+    <a href="{{url_for('main.detail', filename=file.filename)}}" style="font-weight: 600; font-size:16px;">{{ file.user.username }}/{{ file.title.replace(" ", "_") }}</a>
     <cite>{{ file.description }}</cite>
     <div class="footer" style="display: flex;
     gap: 30px; font-size: 14px;">
