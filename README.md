@@ -27,8 +27,8 @@ This is final year project .i.e Codehub by CS students of ST Lamart School. This
 
 - [@Kamalkoranga](https://www.github.com/Kamalkoranga)
 - [@Harishjoshi]()
-- [@Shivanshchauryshia]()
-- [@Sauravkarki]()
+- [@ShivanshChauryshia]()
+- [@SauravKarki]()
 
 
 ## Contributing
