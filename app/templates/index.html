@@ -496,12 +496,12 @@
 
 <ul class="s-header__social">
     {% if current_user.is_anonymous %}
-    <li><a href="{{url_for('login')}}">login</a></li>
+    <li><a href="{{url_for('auth.login')}}">login</a></li>
     {% else %}
-    <li><a href="{{ url_for('user', username=current_user.username) }}" style="display: flex; align-items:center; gap:10px;"><img
+    <li><a href="{{ url_for('main.user', username=current_user.username) }}" style="display: flex; align-items:center; gap:10px;"><img
                 style="margin-bottom: 0; border-radius:50%;" src="{{ current_user.avatar(26) }}" alt="">{{ current_user.username }}</a></li>
     <li>|</li>
-    <li><a href="{{url_for('logout')}}" onclick="return confirm('Are you sure you want to logout?')">logout</a></li>
+    <li><a href="{{url_for('auth.logout')}}" onclick="return confirm('Are you sure you want to logout?')">logout</a></li>
     {% endif %}
 </ul>
 {% endblock nav %}
@@ -573,7 +573,7 @@
             <p>
             <ul class="members">
                 {% for member in members[0:4] %}
-                <li><a href="{{url_for('user', username=member.username)}}">{{ member.username }}</a> <cite>... recently
+                <li><a href="{{url_for('main.user', username=member.username)}}">{{ member.username }}</a> <cite>... recently
                         joined</cite></li>
                 {% endfor %}
             </ul>
@@ -731,7 +731,7 @@
                 <h3>Kamal Koranga</h3>
                 <div class="textIcon">
                     <h4 class="h4">CEO, Co Founder</h4>
-                    <a href="{{url_for('user', username='kamal')}}">
+                    <a href="{{url_for('main.user', username='kamal')}}">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
                 </div>
@@ -768,7 +768,7 @@
                 </a>
                 <h3>Harish Joshi</h3>
                 <div class="textIcon">
-                    <h4>Programs manager</h4>
+                    <h4>Developer</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -787,7 +787,7 @@
                 </a>
                 <h3>Saurabh Karki</h3>
                 <div class="textIcon">
-                    <h4>Content manager</h4>
+                    <h4>Designer</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -845,12 +845,12 @@
 <section class="s-intro target-section" style="width: auto; margin: auto;" id="admin">
     <h2>{{ users|length }} Users and {{ files|length }} Files</h2>
     {% for user in users %}
-    <h4>{{ user.username }} <cite><a href="{{url_for('delete_user', username=user.username)}}"> Delete User </a></cite>
+    <h4>{{ user.username }} <cite><a href="{{url_for('main.delete_user', username=user.username)}}"> Delete User </a></cite>
     </h4>
     <ol>
         {% for file in user.uploads %}
-        <li><a href="{{url_for('detail', username=user.username, filename=file.filename)}}">{{ file }}</a> <cite><a
-                    href="{{url_for('delete_file', filename=file.filename)}}"> Delete File </a></cite></li>
+        <li><a href="{{url_for('main.detail', username=user.username, filename=file.filename)}}">{{ file }}</a> <cite><a
+                    href="{{url_for('main.delete_file', filename=file.filename)}}"> Delete File </a></cite></li>
         {% endfor %}
     </ol>
     {% endfor %}
@@ -860,19 +860,19 @@
 
 <div class="parent" style="margin-top: 74px;">
     <aside style="border-right: 2px solid #ffffff0d; padding:30px;" id="left">
-        <a href="{{url_for('user', username=current_user.username)}}" style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff">
+        <a href="{{url_for('main.user', username=current_user.username)}}" style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff">
             <img src="{{ current_user.avatar(22) }}" alt="" style="margin: 0; border-radius:50%;">
             {{ current_user.username }}
         </a>
         <div style="display: flex; align-items: center; justify-content: space-between; padding:20px 0; gap:10px;">
             <h6 style="margin: 0; text-transform: capitalize; letter-spacing: 0;">Recent Programs</h6>
-            <a href="{{url_for('new')}}" class="btn btn--primary" style="height: 30px; padding: 10px; display: flex; align-items: center; margin: 0; letter-spacing:0; text-transform:capitalize"><i class="fa-regular fa-square-plus" style="margin-right: 5px;"></i>New</a>
+            <a href="{{url_for('main.new')}}" class="btn btn--primary" style="height: 30px; padding: 10px; display: flex; align-items: center; margin: 0; letter-spacing:0; text-transform:capitalize"><i class="fa-regular fa-square-plus" style="margin-right: 5px;"></i>New</a>
         </div>
         <ul style="list-style-type: none; margin-left: 0;">
             {% for file in files %}
             {% if file.user.username == current_user.username %}
             <li>
-                <a href="{{ url_for('detail', filename=file.filename) }}" style="display: flex; gap: 10px; align-items: center; font-size:14px;">
+                <a href="{{ url_for('main.detail', filename=file.filename) }}" style="display: flex; gap: 10px; align-items: center; font-size:14px;">
                     <img style="margin-bottom: 0; border-radius:50%;" src="{{ file.user.avatar(20) }}" alt="">
                     {{current_user.username }}/{{ file.title.replace(" ", "_") }}
                 </a>
@@ -885,7 +885,7 @@
             <ul class="members" style="font-size: 14px;">
                 {% for member in members[0:10] %}
                 <li>
-                    <a href="{{url_for('user', username=member.username)}}">{{ member.username }}</a>
+                    <a href="{{url_for('main.user', username=member.username)}}">{{ member.username }}</a>
                     <cite>... recently joined</cite>
                 </li>
                 {% endfor %}
