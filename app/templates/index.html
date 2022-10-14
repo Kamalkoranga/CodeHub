@@ -476,6 +476,18 @@
         }
     }
 
+    .stroke {
+        display: flex;
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .stroke:hover {
+        background-color: #fff;
+        color: #000;
+    }
+
 
 </style>
 {% endblock style %}
@@ -496,7 +508,8 @@
 
 <ul class="s-header__social">
     {% if current_user.is_anonymous %}
-    <li><a href="{{url_for('auth.login')}}">login</a></li>
+    <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
+    <li><a href="{{url_for('auth.register')}}" class="stroke">Sign up</a></li>
     {% else %}
     <li><a href="{{ url_for('main.user', username=current_user.username) }}" style="display: flex; align-items:center; gap:10px;"><img
                 style="margin-bottom: 0; border-radius:50%;" src="{{ current_user.avatar(26) }}" alt="">{{ current_user.username }}</a></li>
@@ -539,11 +552,10 @@
             <h2 class="s-intro__about-title">Hello, Welcome to CodeHub.</h2>
 
             <p>
-                This is final year project .i.e Codehub by CS students of ST Lamart School. This is a type of code
-                saving website, something like Github which is also a type of code saving website. Now this project do
-                only CRUD
-                operations of file from database and we will try to add more operations in future updates.
+                This is final year project .i.e Codehub by CS students of ST Lamart School. 
             </p>
+
+            <a href="{{url_for('auth.register')}}" class="btn btn--primary u-fullwidth" style="text-align: center;">Sign up for CodeHub</a>
 
         </div>
     </div>
@@ -749,7 +761,7 @@
                 </a>
                 <h3>Shivansh Chaursia</h3>
                 <div class="textIcon">
-                    <h4>Designer</h4>
+                    <h4>Program Manager</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -768,7 +780,7 @@
                 </a>
                 <h3>Harish Joshi</h3>
                 <div class="textIcon">
-                    <h4>Developer</h4>
+                    <h4>Program Manager</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -787,7 +799,7 @@
                 </a>
                 <h3>Saurabh Karki</h3>
                 <div class="textIcon">
-                    <h4>Designer</h4>
+                    <h4>Content Manager</h4>
                     <a href="#">
                         <i class="fa fa-arrow-right" aria-hidden="true"></i>
                     </a>
@@ -903,7 +915,7 @@
 
             <div id="following" class="container">
                 <hr style="margin: 7px 0 30px;">
-                {% if fuser %}    
+                {% if fuser %}
                 {% for i in posts1|reverse %}
                 {% for file in files %}
                     {% if file.user.username == i.username %}
