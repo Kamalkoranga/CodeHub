@@ -707,7 +707,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for file in files %}
+            {% for file in files[:5] %}
             <tr>
                 <td data-label="Project"><a href="#">{{file.filename}}</a></td>
                 <td data-label="Developer">{{file.user.username.capitalize()}}</td>

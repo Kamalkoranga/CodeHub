@@ -28,15 +28,15 @@
     <form method="POST" action="" novalidate>
         {{ form.hidden_tag() }}
         <div>
-            {{ form.username.label }}
-            {{ form.username(size=32, class='u-fullwidth') }}
+            <!-- {{ form.username.label }} -->
+            {{ form.username(size=32, class='u-fullwidth', placeholder='Username') }}
             {% for error in form.username.errors %}
                 <span style="color: #727373;">[{{ error }}]</span>
             {% endfor %}
         </div>
         <div>
-            {{ form.password.label }}
-            {{ form.password(size=32, class='u-fullwidth') }}
+            <!-- {{ form.password.label }} -->
+            {{ form.password(size=32, class='u-fullwidth', placeholder='Password') }}
             {% for error in form.password.errors %}
             <span style="color: #727373;">[{{ error }}]</span>
             {% endfor %}
