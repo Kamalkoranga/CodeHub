@@ -28,31 +28,31 @@ def index():
             'heading': 'Beginning',
             'paragraph': 'Project Started'
         },
-        
+
         {
             'date': '12 September 2022',
             'heading': 'Deployed',
             'paragraph': 'Project Deployed Online at codehub.gq'
         },
-        
+
         {
             'date': '16 September 2022',
             'heading': 'UI updated',
             'paragraph': 'Updated webapp ui'
         },
-        
+
         {
             'date': '18 September 2022',
             'heading': 'Explore Page, Profile Page and Comment Section !!',
             'paragraph': "Explore the programs made by other developers, Check Profile to know about that particular developer at ''username'' and at last but not the least Comment section where you can appericiate about their code or suggest some easy methods at ''Explore page'' -> ''filename.py''"
         },
-        
+
         {
             'date': '20 September 2022',
             'heading': 'Title and Descriptions',
             'paragraph': 'Now you can give a stunning title and description about your program to others and fixed some ui bugs.'
         },
-        
+
         {
             'date': '21 September 2022',
             'heading': 'A new and modern UI',
@@ -78,10 +78,10 @@ def index():
 
         next_url1 = url_for('main.index', page=posts1.next_num) if posts1.has_next else None
         prev_url1 = url_for('main.index', page=posts1.prev_num) if posts1.has_prev else None
-        
+
         next_url2 = url_for('main.index', page=posts2.next_num) if posts2.has_next else None
         prev_url2 = url_for('main.index', page=posts2.prev_num) if posts2.has_prev else None
-    
+
         return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users, posts1=posts1.items, posts2=posts2.items, next_url1=next_url1, prev_url1=prev_url1, next_url2=next_url2, prev_url2=prev_url2)
 
 @bp.route('/new', methods=['GET', 'POST'])
@@ -97,7 +97,7 @@ def new():
         db.session.add(upload)
         db.session.commit()
         return redirect(url_for('main.index'))
-        
+
     return render_template('new.html', form=form)
 
 @bp.route('/file/<filename>', methods=['GET', 'POST'])
@@ -119,7 +119,7 @@ def detail(filename):
         return redirect(url_for('main.detail', filename=file.filename))
     elif request.method == 'GET':
         form.username.data = current_user.username
-        
+
     return render_template('detail.html',f=a, file=file, username=file.user.username, form=form, users=User.query.all())
 
 
@@ -133,7 +133,7 @@ def user(username):
     next_url = url_for('main.user', username=user.username, page=posts.next_num) if posts.has_next else None
     prev_url = url_for('main.user', username=user.username, page=posts.prev_num) if posts.has_prev else None
     return render_template('user.html', user=user, files=files, username=username, form = EmptyForm(), posts=posts.items, next_url=next_url, prev_url=prev_url)
-        
+
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
@@ -215,7 +215,7 @@ def delete_user(username):
         return redirect(url_for('main.admin'))
     else:
         return redirect(url_for('main.index'))
-    
+
 @bp.post('/comments/<int:comment_id>/delete')
 def delete_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
