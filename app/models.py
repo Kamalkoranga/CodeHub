@@ -56,7 +56,7 @@ class User(db.Model, UserMixin):
         """
         "Return a query object that contains all the posts of the users that the current user is
         following, as well as the current user's own posts, ordered by timestamp."
-        
+
         The first line of the function is a query object that contains all the posts of the users that
         the current user is following. The second line is a query object that contains the current
         user's own posts. The third line combines the two query objects into one, and orders the posts

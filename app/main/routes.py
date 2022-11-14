@@ -71,10 +71,10 @@ def index():
 
         page1 = request.args.get('page', 1, type=int)
         posts1 = current_user.followed.paginate(page1, current_app.config['POSTS_PER_PAGE'], False)
-        
+
         page2 = request.args.get('page', 1, type=int)
         posts2 = Upload.query.order_by(Upload.timestamp.desc()).paginate(page2, current_app.config['POSTS_PER_PAGE'], False)
-        
+
 
         next_url1 = url_for('main.index', page=posts1.next_num) if posts1.has_next else None
         prev_url1 = url_for('main.index', page=posts1.prev_num) if posts1.has_prev else None
@@ -144,7 +144,7 @@ def edit_profile():
         db.session.commit()
         flash('Your changes have been saved.')
         return redirect(url_for('main.edit_profile'))
-    elif request.method == 'GET':
+    if request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
     return render_template('edit_profile.html', title='Edit Profile', form=form)
@@ -165,8 +165,7 @@ def follow(username):
         db.session.commit()
         flash('You are following {}!'.format(username))
         return redirect(url_for('main.user', username=username))
-    else:
-        return redirect(url_for('main.index'))
+    return redirect(url_for('main.index'))
 
 @bp.route('/unfollow/<username>', methods=['POST'])
 @login_required
@@ -184,8 +183,7 @@ def unfollow(username):
         db.session.commit()
         flash('You are not following {}.'.format(username))
         return redirect(url_for('main.user', username=username))
-    else:
-        return redirect(url_for('main.index'))
+    return redirect(url_for('main.index'))
 
 @bp.route('/delete/<filename>')
 def delete_file(filename):
@@ -196,8 +194,7 @@ def delete_file(filename):
     flash('Programme deleted')
     if current_user.username == 'aman':
         return redirect(url_for('main.admin'))
-    else:
-        return redirect(url_for('main.index'))
+    return redirect(url_for('main.index'))
 
 @bp.route('/deleteUser/<username>')
 def delete_user(username):
