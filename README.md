@@ -17,7 +17,9 @@ This is final year project .i.e Codehub by CS students of ST Lamart School. This
 ## Tech Stack
 
 **Client:** HTML, CSS, JS
+
 **Server:** FLASK module (Python)
+
 **Database:** Postgresql database (SQL)
 
 
