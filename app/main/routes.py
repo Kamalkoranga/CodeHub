@@ -63,6 +63,11 @@ def index():
             'heading': 'Follow and Unfollow other developers',
             'paragraph': 'Follow other developers to see their programs in seprate "Following" tab which helps to find their programs easily also you can unfollow others.'
         },
+        {
+            'date': '1 November 2022',
+            'heading': 'Completed development',
+            'paragraph': 'We have completed our class 12th project "CodeHub". We will provide a new version of CodeHub in future versions, So keep checking ... '
+        }
     ]
     timeline.reverse()
     if current_user.is_anonymous:
