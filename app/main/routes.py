@@ -95,13 +95,16 @@ def new():
     userr = current_user.username
     form = UploadFile()
     if form.validate_on_submit():
-        title =  form.title.data
-        description = form.description.data
-        file = form.file.data
-        upload = Upload(title = title, description = description, filename = file.filename, data = file.read(), user_id=userr)
-        db.session.add(upload)
-        db.session.commit()
-        return redirect(url_for('main.index'))
+        if '.py' in form.file.data.filename:
+            title =  form.title.data
+            description = form.description.data
+            file = form.file.data
+            upload = Upload(title = title, description = description, filename = file.filename, data = file.read(), user_id=userr)
+            db.session.add(upload)
+            db.session.commit()
+            return redirect(url_for('main.index'))
+        else:
+            flash('Select only Python file (.py)')
 
     return render_template('new.html', form=form)
 
