@@ -111,7 +111,7 @@ def new():
 @bp.route('/file/<filename>', methods=['GET', 'POST'])
 @login_required
 def detail(filename):
-    print(current_app.root_path)
+    # print(current_app.root_path)
     file = Upload.query.filter_by(filename = filename).first()
     with open(f'app/static/code/{file.filename}', 'wb') as f:
         f.write(file.data)
