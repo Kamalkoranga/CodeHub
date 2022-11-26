@@ -22,15 +22,6 @@ This is final year project .i.e Codehub by CS students of ST Lamart School. This
 
 **Database:** Postgresql database (SQL)
 
-
-## Developers
-
-- [@KamalKoranga](https://www.instagram.com/__kamalkoranga__/)
-- [@HarishJoshi](https://www.instagram.com/harishjoshi384/)
-- [@ShivanshChauryshia](https://www.instagram.com/__shivansh_24/)
-- [@SaurabKarki](https://www.instagram.com/saurabhkarki83/)
-
-
 ## Contributing
 
 Contributions are always welcome!
