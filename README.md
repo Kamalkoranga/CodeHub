@@ -1,8 +1,7 @@
+![Logo](https://user-images.githubusercontent.com/83089446/204849589-0ab4f315-b630-4de0-9475-04ed851f5af4.png)
 
-![Logo](https://images.unsplash.com/photo-1662817484705-97149c0f11e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1934&q=80)
 
-
-# Codehub - Final year project (https://codehub.gq)
+# [Codehub](https://codehub.gq)- Final year project
 
 This is final year project .i.e Codehub by CS students of ST Lamart School. This is a type of code saving service, something like [Github](https://github.com) which is also a code tracking service. This project do only CRUD operations of file from database and we will try to add more operations in future updates.
 
