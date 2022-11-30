@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ username|capitalize }}'s Profile
+{{ current_user.name }}'s Profile
 {% endblock title %}
 
 {% block style %}
@@ -12,6 +12,17 @@
                 top: 1rem;
             }
         }
+
+        cite {
+            font-weight: 400;
+            font-family: var(--font-1);
+            border: none;
+            display: inline-block;
+            color: var(--color-text-light);
+            font-size: var(--text-sm);
+            line-height: var(--vspace-0_75);
+            font-style: normal;
+        }
     </style>
 {% endblock style %}
 
@@ -21,8 +32,8 @@
 <ul class="s-header__social">
     {% if user != current_user  %}
     <li><a href="{{ url_for('main.user', username=current_user.username) }}"
-            style="display: flex; align-items:center; gap:10px;"><img style="margin-bottom: 0; border-radius:50%;"
-                src="{{ current_user.avatar(26) }}" alt="">{{ current_user.username }}</a></li>
+            style="display: flex; align-items:center; gap:10px;height:36px;"><img style="margin-bottom: 0; border-radius:50%;"
+                src="{{ current_user.avatar() }}" alt="">{{ current_user.username }}</a></li>
         <li>|</li>
     {% endif %}
     <li>
@@ -37,9 +48,9 @@
 <div class="content" style="margin: 100px auto; padding:0 50px;">
     <table>
         <tr valign="top" style="display: flex; align-items:center; border-bottom:0; flex-wrap:wrap; justify-content:center;">
-            <td style="border-bottom:0;"><img src="{{ user.avatar(128) }}"></td>
+            <td style="border-bottom:0;"><img src="{{ user.avatar() }}" style="height:138px;"></td>
             <td style="border-bottom:0;">
-                <h1>User: {{ user.username }}</h1>
+                <h1>Username: {{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>{% endif %}
                 <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>

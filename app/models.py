@@ -15,9 +15,11 @@ followers = db.Table('followers',
 # The User class is a database model that inherits from db.Model and UserMixin
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(80), nullable=False)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    password_hash = db.Column(db.Text)
+    profile_pic = db.Column(db.Text, nullable=False)
     uploads = db.relationship('Upload', backref='user', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
@@ -33,9 +35,8 @@ class User(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    def avatar(self, size):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-        return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
+    def avatar(self):
+        return self.profile_pic
 
     def __repr__(self) -> str:
         return f'<User {self.username}>'
@@ -98,7 +99,7 @@ class Upload(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return User.query.filter_by(id=user_id).first()
 
 # It defines a table named comment, with four columns, id, author, content, and timestamp. The id
 # column is an integer and is the primary key of the table. The author column is a string with a

@@ -1,5 +1,5 @@
 
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, session, abort
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from app import db
@@ -7,7 +7,26 @@ from app.auth import bp
 from app.auth.forms import LoginForm, RegisterForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.models import User
 from app.auth.email import send_password_reset_email
+import os
+import pathlib
+import requests
+from google.oauth2 import id_token
+from google_auth_oauthlib.flow import Flow
+from pip._vendor import cachecontrol
+import google.auth.transport.requests
 
+os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
+
+GOOGLE_CLIENT_ID = "740000035885-thseaienoi32jt6hb4nj6it5qas6risj.apps.googleusercontent.com"
+client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
+
+flow = Flow.from_client_secrets_file(
+    client_secrets_file=client_secrets_file,
+    scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
+            "openid"],
+    redirect_uri="http://127.0.0.1:5000/auth/callback"
+)
+'''
 @bp.route('/login', methods=['GET', 'POST'])
 def login():    
     if current_user.is_authenticated:
@@ -26,6 +45,59 @@ def login():
             return redirect(url_for('main.admin'))
         return redirect(url_for('main.index'))
     return render_template('auth/login.html', title='Sign In', form=form)
+'''
+@bp.route("/login")
+def login():
+    authorization_url, state = flow.authorization_url()
+    session["state"] = state
+    return redirect(authorization_url)
+
+@bp.route("/callback")
+def callback():
+    flow.fetch_token(authorization_response=request.url)
+
+    if not session["state"] == request.args["state"]:
+        abort(500)  # State does not match!
+
+    credentials = flow.credentials
+    request_session = requests.session()
+    cached_session = cachecontrol.CacheControl(request_session)
+    token_request = google.auth.transport.requests.Request(session=cached_session)
+
+    id_info = id_token.verify_oauth2_token(
+        id_token=credentials._id_token,
+        request=token_request,
+        audience=GOOGLE_CLIENT_ID
+    )
+    # print(id_info)
+
+    session["google_id"] = id_info.get("sub")
+    session["name"] = id_info.get("name")
+    session["email"] = id_info.get("email")
+    session["profile_pic"] = id_info.get("picture")
+
+    google_id = id_info.get('sub') # used as a password_hash
+    name = id_info.get("name")
+    email = id_info.get('email')
+    profile_pic = id_info.get('picture')
+    username = email.removesuffix('@gmail.com')
+
+    user = User.query.filter_by(username=username).first()
+    if user is None or not user.check_password(google_id):
+        user = User(name=name, username=username, email=email, profile_pic=profile_pic)
+        user.set_password(google_id)
+        db.session.add(user)
+        db.session.commit()
+        login_user(user, remember=True)
+        return redirect(url_for('main.index'))
+
+    login_user(user, remember=True)
+    next_page = request.args.get('next')
+    if not next_page or url_parse(next_page).netloc != '':
+        next_page = url_for('main.index')
+    if user.username == 'devemail13.1':
+        return redirect(url_for('main.admin'))
+    return redirect(url_for('main.index'))
 
 @bp.route('/logout')
 def logout():
@@ -36,6 +108,7 @@ def logout():
 def register():    
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
+    '''
     form = RegisterForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
@@ -45,6 +118,10 @@ def register():
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('auth.login'))
     return render_template('auth/register.html', title='Register', form=form)
+    '''
+    authorization_url, state = flow.authorization_url()
+    session["state"] = state
+    return redirect(authorization_url)
 
 @bp.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():

@@ -25,7 +25,7 @@ class CommentForm(FlaskForm):
 
 class UploadFile(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[Length(min=0 ,max=200)])
+    description = TextAreaField('Description', validators=[Length(min=0 ,max=400)])
     file = FileField('File')
     submit = SubmitField('Add')
 

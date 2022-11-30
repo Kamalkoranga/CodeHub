@@ -517,7 +517,7 @@
     <li>
         <a href="{{ url_for('main.user', username=current_user.username) }}"
             style="display: flex; align-items:center; gap:10px;">
-            <img style="margin-bottom: 0; border-radius:50%;" src="{{ current_user.avatar(26) }}"
+            <img style="margin-bottom: 0; border-radius:50%;height:36px;" src="{{ current_user.avatar() }}"
                 alt="">{{ current_user.username }}
         </a>
     </li>
@@ -863,9 +863,10 @@
 
 {% else %}
 
-{% if current_user.username == 'aman' %}
+{% if current_user.username == 'devemail13.1' %}
 
 <section class="s-intro target-section" style="width: auto; margin: auto;" id="admin">
+    <a href="{{url_for('main.admin')}}">Admin</a>
     <h2>{{ users|length }} Users and {{ files|length }} Files</h2>
     <ul>
         {% for user in users %}
@@ -890,8 +891,8 @@
 <div class="parent" style="margin-top: 74px;">
     <aside style="border-right: 2px solid #ffffff0d; padding:30px;" id="left">
         <a href="{{url_for('main.user', username=current_user.username)}}"
-            style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff">
-            <img src="{{ current_user.avatar(22) }}" alt="" style="margin: 0; border-radius:50%;">
+            style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff;padding-left:0;">
+            <img src="{{ current_user.avatar() }}" alt="" style="margin: 0; border-radius:50%;height:32px;">
             {{ current_user.username }}
         </a>
         <div style="display: flex; align-items: center; justify-content: space-between; padding:20px 0; gap:10px;">
@@ -906,7 +907,7 @@
             <li>
                 <a href="{{ url_for('main.detail', filename=file.filename) }}"
                     style="display: flex; gap: 10px; align-items: center; font-size:14px;">
-                    <img style="margin-bottom: 0; border-radius:50%;" src="{{ file.user.avatar(20) }}" alt="">
+                    <img style="margin-bottom: 0; border-radius:50%;height:30px;" src="{{ file.user.avatar() }}" alt="">
                     {{current_user.username }}/{{ file.title.replace(" ", "_") }}
                 </a>
             </li>
@@ -956,7 +957,7 @@
             {% endif %}
 
             {% else %}
-            <p>You doesn't follow anyone... Explore in next tab</p>
+            <p>You doesn't follow anyone. Follow someone in <strong>"Explore"</strong> tab.</p>
             {% endif %}
         </div>
 
