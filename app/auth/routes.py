@@ -51,6 +51,7 @@ def login():
 def login():
     authorization_url, state = flow.authorization_url()
     session["state"] = state
+    print(authorization_url)
     return redirect(authorization_url)
 
 @bp.route("/callback")
@@ -81,7 +82,10 @@ def callback():
     name = id_info.get("name")
     email = id_info.get('email')
     profile_pic = id_info.get('picture')
-    username = email.removesuffix('@gmail.com')
+    # username = email.removesuffix('@gmail.com')
+    # username = email.lstrip('@gmail.com')
+    username = email[:-10]
+    print(username)
 
     user = User.query.filter_by(username=username).first()
     if user is None or not user.check_password(google_id):
