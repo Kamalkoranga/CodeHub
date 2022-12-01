@@ -1,5 +1,5 @@
 
-from flask import render_template, redirect, url_for, flash, request, session, abort
+from flask import render_template, redirect, url_for, flash, request, session, abort, current_app
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from app import db
@@ -17,7 +17,7 @@ import google.auth.transport.requests
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
-GOOGLE_CLIENT_ID = "740000035885-thseaienoi32jt6hb4nj6it5qas6risj.apps.googleusercontent.com"
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 client_secrets_file = os.path.join(pathlib.Path(__file__).parent, "client_secret.json")
 
 flow = Flow.from_client_secrets_file(
@@ -25,7 +25,7 @@ flow = Flow.from_client_secrets_file(
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
             "openid"],
     # redirect_uri="https://127.0.0.1:5000/auth/callback"
-    redirect_uri = 'https://codehub.gq/auth/callback'
+    redirect_uri = os.getenv('REDIRECT_URI')
 )
 '''
 @bp.route('/login', methods=['GET', 'POST'])

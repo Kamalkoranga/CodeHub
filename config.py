@@ -5,8 +5,8 @@ load_dotenv()
 
 class Config(object):
     SECRET_KEY = os.getenv('SECRET_KEY')
-    # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     LOG_TO_STDOUT = os.getenv('LOG_TO_STDOUT')
     SQLALCHEMY_ENABLE_POOL_PRE_PING = True
@@ -17,3 +17,5 @@ class Config(object):
     MAIL_USERNAME = os.getenv('MAIL_USERNAME')
     MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
     ADMINS = list(os.getenv('ADMIN_MAIL'))
+    GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+    REDIRECT_URI = os.getenv('REDIRECT_URI')

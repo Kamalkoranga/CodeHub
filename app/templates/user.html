@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ current_user.name }}'s Profile
+{{ username|capitalize }}'s Profile
 {% endblock title %}
 
 {% block style %}
@@ -32,7 +32,7 @@
 <ul class="s-header__social">
     {% if user != current_user  %}
     <li><a href="{{ url_for('main.user', username=current_user.username) }}"
-            style="display: flex; align-items:center; gap:10px;height:36px;"><img style="margin-bottom: 0; border-radius:50%;"
+            style="display: flex; align-items:center; gap:10px;"><img style="margin-bottom: 0; border-radius:50%;height:36px;"
                 src="{{ current_user.avatar() }}" alt="">{{ current_user.username }}</a></li>
         <li>|</li>
     {% endif %}
