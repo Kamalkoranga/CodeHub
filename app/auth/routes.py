@@ -2,7 +2,7 @@
 from flask import render_template, redirect, url_for, flash, request, session, abort, current_app
 from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
-from app import db
+from app import db, mail
 from app.auth import bp
 from app.auth.forms import LoginForm, RegisterForm, ResetPasswordRequestForm, ResetPasswordForm
 from app.models import User
@@ -14,6 +14,8 @@ from google.oauth2 import id_token
 from google_auth_oauthlib.flow import Flow
 from pip._vendor import cachecontrol
 import google.auth.transport.requests
+from flask_mail import Message
+from threading import Thread
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
@@ -94,7 +96,8 @@ def callback():
         db.session.add(user)
         db.session.commit()
         login_user(user, remember=True)
-        return redirect(url_for('main.index'))
+        if current_app.config['ADMINS']:
+            send_email(current_app.config['ADMINS'], 'New User', 'email/new_user', user=user)
 
     login_user(user, remember=True)
     next_page = request.args.get('next')
@@ -103,6 +106,17 @@ def callback():
     if user.username == 'devemail13.1':
         return redirect(url_for('main.admin'))
     return redirect(url_for('main.index'))
+
+def send_async_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
+
+def send_email(to, subject, template, **kwargs):
+    msg = Message('[CodeHub]' + subject, sender = current_app.config['ADMINS'][0], recipients=to)
+    msg.body = render_template(template + '.txt', **kwargs)
+    msg.html = render_template(template + '.html', **kwargs)
+    thr = Thread(target=send_async_email, args=[current_app._get_current_object(), msg])
+    thr.start()
 
 @bp.route('/logout')
 def logout():

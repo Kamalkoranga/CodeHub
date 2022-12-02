@@ -1,0 +1,4 @@
+New User Joined!
+Name: {{user.name}}
+Username: {{ user.username }}
+Email: {{ user.email }}
