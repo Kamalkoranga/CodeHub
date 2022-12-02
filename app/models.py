@@ -99,7 +99,7 @@ class Upload(db.Model):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.filter_by(id=user_id).first()
+    return User.query.get(int(user_id))
 
 # It defines a table named comment, with four columns, id, author, content, and timestamp. The id
 # column is an integer and is the primary key of the table. The author column is a string with a
