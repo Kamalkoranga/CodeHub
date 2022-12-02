@@ -87,7 +87,7 @@ def callback():
     # username = email.removesuffix('@gmail.com')
     # username = email.lstrip('@gmail.com')
     username = email[:-10]
-    print(username)
+    # print(username)
 
     user = User.query.filter_by(username=username).first()
     if user is None or not user.check_password(google_id):
