@@ -1,0 +1,7 @@
+<h1>{{user.username}} started following you</h1>
+<hr>
+<img src="{{user.profile_pic}}" alt="">
+<p>{{user.name}}</p>
+<button><a href="{{ url_for('main.user', username=user.username,  _external=True) }}">Follow</a></button>
+<p>Sincerely,</p>
+<p>The CodeHub Team</p>

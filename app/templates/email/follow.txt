@@ -1,0 +1,6 @@
+{{user.username}} started following you
+{{user.profile_pic}}
+{{user.name}}
+{{ url_for('main.user', username=user.username,  _external=True) }} Follow
+Sincerely,
+The CodeHub Team

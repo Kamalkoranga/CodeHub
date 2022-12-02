@@ -6,6 +6,7 @@ from app import db
 from app.main.forms import EditProfileForm, EmptyForm, CommentForm, UploadFile
 from app.models import User, Upload, Comment
 from app.main import bp
+from app.email import new_send_email
 
 @bp.before_request
 def before_request():
@@ -172,6 +173,10 @@ def follow(username):
         current_user.follow(user)
         db.session.commit()
         flash('You are following {}!'.format(username))
+        print(user.email)
+        # Email for follow
+        new_send_email(user.email, 'New Follow', 'email/follow', user=current_user)
+
         return redirect(url_for('main.user', username=username))
     return redirect(url_for('main.index'))
 
