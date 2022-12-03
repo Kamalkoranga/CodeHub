@@ -17,7 +17,7 @@ def before_request():
 @bp.route('/index')
 @bp.route('/')
 def index():
-    no = Upload.query.count()
+    no = Upload.query.all()
     members=User.query.all()
     if current_user.is_anonymous:
         f_users = []
