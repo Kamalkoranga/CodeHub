@@ -4,7 +4,7 @@ from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from app import db, mail
 from app.auth import bp
-from app.auth.forms import LoginForm, RegisterForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.auth.forms import ResetPasswordRequestForm, ResetPasswordForm
 from app.models import User
 from app.auth.email import send_password_reset_email
 import os
@@ -26,8 +26,8 @@ flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
             "openid"],
-    # redirect_uri="https://127.0.0.1:5000/auth/callback"
-    redirect_uri = os.getenv('REDIRECT_URI')
+    redirect_uri="https://127.0.0.1:5000/auth/callback"
+    # redirect_uri = os.getenv('REDIRECT_URI')
 )
 '''
 @bp.route('/login', methods=['GET', 'POST'])
@@ -98,6 +98,7 @@ def callback():
         login_user(user, remember=True)
         if current_app.config['ADMINS']:
             send_email(current_app.config['ADMINS'], 'New User', 'email/new_user', user=user)
+            send_email([user.email], 'Welcome to CodeHub', 'email/welcome', user=user)
 
     login_user(user, remember=True)
     next_page = request.args.get('next')

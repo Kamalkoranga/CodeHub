@@ -126,6 +126,10 @@ def detail(filename):
         comments = Comment(author = username, content=comment, upload_id=file.id)
         db.session.add(comments)
         db.session.commit()
+        print(file.user)
+        # Email Feature
+        new_send_email(file.user.email, 'New Comment', 'email/comment', user=current_user, file=file)
+
         return redirect(url_for('main.detail', filename=file.filename))
     elif request.method == 'GET':
         form.username.data = current_user.username

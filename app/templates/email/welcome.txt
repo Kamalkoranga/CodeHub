@@ -1,0 +1,6 @@
+Hello, {{user.name}},
+Welcome to CodeHub
+First of all thanks, for creating account and joining us.
+As you all know or may be not, tha CodeHub is a code management website for everyone. So kickstart your journey of being a software engineer with us.
+Thank you,
+The CodeHub Team

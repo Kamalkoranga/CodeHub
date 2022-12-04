@@ -1,0 +1,8 @@
+<h1>Comment in {{file.filename}}</h1>
+<hr>
+<p>User {{user.username}} commented in {{file.filename}}. </p>
+<p>Click below to view the comment </p>
+<a href="{{ url_for('main.detail', filename=file.filename,  _external=True) }}">View Comment</a>
+<hr>
+<p>Sincerely,</p>
+<p>The CodeHub Team</p>

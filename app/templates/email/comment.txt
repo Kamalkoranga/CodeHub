@@ -1,0 +1,6 @@
+Comment in {{file.filename}}
+User {{user.username}} commented in {{file.filename}}.
+Click below to view
+{{ url_for('main.detail', filename=file.filename,  _external=True) }} View Comment
+Sincerely,
+The CodeHub Team
