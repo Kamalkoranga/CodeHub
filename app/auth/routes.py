@@ -26,8 +26,8 @@ flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
     scopes=["https://www.googleapis.com/auth/userinfo.profile", "https://www.googleapis.com/auth/userinfo.email",
             "openid"],
-    redirect_uri="https://127.0.0.1:5000/auth/callback"
-    # redirect_uri = os.getenv('REDIRECT_URI')
+    # redirect_uri="https://127.0.0.1:5000/auth/callback"
+    redirect_uri = os.getenv('REDIRECT_URI')
 )
 '''
 @bp.route('/login', methods=['GET', 'POST'])

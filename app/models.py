@@ -6,6 +6,7 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from app import db, login_manager
+from sqlalchemy.sql import func
 
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -23,6 +24,7 @@ class User(db.Model, UserMixin):
     uploads = db.relationship('Upload', backref='user', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    likes = db.relationship('Like', backref='user', passive_deletes=True)
     followed = db.relationship(
         'User', secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
@@ -93,6 +95,7 @@ class Upload(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.String(64), db.ForeignKey('user.username'))
     comments = db.relationship('Comment', backref='upload')
+    likes = db.relationship('Like', backref='upload', passive_deletes=True)
 
     def __repr__(self) -> str:
         return f'<Upload {self.filename}>'
@@ -114,3 +117,11 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f'<Comment "{self.content[:20]}...">'
+
+class Like(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.DateTime(timezone=True), default=func.now())
+    author = db.Column(db.Integer, db.ForeignKey(
+        'user.id', ondelete="CASCADE"), nullable=False)
+    upload_id = db.Column(db.Integer, db.ForeignKey(
+        'upload.id', ondelete="CASCADE"), nullable=False)
