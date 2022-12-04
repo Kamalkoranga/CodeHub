@@ -29,7 +29,3 @@ Contributions are always welcome!
 
 If you have any feedback, please reach out to us at [here](https://www.instagram.com/__kamalkoranga__/).
 
-## License
-
-[MIT](https://choosealicense.com/licenses/mit/)
-
