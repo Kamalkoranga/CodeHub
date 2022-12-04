@@ -47,7 +47,7 @@
 {% block nav %}
 <ul class="s-header__social">
     <li><a href="{{ url_for('main.user', username=current_user.username) }}"
-            style="display: flex; align-items:center; gap:10px;"><img style="margin-bottom: 0; border-radius:50%;height:36px;"
+            style="display: flex; align-items:center; gap:10px;"><img style="margin-bottom: 0; border-radius:50%;width:20px;height:auto;"
                 src="{{ current_user.avatar() }}" alt="">{{ current_user.username }}</a></li>
     <li>|</li>
     <li><a href="{{url_for('auth.logout')}}" onclick="return confirm('Are you sure you want to logout?')">logout</a></li>
@@ -98,7 +98,7 @@
                 {% if comment.author == user.username %}
                         {% set img = user.avatar() %}
                         <div style="display: flex; align-items: center; gap: 10px;">
-                            <img src="{{img}}" style="border-radius: 50%; margin:0;height:46px;" alt="">
+                            <img src="{{img}}" style="border-radius: 50%; margin:0;width:40px;height:auto;" alt="">
                             <strong style="color: #fff; margin-right: 0.5em;"> {{ comment.author }}</strong><small>{{ moment(comment.timestamp).fromNow() }}</small>
                         </div>
                         <p style="padding:0 45px;">{{ comment.content }}</p>

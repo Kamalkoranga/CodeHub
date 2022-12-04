@@ -54,6 +54,10 @@
         .s-header__logo {
             top: 1rem;
         }
+
+        aside {
+            border: 0;
+        }
     }
 
     @media screen and (max-width: 600px) {
@@ -474,6 +478,21 @@
         .parent {
             grid-template-columns: 1fr;
         }
+
+        aside {
+            border: 0 !important;
+        }
+    }
+
+    @media screen and (max-width:500px){
+        aside {
+            width: 400px;
+            border: 0;
+        }
+
+        main {
+            width: 400px;
+        }
     }
 
     .stroke {
@@ -517,7 +536,7 @@
     <li>
         <a href="{{ url_for('main.user', username=current_user.username) }}"
             style="display: flex; align-items:center; gap:10px;">
-            <img style="margin-bottom: 0; border-radius:50%;height:36px;" src="{{ current_user.avatar() }}"
+            <img style="margin-bottom: 0; border-radius:50%;height:auto;width:20px;" src="{{ current_user.avatar() }}"
                 alt="">{{ current_user.username }}
         </a>
     </li>
@@ -888,7 +907,7 @@
     <aside style="border-right: 2px solid #ffffff0d; padding:30px;" id="left">
         <a href="{{url_for('main.user', username=current_user.username)}}"
             style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff;padding-left:0;">
-            <img src="{{ current_user.avatar() }}" alt="" style="margin: 0; border-radius:50%;height:32px;">
+            <img src="{{ current_user.avatar() }}" alt="" style="margin: 0; border-radius:50%;height:20px;">
             {{ current_user.username }}
         </a>
         <div style="display: flex; align-items: center; justify-content: space-between; padding:20px 0; gap:10px;">
@@ -903,7 +922,7 @@
             <li>
                 <a href="{{ url_for('main.detail', filename=file.filename) }}"
                     style="display: flex; gap: 10px; align-items: center; font-size:14px;">
-                    <img style="margin-bottom: 0; border-radius:50%;height:30px;" src="{{ file.user.avatar() }}" alt="">
+                    <img style="margin-bottom: 0; border-radius:50%;height:16px;" src="{{ file.user.avatar() }}" alt="">
                     {{current_user.username }}/{{ file.title.replace(" ", "_") }}
                 </a>
             </li>

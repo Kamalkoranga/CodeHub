@@ -21,3 +21,4 @@ class Config(object):
     GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
     REDIRECT_URI = os.getenv('REDIRECT_URI')
     CODEHUB_MAIL_SENDER = 'CodeHub <admin@codehub.com>'
+    # DEBUG=True

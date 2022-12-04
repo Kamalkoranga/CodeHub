@@ -2,7 +2,7 @@
     display: flex;
     align-items: center;">
     <a href="{{ url_for('main.user', username=file.user.username) }}" style="display: flex;">
-        <img style="margin-bottom: 0; border-radius:50%;height:36px;" src="{{ file.user.avatar() }}" alt="">
+        <img style="margin-bottom: 0; border-radius:50%;width:32px;height:auto;" src="{{ file.user.avatar() }}" alt="">
     </a>
     <h5 style="margin: 0; font-size:14px;">
         <a href="{{ url_for('main.user', username=file.user.username) }}">{{ file.user.username }}</a> coded <a href="{{url_for('main.detail', filename=file.filename)}}">{{ file.user.username }}/{{ file.title.replace(" ", "_") }}</a> <small style="color:#8a8a8b; margin:0 10px;">{{ moment(file.timestamp).fromNow() }}</small>
