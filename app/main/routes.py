@@ -96,17 +96,18 @@ def new():
     userr = current_user.username
     form = UploadFile()
     if form.validate_on_submit():
-        if '.py' in form.file.data.filename:
+        if '.py' in form.filename.data:
             title =  form.title.data
             description = form.description.data
-            file = form.file.data
-            upload = Upload(title = title, description = description, filename = file.filename, data = file.read(), user_id=userr)
+            # file = form.file.data
+            filename = form.filename.data
+            code = form.code.data
+            upload = Upload(title = title, description = description, filename = filename, data = code, user_id=userr)
             db.session.add(upload)
             db.session.commit()
             return redirect(url_for('main.index'))
         else:
-            flash('Select only Python file (.py)')
-
+            flash('Add ".py" in filename')
     return render_template('new.html', form=form)
 
 @bp.route('/file/<filename>', methods=['GET', 'POST'])

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, FileField
+from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import ValidationError, DataRequired, Length
 from app.models import User
 
@@ -25,8 +25,9 @@ class CommentForm(FlaskForm):
 
 class UploadFile(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    description = TextAreaField('Description', validators=[Length(min=0 ,max=400)])
-    file = FileField('File')
+    description = StringField('Description')
+    code = TextAreaField(validators=[DataRequired()])
+    filename = StringField('File name (with extension)', validators=[DataRequired()])
     submit = SubmitField('Add')
 
 class EmptyForm(FlaskForm):

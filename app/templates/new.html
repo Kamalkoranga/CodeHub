@@ -61,22 +61,26 @@ New File | CodeHub
             </div>
             <div>
                 {{ form.description.label }}
-                {{ form.description(cols=50, rows=4, placeholder='description ...') }}
+                {{ form.description(class='u-fullwidth', cols=50, rows=4, placeholder='description ...') }}
                 {% for error in form.description.errors %}
                 <span style="color: #727373;">[{{ error }}]</span>
                 {% endfor %}
             </div>
             <div>
-                {{ form.file(accept=".py", id="inputfile", required=true) }}
+                {{ form.code.label }}
+                {{ form.code(cols="50", rows="4", spellcheck=false, placeholder="Enter something to save", class="u-fullwidth", required=true) }}
+                {% for error in form.code.errors %}
+                <span style="color: #727373;">[{{ error }}]</span>
+                {% endfor %}
             </div>
-
-
-            <p>{{ form.submit(class='btn btn--primary') }}</p>
+            <div class="file-options">
+                <div class="option file-name">
+                    {{ form.filename.label }}
+                    {{ form.filename(class="u-fullwidth", spellcheck=false, placeholder="Enter file name") }}
+                </div>
+            </div>
+            <p>{{ form.submit(class='btn btn--primary u-fullwidth') }}</p>
         </form>
-    </div>
-    <div class="code" style="margin: 0 auto; max-width:1100px;">
-        <h5>Code &#128071;: </h5>
-        <pre id="output" style="border-radius: 20px;">File not selected!!</pre>
     </div>
 </section>
 {% endblock content %}
@@ -89,8 +93,32 @@ New File | CodeHub
             document.getElementById('output')
                 .textContent = fr.result;
         }
-
         fr.readAsText(this.files[0]);
-    })
+    });
+
+    const textarea = document.querySelector("textarea"),
+            fileNameInput = document.querySelector(".file-name input"),
+            selectMenu = document.querySelector(".save-as select"),
+            saveBtn = document.querySelector(".save-btn");
+
+        selectMenu.addEventListener("change", () => {
+            const selectedFormat = selectMenu.options[selectMenu.selectedIndex].text;
+            saveBtn.innerText = `Save As ${selectedFormat.split(" ")[0]} File`;
+        });
+
+        saveBtn.addEventListener("click", () => {
+            const blob = new Blob([textarea.value], { type: selectMenu.value });
+            const fileUrl = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            const selectedFormat = selectMenu.options[selectMenu.selectedIndex].text;
+            const file_type = selectedFormat.split(" ")[0]
+            if (file_type === 'Python') {
+                link.download = fileNameInput.value + '.py';
+            } else {
+                link.download = fileNameInput.value;
+            }
+            link.href = fileUrl;
+            link.click();
+        });
 </script>
 {% endblock script %}
