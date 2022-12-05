@@ -151,6 +151,7 @@ def like(upload_id):
         like = Like(author=current_user.id, upload_id=upload_id)
         db.session.add(like)
         db.session.commit()
+        new_send_email(file.user.email, 'Program starred', 'email/starred', user=current_user, file=file)
     
     return redirect(url_for('main.detail', filename=file.filename))
 
