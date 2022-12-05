@@ -20,7 +20,7 @@ class EditProfileForm(FlaskForm):
 
 class CommentForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    comment = TextAreaField('Comment', validators=[Length(min=0, max=200)])
+    comment = TextAreaField('Comment', validators=[DataRequired(), Length(min=0, max=200)])
     submit = SubmitField('Comment')
 
 class UploadFile(FlaskForm):

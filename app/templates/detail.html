@@ -59,18 +59,55 @@
 
     <div class="content">
         <div class="child">
-            <h2 style="text-align:center; margin-bottom: 50px;">{{ file.filename.capitalize() }}</h2>
+            <h2 style="text-align:left; margin-bottom: 0px;">{{ file.filename.capitalize() }}</h2>
+            <hr style="margin:20px; padding:0;">
             <pre style="border-radius: 20px;">
                 <code class="language-python">{{f}}</code>
             </pre>
             <div class="about">
-                <h3><strong>Title:</strong> {{ file.title }}</h3>
+                <h3><strong>Title:</strong> {{ file.title }} </h3>
                 <p><strong>Description: </strong> {{ file.description }}</p>
             </div>
             {% if current_user.username == username %}
             <a href="{{ url_for('main.delete_file', filename=file.filename) }}" onclick="return confirm('Are you sure you want to delete this file?')">Delete</a>
+            <div style="position: absolute;
+                        font-size: 1em;
+                        top: 7em;
+                        right: 2em;
+                        border:1px solid white;
+                        padding: 5px 10px;
+                        border-radius: 5px;
+                        right: 2em;
+                        ">
+            
+                {% if current_user.id in file.likes|map(attribute="author")|list %}
+                <a href="{{ url_for('main.like', upload_id=file.id) }}"><i class="fa-solid fa-star"></i><span> Star </span>{{
+                    file.likes|length }}</a>
+                {% else %}
+                <a href="{{ url_for('main.like', upload_id=file.id) }}"><i class="fa-regular fa-star"></i><span> Star </span>{{
+                    file.likes|length }}</a>
+                {% endif %}
+            
+            </div>
             {% else %}
             <cite> - By {{ username }}</cite>
+            <div style="position: absolute;
+            font-size: 1em;
+            top: 7em;
+            right: 2em;
+            border:1px solid white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            right: 2em;
+            ">
+                
+                {% if current_user.id in file.likes|map(attribute="author")|list %}
+                    <a href="{{ url_for('main.like', upload_id=file.id) }}"><i class="fa-solid fa-star"></i><span> Star </span>{{ file.likes|length }}</a>
+                {% else %}
+                    <a href="{{ url_for('main.like', upload_id=file.id) }}"><i class="fa-regular fa-star"></i><span> Star </span>{{ file.likes|length }}</a>        
+                {% endif %}
+                
+            </div>
             {% endif %}
         </div>
         <hr>
