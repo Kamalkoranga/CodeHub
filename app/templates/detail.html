@@ -78,14 +78,15 @@
                         padding: 5px 10px;
                         border-radius: 5px;
                         right: 2em;
+                        color:#fff;
                         ">
             
                 {% if current_user.id in file.likes|map(attribute="author")|list %}
-                <a href="{{ url_for('main.like', upload_id=file.id) }}"><i class="fa-solid fa-star"></i><span> Star </span>{{
-                    file.likes|length }}</a>
+                <i id="like-button-{{file.id}}" class="fa-solid fa-star" onclick="like({{ file.id }})"></i><span> Starred </span><span
+                    id="likes-count-{{file.id}}">{{ file.likes|length }}</span>
                 {% else %}
-                <a href="{{ url_for('main.like', upload_id=file.id) }}"><i class="fa-regular fa-star"></i><span> Star </span>{{
-                    file.likes|length }}</a>
+                <i id="like-button-{{file.id}}" class="fa-regular fa-star" onclick="like({{ file.id }})"></i><span> Star </span><span
+                    id="likes-count-{{file.id}}">{{ file.likes|length }}</span>
                 {% endif %}
             
             </div>
@@ -99,12 +100,13 @@
             padding: 5px 10px;
             border-radius: 5px;
             right: 2em;
+            color:#fff;
             ">
                 
                 {% if current_user.id in file.likes|map(attribute="author")|list %}
-                    <a href="{{ url_for('main.like', upload_id=file.id) }}"><i class="fa-solid fa-star"></i><span> Starred </span>{{ file.likes|length }}</a>
+                    <i id="like-button-{{file.id}}" class="fa-solid fa-star" onclick="like({{ file.id }})"></i><span> Starred </span><span id="likes-count-{{file.id}}">{{ file.likes|length }}</span>
                 {% else %}
-                    <a href="{{ url_for('main.like', upload_id=file.id) }}"><i class="fa-regular fa-star"></i><span> Star </span>{{ file.likes|length }}</a>        
+                    <i id="like-button-{{file.id}}" class="fa-regular fa-star" onclick="like({{ file.id }})"></i><span> Star </span><span id="likes-count-{{file.id}}">{{ file.likes|length }}</span>        
                 {% endif %}
                 
             </div>

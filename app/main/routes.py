@@ -1,6 +1,6 @@
 
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request, current_app
+from flask import render_template, flash, redirect, url_for, request, current_app, jsonify
 from flask_login import current_user, login_required
 from app import db
 from app.main.forms import EditProfileForm, EmptyForm, CommentForm, UploadFile
@@ -144,6 +144,7 @@ def like(upload_id):
 
     if not file:
         flash("File does not exist.", category='error')
+        return jsonify({"error": "File does not exist."}, 400)
     elif like:
         db.session.delete(like)
         db.session.commit()
@@ -153,7 +154,7 @@ def like(upload_id):
         db.session.commit()
         new_send_email(file.user.email, 'Program starred', 'email/starred', user=current_user, file=file)
     
-    return redirect(url_for('main.detail', filename=file.filename))
+    return jsonify({'likes': len(file.likes), 'liked': current_user.id in map(lambda x: x.author, file.likes)})
 
 
 @bp.route('/user/<username>')

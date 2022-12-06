@@ -441,3 +441,19 @@
     })();
 
 })(document.documentElement);
+
+/* Ajax like */
+
+function like(uploadId) {
+    const likeCount = document.getElementById(`likes-count-${uploadId}`);
+    const likeButton = document.getElementById(`like-button-${uploadId}`);
+
+    fetch(`/like-file/${uploadId}`, {method: 'POST'}).then((res) => res.json()).then((data) => {
+        likeCount.innerHTML = data['likes'];
+        if (data["liked"] == true) {
+            likeButton.className = "fa-solid fa-star";
+        } else {
+            likeButton.className = "fa-regular fa-star";
+        }
+    });
+}
