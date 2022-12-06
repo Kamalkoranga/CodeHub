@@ -455,5 +455,5 @@ function like(uploadId) {
         } else {
             likeButton.className = "fa-regular fa-star";
         }
-    });
+    }).catch((e) => alert("Could not star this project"));
 }
