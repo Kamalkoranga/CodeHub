@@ -41,7 +41,7 @@
         border: none;
         display: inline-block;
         color: var(--color-text-light);
-        font-size: var(--text-sm);
+        font-size: 14px;
         line-height: var(--vspace-0_75);
         font-style: normal;
     }
@@ -535,13 +535,13 @@
     {% else %}
     <li>
         <a href="{{ url_for('main.user', username=current_user.username) }}"
-            style="display: flex; align-items:center; gap:10px;">
+            style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
             <img style="margin-bottom: 0; border-radius:50%;height:auto;width:20px;" src="{{ current_user.avatar() }}"
                 alt="">{{ current_user.username }}
         </a>
     </li>
-    <li>|</li>
-    <li><a href="{{url_for('auth.logout')}}" onclick="return confirm('Are you sure you want to logout?')">logout</a>
+    <li style="font-size:14px;letter-spacing:0.05em;font-weight:600;">|</li>
+    <li><a href="{{url_for('auth.logout')}}" onclick="return confirm('Are you sure you want to logout?')" style="font-size:14px;letter-spacing:0.05em;font-weight:600;">logout</a>
     </li>
     {% endif %}
 </ul>
@@ -904,14 +904,14 @@
 {%else%}
 
 <div class="parent" style="margin-top: 74px;">
-    <aside style="border-right: 2px solid #ffffff0d; padding:30px;" id="left">
+    <aside style="border-right: 2px solid #ffffff0d; padding:20px 50px 20px 20px;" id="left">
         <a href="{{url_for('main.user', username=current_user.username)}}"
-            style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff;padding-left:0;">
+            style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff;padding-left:0;font-size:14px;font-weight:600;">
             <img src="{{ current_user.avatar() }}" alt="" style="margin: 0; border-radius:50%;height:20px;">
             {{ current_user.username }}
         </a>
         <div style="display: flex; align-items: center; justify-content: space-between; padding:20px 0; gap:10px;">
-            <h6 style="margin: 0; text-transform: capitalize; letter-spacing: 0;">Recent Programs</h6>
+            <h6 style="margin: 0; text-transform: capitalize; letter-spacing: 0;font-size:14px; font-weight:600;">Recent Programs</h6>
             <a href="{{url_for('main.new')}}" class="btn btn--primary"
                 style="height: 30px; padding: 10px; display: flex; align-items: center; margin: 0; letter-spacing:0; text-transform:capitalize"><i
                     class="fa-regular fa-square-plus" style="margin-right: 5px;"></i>New</a>
@@ -944,7 +944,7 @@
         {% endif %}
     </aside>
 
-    <main style="padding:50px;">
+    <main style="padding:50px 20px;">
         <div>
             <span class="tablink activeTab"
                 style="padding:12px; margin: 0; font-size:14px; font-weight:600; color:#fff; cursor:pointer;"
@@ -991,13 +991,13 @@
 
     </main>
 
-    <aside style="padding:50px;" class="updates">
-        <h4 style="margin: 0; font-size:20px; font-weight:bolder;">Updates Timeline</h4>
+    <aside style="padding:50px 20px;" class="updates">
+        <h4 style="margin: 0; font-size:14px; font-weight:bolder;">Updates Timeline</h4>
         <div>
             <ul>
                 {% for i in timeline[0:3] %}
                 <li class="event" data-date="{{ i.date }}">
-                    <h5 style="margin-bottom: 0; font-size: 14px; font-weight: bolder;">{{ i.heading }}</h5>
+                    <h5 style="margin: 5px; font-size: 14px; font-weight: bolder;">{{ i.heading }}</h5>
                     <small><strong>{{ i.date }}</strong></small>
                     <p style="margin-top: 20px; font-size: 14px; line-height:1.5em;">{{ i.paragraph }}</p>
                 </li>

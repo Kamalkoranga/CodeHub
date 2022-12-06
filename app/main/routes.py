@@ -67,7 +67,7 @@ def index():
         {
             'date': '1 November 2022',
             'heading': 'Completed development',
-            'paragraph': 'We have completed our class 12th project "CodeHub". We will provide a new version of CodeHub in future versions, So keep checking ... '
+            'paragraph': 'We have completed our class 12th project "CodeHub". We will provide new features of CodeHub in future, So keep checking ... '
         }
     ]
     timeline.reverse()
