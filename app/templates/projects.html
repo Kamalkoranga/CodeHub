@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Your Stars
+Your Projects
 {% endblock title %}
 
 {% block nav %}
 <nav class="s-header__nav">
     <ul>
-        <li class="current"><a href="{{url_for('main.starred')}}">Starred</a></li>
+        <li><a href="{{url_for('main.starred')}}">Starred</a></li>
         <li><a href="{{url_for('main.chat')}}">Chat</a></li>
         <li><a href="{{url_for('main.developers')}}">developers</a></li>
     </ul>
@@ -32,30 +32,9 @@
 
 {% block content %}
 <section id="intro" class="s-intro target-section" style="margin: 0 auto;">
-    <h3 style="margin: 0 20px;">Starred Projects</h3>
-    {% for i in current_user.likes %}
-        <div>
-            <div class="body" style="padding: 20px;
-                margin: 20px;
-                border: 2px solid #ffffff0d;
-                border-radius: 20px;
-                display:flex;
-                flex-direction:column;
-                gap:10px;
-            ">
-                
-                <a href="{{url_for('main.detail', filename=i.upload.filename)}}" style="font-weight: 600; font-size:16px;">{{
-                    i.upload.user.username }}/{{ i.upload.title.replace(" ", "_") }}</a>
-                <cite>{{ i.upload.description }}</cite>
-                <div class="footer" style="display: flex;
-                    gap: 30px; font-size: 14px;">
-                    <span><i class="fa-brands fa-python"></i> Python</span>
-                    <span><i class="fa-solid fa-comment"></i> {{ i.upload.comments|length }} comments</span>
-                    <span><i class="fa-regular fa-star"></i> {{i.upload.likes|length}}</span>
-                </div>
-            </div>
-        </div>
-        <hr style="margin: 30px 0;">
+    <h3>Your Projects</h3>
+    {% for i in current_user.uploads %}
+        <li><a href="{{url_for('main.detail', filename=i.filename)}}">{{ i.filename }}</a></li>
     {% endfor %}
 </section>
 {% endblock content %}

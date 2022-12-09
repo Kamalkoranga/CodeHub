@@ -484,7 +484,7 @@
         }
     }
 
-    @media screen and (max-width:500px){
+    @media screen and (max-width:500px) {
         aside {
             width: 400px;
             border: 0;
@@ -520,6 +520,7 @@
         {% if not current_user.is_anonymous %}
         <li><a href="{{url_for('main.starred')}}">Starred</a></li>
         <li><a href="{{url_for('main.chat')}}">Chat</a></li>
+        <li><a href="{{url_for('main.developers')}}">developers</a></li>
         {%else%}
         <li class="current"><a href="#intro" class="smoothscroll">Intro</a></li>
         <li><a href="#services" class="smoothscroll">What We Do</a></li>
@@ -536,14 +537,16 @@
     <li><a href="{{url_for('auth.register')}}" class="stroke">Sign up</a></li>
     {% else %}
     <li>
-        <a href="{{ url_for('main.user', username=current_user.username) }}"
-            style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
+        <a style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
             <img style="margin-bottom: 0; border-radius:50%;height:auto;width:20px;" src="{{ current_user.avatar() }}"
-                alt="">{{ current_user.username }}
+                alt=""><i onclick="myFunction()" class="fa-solid fa-caret-down dropbtn"></i>
         </a>
-    </li>
-    <li style="font-size:14px;letter-spacing:0.05em;font-weight:600;">|</li>
-    <li><a href="{{url_for('auth.logout')}}" onclick="return confirm('Are you sure you want to logout?')" style="font-size:14px;letter-spacing:0.05em;font-weight:600;">logout</a>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="{{url_for('main.user', username=current_user.username)}}">Your profile</a>
+            <a href="{{url_for('main.starred')}}">Your stars</a>
+            <a href="{{url_for('main.projects')}}">Your projects</a>
+            <a href="{{url_for('auth.logout')}}" onclick="return confirm('Are you sure you want to sign out?')" style="border-top: 1px solid;">Sign out</a>
+        </div>
     </li>
     {% endif %}
 </ul>
@@ -580,8 +583,9 @@
         <div class="column s-intro__about">
             <h2 class="s-intro__about-title">Hello, Welcome to CodeHub.</h2>
 
-            <p>CodeHub is a full stack web based application project which manages projects or programs of developers, students, CS
-            teachers, etc. by CS students of ST Lamart School.</p>
+            <p>CodeHub is a full stack web based application project which manages projects or programs of developers,
+                students, CS
+                teachers, etc. by CS students of ST Lamart School.</p>
 
             <a href="{{url_for('auth.register')}}" class="btn btn--primary u-fullwidth" style="text-align: center;">Sign
                 up for CodeHub</a>
@@ -591,41 +595,44 @@
 
     <div class="row about-stats stats block-lg-one-fourth block-md-one-half block-mob-whole" data-animate-block>
         <div class="column stats__item" data-animate-el>
-            <div class="stats__count" data-counter=68><span>68</span>+</div>
+            <div class="stats__count" data-counter=78><span>78</span>+</div>
             <h5>Hours Work</h5>
             <p>
-                The number of hours it took to create CodeHub, a user-friendly, code manager, and collaborative online platform.
+                The number of hours it took to create CodeHub, a user-friendly, code manager, and collaborative online
+                platform.
             </p>
         </div>
         <div class="column stats__item" data-animate-el>
             <div class="stats__count" data-counter=90><span>90</span>+</div>
             <h5>Performance</h5>
             <p>
-                According to Google PageSpeed Insights, CodeHub's performance and accessibility are always 90+ out of 100.
+                According to Google PageSpeed Insights, CodeHub's performance and accessibility are always 90+ out of
+                100.
             </p>
         </div>
         <div class="column stats__item" data-animate-el>
             <div class="stats__count" data-counter={{members|length}}><span>{{members|length}}</span>+</div>
             <h5>Memmbers Joinded</h5>
             <p>
-                <ul class="members">
-                    {% for member in members[0:4] %}
-                    <li>
-                        <a href="{{url_for('main.user', username=member.username)}}">{{ member.username }}</a> <cite>...
-                            recently joined</cite>
-                    </li>
-                    {% endfor %}
-                </ul>
-                {% if members|length >=5 %}
-                <span>.... {{ members|length - 4 }} + other members</span>
-                {% endif %}
+            <ul class="members">
+                {% for member in members[0:4] %}
+                <li>
+                    <a href="{{url_for('main.user', username=member.username)}}">{{ member.username }}</a> <cite>...
+                        recently joined</cite>
+                </li>
+                {% endfor %}
+            </ul>
+            {% if members|length >=5 %}
+            <span>.... {{ members|length - 4 }} + other members</span>
+            {% endif %}
             </p>
         </div>
         <div class="column stats__item" data-animate-el>
             <div class="stats__count" data-counter={{no|length}}><span>{{no|length}}</span>+</div>
             <h5>Saved Projects</h5>
             <p>
-                CodeHub allows you to save your programs or projects online, whether they are written in Python, C, C++, Java, HTML,
+                CodeHub allows you to save your programs or projects online, whether they are written in Python, C, C++,
+                Java, HTML,
                 or JS.
             </p>
         </div>
@@ -913,7 +920,8 @@
             {{ current_user.username }}
         </a>
         <div style="display: flex; align-items: center; justify-content: space-between; padding:20px 0; gap:10px;">
-            <h6 style="margin: 0; text-transform: capitalize; letter-spacing: 0;font-size:14px; font-weight:600;">Recent Programs</h6>
+            <h6 style="margin: 0; text-transform: capitalize; letter-spacing: 0;font-size:14px; font-weight:600;">Recent
+                Programs</h6>
             <a href="{{url_for('main.new')}}" class="btn btn--primary"
                 style="height: 30px; padding: 10px; display: flex; align-items: center; margin: 0; letter-spacing:0; text-transform:capitalize"><i
                     class="fa-regular fa-square-plus" style="margin-right: 5px;"></i>New</a>

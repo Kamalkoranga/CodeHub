@@ -158,6 +158,16 @@ def chat():
     global msg
     return render_template('chat.html', msg=msg)
 
+@bp.route('/developers')
+@login_required
+def developers():
+    return render_template('developers.html', users=User.query.all())
+
+@bp.route('/projects')
+@login_required
+def projects():
+    return render_template('projects.html')
+
 @bp.route('/like-file/<upload_id>', methods=['GET', 'POST'])
 @login_required
 def like(upload_id):
