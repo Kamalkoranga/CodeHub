@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Chat | CodeHub
+{% endblock title %}
+
+{% block style %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.min.js"></script>
+    <style>
+        #messages p {
+            margin-bottom: 0;
+        }
+    </style>
+{% endblock style %}
+
+{% block content %}
+    <section id="intro" class="s-intro target-section" style="margin: 0 auto;width:350px;">
+        <div id="messages" style="margin: 0 auto;text-align:left;min-height:300px;border:1px solid;border-radius:20px;padding:20px;
+        {% if current_user %} text-align:right; {% endif %}"></div>
+        <input type="text" placeholder="Message" id="message">
+        <button id="sendBtn">Send</button>
+    </section>ji
+{% endblock content %}
+
+{% block script %}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            let socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port);
+            socket.on('connect', function () {
+                socket.send("User connected!");
+            });
+
+            socket.on('message', function (data) {
+                $('#messages').append($('<p>').text(data));
+            });
+
+            $('#sendBtn').on('click', function () {
+                socket.send('{{current_user.username}}' + ': ' + $('#message').val());
+                $('#message').val('');
+            })
+        })
+    </script>
+{% endblock script %}

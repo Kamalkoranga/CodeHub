@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Your Stars
+{% endblock title %}
+
+{% block nav %}
+    <ul class="s-header__social">
+        <li><a href="{{ url_for('main.user', username=current_user.username) }}"
+                style="display: flex; align-items:center; gap:10px;"><img
+                    style="margin-bottom: 0; border-radius:50%;width:20px;height:auto;" src="{{ current_user.avatar() }}"
+                    alt="">{{ current_user.username }}</a></li>
+        <li>|</li>
+        <li><a href="{{url_for('auth.logout')}}" onclick="return confirm('Are you sure you want to logout?')">logout</a>
+        </li>
+    </ul>
+{% endblock nav %}
+
+{% block content %}
+<section id="intro" class="s-intro target-section" style="margin: 0 auto;">
+    <h3 style="margin: 0 20px;">Starred Projects</h3>
+    {% for i in current_user.likes %}
+        <div>
+            <div class="body" style="padding: 20px;
+                margin: 20px;
+                border: 2px solid #ffffff0d;
+                border-radius: 20px;
+                display:flex;
+                flex-direction:column;
+                gap:10px;
+            ">
+                
+                <a href="{{url_for('main.detail', filename=i.upload.filename)}}" style="font-weight: 600; font-size:16px;">{{
+                    i.upload.user.username }}/{{ i.upload.title.replace(" ", "_") }}</a>
+                <cite>{{ i.upload.description }}</cite>
+                <div class="footer" style="display: flex;
+                    gap: 30px; font-size: 14px;">
+                    <span><i class="fa-brands fa-python"></i> Python</span>
+                    <span><i class="fa-solid fa-comment"></i> {{ i.upload.comments|length }} comments</span>
+                    <span><i class="fa-regular fa-star"></i> {{i.upload.likes|length}}</span>
+                </div>
+            </div>
+        </div>
+        <hr style="margin: 30px 0;">
+    {% endfor %}
+</section>
+{% endblock content %}

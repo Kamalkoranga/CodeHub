@@ -2,7 +2,8 @@
 from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, current_app, jsonify
 from flask_login import current_user, login_required
-from app import db
+from app import db, socketio
+from flask_socketio import send
 from app.main.forms import EditProfileForm, EmptyForm, CommentForm, UploadFile
 from app.models import User, Upload, Comment, Like
 from app.main import bp
@@ -135,6 +136,27 @@ def detail(filename):
         form.username.data = current_user.username
 
     return render_template('detail.html',f=a, file=file, username=file.user.username, form=form, users=User.query.all())
+
+@bp.route('/starred')
+@login_required
+def starred():
+    return render_template('starred.html')
+
+msg = ''
+@socketio.on('message')
+def handle(message):
+    global msg
+    print("Recieved Message: " + message)
+
+    if message != 'User connected!':
+        send(message, broadcast=True)
+        msg=message
+
+@bp.route('/chat')
+@login_required
+def chat():
+    global msg
+    return render_template('chat.html', msg=msg)
 
 @bp.route('/like-file/<upload_id>', methods=['GET', 'POST'])
 @login_required

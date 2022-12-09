@@ -518,6 +518,8 @@
 <nav class="s-header__nav">
     <ul>
         {% if not current_user.is_anonymous %}
+        <li><a href="{{url_for('main.starred')}}">Starred</a></li>
+        <li><a href="{{url_for('main.chat')}}">Chat</a></li>
         {%else%}
         <li class="current"><a href="#intro" class="smoothscroll">Intro</a></li>
         <li><a href="#services" class="smoothscroll">What We Do</a></li>

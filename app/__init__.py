@@ -8,6 +8,8 @@ from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
 from config import Config
+from flask_socketio import SocketIO, send
+
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -16,6 +18,7 @@ login_manager.login_view = 'auth.login'
 login_manager.login_message = 'Please log in to access this page.'
 mail = Mail()
 moment = Moment()
+socketio = SocketIO()
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -26,6 +29,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     mail.init_app(app)
     moment.init_app(app)
+    socketio.init_app(app, cors_allowed_origins="*")
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)
