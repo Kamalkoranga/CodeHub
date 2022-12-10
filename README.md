@@ -46,5 +46,5 @@ Contributions are always welcome!
 
 ## Feedback
 
-If you have any feedback, please mail us at [here](kamalkoranga75@gmail.com).
+If you have any feedback, please contact us at [here](https://www.instagram.com/__kamalkoranga__/).
 
