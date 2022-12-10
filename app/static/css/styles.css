@@ -4047,9 +4047,9 @@ img.u-pull-left {
  *
  *
  * ------------------------------------------------------------------- */
-.s-footer {
+/* .s-footer {
     margin-top : var(--vspace-5);
-}
+} */
 
 .s-footer h4 {
     margin-top    : 0;
@@ -4063,13 +4063,11 @@ img.u-pull-left {
 }
 
 .s-footer__block {
-    font-size   : var(--text-lg);
-    line-height : calc(1.375 * var(--space));
+    font-size   : 12px;
     color       : white;
 }
 
 .s-footer__bottom {
-    margin-top : var(--vspace-1_25);
     position   : relative;
 }
 
@@ -4111,7 +4109,7 @@ img.u-pull-left {
 }
 
 .ss-copyright span {
-    font-size : var(--text-sm);
+    font-size : 12px;
     display   : inline-block;
 }
 
