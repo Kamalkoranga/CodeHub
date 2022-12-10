@@ -12,8 +12,8 @@ Objective of this project
 The objectives are:-
 - The primary objective of this project is to allow students to apply their programming knowledge to a real-world situation/problem and to show them how programming skills facilitate in the development of good software.
 - To learn how real software is built.
-- To learn communication, leadership among group of developers
-- To learn how to manage projects
+- To learn communication, leadership among group of developers.
+- To learn how to manage projects.
 
 ## Layers of Web App
 - UI - > What we see on Web App
@@ -21,13 +21,16 @@ The objectives are:-
 - Database - > Where Data is stored
 - Hosting - > Where the project is stored in the server
 
-This is final year project .i.e Codehub by CS students of ST Lamart School. This is a type of code saving service, something like [Github](https://github.com) which is also a code tracking service. This project do only CRUD operations of file from database and we will try to add more operations in future updates.
-
 ## Features
 - Code Hosting
-- Alternative of GitHub
-- Saves and manages Programs
-- Open Source
+- Follow/Unfollow other developers
+- Cross Platform
+- Star Programs
+- Comments on Programs
+- Chat with other developers (Beta)
+- Customize your Profile
+- Goggle Authintication System
+- Developer Support
 
 ## Tech Stack
 Technologies used in building CodeHub:
