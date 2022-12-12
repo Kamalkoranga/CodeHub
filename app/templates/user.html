@@ -39,12 +39,12 @@
 
 <ul class="s-header__social">
     <li>
-        <a style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
+        <span style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
             <a href="{{url_for('main.new')}}"><i class="fa-solid fa-plus" style="cursor: pointer;"></i></a>
             <i class="fa-solid fa-caret-down dropbtn"></i>
             <img style="margin-bottom: 0; border-radius:50%;height:auto;width:20px;" src="{{ current_user.avatar() }}" alt="">
             <i onclick="myFunction()" class="fa-solid fa-caret-down dropbtn"></i>
-        </a>
+        </span>
         <div id="myDropdown" class="dropdown-content">
             <a href="{{url_for('main.user', username=current_user.username)}}">Your profile</a>
             <a href="{{url_for('main.starred')}}">Your stars</a>
@@ -57,11 +57,11 @@
 {% endblock nav %}
 
 {% block content %}
-<div class="content" style="margin: 100px auto; padding:0 50px;">
+<div class="content" style="margin: 100px auto; padding:0 30px;word-break: break-all;">
     <table>
         <tr valign="top" style="display: flex; align-items:center; border-bottom:0; flex-wrap:wrap; justify-content:center;">
             <td style="border-bottom:0;"><img src="{{ user.avatar() }}" style="height:138px;"></td>
-            <td style="border-bottom:0;">
+            <td style="border-bottom:0;padding:0;">
                 <h1>Username: {{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>{% endif %}

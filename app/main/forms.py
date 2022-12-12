@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField
 from wtforms.validators import ValidationError, DataRequired, Length
-from app.models import User
+from app.models import User, Upload
 
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -29,6 +29,11 @@ class UploadFile(FlaskForm):
     code = TextAreaField(validators=[DataRequired()])
     filename = StringField('File name (with extension)', validators=[DataRequired()])
     submit = SubmitField('Add')
+
+    def validate_filename(self, filename):
+        file = Upload.query.filter_by(filename=filename.data).first()
+        if file is not None:
+            raise ValidationError('Please use a different filename')
 
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')

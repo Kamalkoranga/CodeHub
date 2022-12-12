@@ -4047,9 +4047,9 @@ img.u-pull-left {
  *
  *
  * ------------------------------------------------------------------- */
-/* .s-footer {
+.s-footer {
     margin-top : var(--vspace-5);
-} */
+}
 
 .s-footer h4 {
     margin-top    : 0;
@@ -4063,11 +4063,13 @@ img.u-pull-left {
 }
 
 .s-footer__block {
-    font-size   : 12px;
+    font-size: var(--text-lg);
+    line-height: calc(1.375 * var(--space));
     color       : white;
 }
 
 .s-footer__bottom {
+    margin-top: var(--vspace-1_25);
     position   : relative;
 }
 
@@ -4109,7 +4111,7 @@ img.u-pull-left {
 }
 
 .ss-copyright span {
-    font-size : 12px;
+    font-size: var(--text-sm);
     display   : inline-block;
 }
 
@@ -4274,4 +4276,4 @@ img.u-pull-left {
 
     .show {display: block;}
 
-    .dropdown-content a:hover {background-color: #8fb9b5;}
+    .dropdown-content a:hover {background-color: #222;}

@@ -16,12 +16,12 @@
 
 <ul class="s-header__social">
     <li>
-        <a style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
+        <span style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
             <a href="{{url_for('main.new')}}"><i class="fa-solid fa-plus" style="cursor: pointer;"></i></a>
             <i class="fa-solid fa-caret-down dropbtn"></i>
             <img style="margin-bottom: 0; border-radius:50%;height:auto;width:20px;" src="{{ current_user.avatar() }}" alt="">
             <i onclick="myFunction()" class="fa-solid fa-caret-down dropbtn"></i>
-        </a>
+        </span>
         <div id="myDropdown" class="dropdown-content">
             <a href="{{url_for('main.user', username=current_user.username)}}">Your profile</a>
             <a href="{{url_for('main.starred')}}">Your stars</a>

@@ -485,13 +485,8 @@
     }
 
     @media screen and (max-width:500px) {
-        aside {
-            width: 400px;
-            border: 0;
-        }
-
         main {
-            width: 400px;
+            padding-right: 20px !important;
         }
     }
 
@@ -510,6 +505,11 @@
     .footer span:hover {
         color: #fff;
         cursor: pointer;
+    }
+
+    .tablink:hover {
+        background: #222;
+        border-radius: 10px;
     }
 </style>
 {% endblock style %}
@@ -537,12 +537,12 @@
     <li><a href="{{url_for('auth.register')}}" class="stroke">Sign up</a></li>
     {% else %}
     <li>
-        <a style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
+        <span style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
             <a href="{{url_for('main.new')}}"><i class="fa-solid fa-plus" style="cursor: pointer;"></i></a>
             <i class="fa-solid fa-caret-down dropbtn"></i>
             <img style="margin-bottom: 0; border-radius:50%;height:auto;width:20px;" src="{{ current_user.avatar() }}" alt="">
             <i onclick="myFunction()" class="fa-solid fa-caret-down dropbtn"></i>
-        </a>
+        </span>
         <div id="myDropdown" class="dropdown-content">
             <a href="{{url_for('main.user', username=current_user.username)}}">Your profile</a>
             <a href="{{url_for('main.starred')}}">Your stars</a>
@@ -915,7 +915,7 @@
 {%else%}
 
 <div class="parent" style="margin-top: 74px;">
-    <aside style="border-right: 2px solid #ffffff0d; padding:20px 50px 20px 20px;" id="left">
+    <aside style="border-right: 2px solid #ffffff0d;min-width: 275px;word-break: break-all;padding:20px;" id="left">
         <a href="{{url_for('main.user', username=current_user.username)}}"
             style="display: flex; align-items: center; gap: 10px; border-bottom:1px solid #ffffff0d; padding: 20px; color:#fff;padding-left:0;font-size:14px;font-weight:600;">
             <img src="{{ current_user.avatar() }}" alt="" style="margin: 0; border-radius:50%;height:20px;">
@@ -956,7 +956,7 @@
         {% endif %}
     </aside>
 
-    <main style="padding:50px 20px;">
+    <main style="padding:50px 20px;word-break: break-word;">
         <div>
             <span class="tablink activeTab"
                 style="padding:12px; margin: 0; font-size:14px; font-weight:600; color:#fff; cursor:pointer;"

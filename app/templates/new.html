@@ -58,12 +58,12 @@ New File | CodeHub
 
 <ul class="s-header__social">
     <li>
-        <a style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
+        <span style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
             <a href="{{url_for('main.new')}}"><i class="fa-solid fa-plus" style="cursor: pointer;"></i></a>
             <i class="fa-solid fa-caret-down dropbtn"></i>
             <img style="margin-bottom: 0; border-radius:50%;height:auto;width:20px;" src="{{ current_user.avatar() }}" alt="">
             <i onclick="myFunction()" class="fa-solid fa-caret-down dropbtn"></i>
-        </a>
+        </span>
         <div id="myDropdown" class="dropdown-content">
             <a href="{{url_for('main.user', username=current_user.username)}}">Your profile</a>
             <a href="{{url_for('main.starred')}}">Your stars</a>
@@ -86,27 +86,30 @@ New File | CodeHub
                 {{ form.title.label }}
                 {{ form.title(size=32, placeholder='title', class='u-fullwidth') }}
                 {% for error in form.title.errors %}
-                <span style="color: #727373;">[{{ error }}]</span>
+                <p style="color: #727373;text-align:center;">[{{ error }}]</p>
                 {% endfor %}
             </div>
             <div>
                 {{ form.description.label }}
                 {{ form.description(class='u-fullwidth', cols=50, rows=4, placeholder='description ...') }}
                 {% for error in form.description.errors %}
-                <span style="color: #727373;">[{{ error }}]</span>
+                <p style="color: #727373;text-align:center;">[{{ error }}]</p>
                 {% endfor %}
             </div>
             <div>
                 {{ form.code.label }}
                 {{ form.code(cols="50", rows="4", spellcheck=false, placeholder="Enter something to save", class="u-fullwidth", required=true) }}
                 {% for error in form.code.errors %}
-                <span style="color: #727373;">[{{ error }}]</span>
+                <p style="color: #727373;text-align:center;">[{{ error }}]</p>
                 {% endfor %}
             </div>
             <div class="file-options">
                 <div class="option file-name">
                     {{ form.filename.label }}
                     {{ form.filename(class="u-fullwidth", spellcheck=false, placeholder="Enter file name") }}
+                    {% for error in form.filename.errors %}
+                    <p style="color: #727373; text-align:center;">[{{ error }}]</p>
+                    {% endfor %}
                 </div>
             </div>
             <p>{{ form.submit(class='btn btn--primary u-fullwidth') }}</p>
