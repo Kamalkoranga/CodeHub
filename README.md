@@ -31,6 +31,7 @@ The objectives are:-
 - Customize your Profile
 - Goggle Authintication System
 - Developer Support
+- Responsive
 
 ## Tech Stack
 Technologies used in building CodeHub:
