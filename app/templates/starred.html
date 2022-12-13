@@ -48,7 +48,7 @@
                 
                 <a href="{{url_for('main.detail', filename=i.upload.filename)}}" style="font-weight: 600; font-size:16px;">{{
                     i.upload.user.username }}/{{ i.upload.title.replace(" ", "_") }}</a>
-                <cite>{{ i.upload.description }}</cite>
+                <cite style="font-style: normal;">{{ i.upload.description }}</cite>
                 <div class="footer" style="display: flex;
                     gap: 30px; font-size: 14px;">
                     <span><i class="fa-brands fa-python"></i> Python</span>
