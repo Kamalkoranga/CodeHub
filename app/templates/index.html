@@ -585,7 +585,7 @@
         <div class="column s-intro__about">
             <h2 class="s-intro__about-title">Hello, Welcome to CodeHub.</h2>
 
-            <p>CodeHub is a full stack web based application project which manages projects or programs of developers,
+            <p>CodeHub is a full stack web based application project which manages projects of developers,
                 students, CS
                 teachers, etc. by CS students of ST Lamart School.</p>
 
@@ -617,7 +617,7 @@
             <h5>Memmbers Joinded</h5>
             <p>
             <ul class="members">
-                {% for member in members[0:4] %}
+                {% for member in members[0:3] %}
                 <li>
                     <a href="{{url_for('main.user', username=member.username)}}">{{ member.username }}</a> <cite>...
                         recently joined</cite>
@@ -625,7 +625,7 @@
                 {% endfor %}
             </ul>
             {% if members|length >=5 %}
-            <span>.... {{ members|length - 4 }} + other members</span>
+            <span>.... {{ members|length - 3 }} + other members</span>
             {% endif %}
             </p>
         </div>
@@ -633,7 +633,7 @@
             <div class="stats__count" data-counter={{no|length}}><span>{{no|length}}</span>+</div>
             <h5>Saved Projects</h5>
             <p>
-                CodeHub allows you to save your programs or projects online, whether they are written in Python, C, C++,
+                CodeHub allows you to save your projects online, whether they are written in Python, C, C++,
                 Java, HTML,
                 or JS.
             </p>
@@ -660,7 +660,7 @@
         <div class="column lg-12">
             <h3 class="text-pretitle">What We Do</h3>
             <h1 class="text-display-title">
-                We make coding programs and manage them
+                We host your projects and maintain them
             </h1>
         </div>
     </div>
@@ -672,10 +672,10 @@
                 <span class="service-icon service-icon--product-design"></span>
             </div>
             <div class="service-text">
-                <h3 class="h4">In python, java, c++, etc</h3>
-                <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium.
-                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
-                    Sunt suscipit voluptas ipsa in tempora esse soluta sint aliquam rhoncus elit.
+                <h3 class="h4">Any Language</h3>
+                <p>
+                    You can write code in any language, such as python, c, c++, c#, html, css, js, java, php, and so on, and host it on
+                    CodeHub. It is now available for Python, but it will be opened for all other languages before <strong>April 2023</strong>.
                 </p>
             </div>
         </div>
@@ -685,10 +685,10 @@
                 <span class="service-icon service-icon--branding"></span>
             </div>
             <div class="service-text">
-                <h3 class="h4">Fast development</h3>
-                <p>Nulla pharetra diam sit amet nisl suscipit adipiscing bibendum est. Quis risus sed vulputate
-                    odio ut. Lectus arcu bibendum at varius vel. Lorem ipsum dolor sit amet consectetur adipiscing
-                    elit pellentesque. In nulla posuere sollicitudin aliquam ultrices.
+                <h3 class="h4">Productive</h3>
+                <p>
+                    You do not have to worry about the lengthy code hosting procedure while using CodeHub to host your code. You just copy
+                    the code and put it into codehub. As a result, and you will save time and become more productive.
                 </p>
             </div>
         </div>
@@ -698,10 +698,10 @@
                 <span class="service-icon service-icon--frontend"></span>
             </div>
             <div class="service-text">
-                <h3 class="h4">Accessible from anywhere</h3>
-                <p>Eleifend donec pretium vulputate sapien nec sagittis aliquam malesuada. Eu scelerisque felis
-                    imperdiet proin fermentum leo. Cursus turpis massa tincidunt dui. Quis commodo odio aenean sed
-                    adipiscing diam donec adipiscing. Congue mauris rhoncus elit.
+                <h3 class="h4">Accessibility</h3>
+                <p>
+                    If you have access to the internet and gmail, you can access your project's code from anywhere in the world. Simply log
+                    in from any device, including mobile phones, PCs, laptops, and tablets, then log out when done.
                 </p>
             </div>
         </div>
@@ -711,10 +711,10 @@
                 <span class="service-icon service-icon--research"></span>
             </div>
             <div class="service-text">
-                <h3 class="h4">Human Readable Code</h3>
-                <p>Nemo cupiditate ab quibusdam quaerat impedit magni. Earum suscipit ipsum laudantium.
-                    Quo delectus est. Maiores voluptas ab sit natus veritatis ut. Debitis nulla cumque veritatis.
-                    Sunt suscipit voluptas ipsa in tempora esse soluta sint donec adipiscing.
+                <h3 class="h4">Developer Support</h3>
+                <p>
+                    You can collaborate on any project in CodeHub with another developer. Additionally, you can assist other developers with
+                    their projects. If you have any questions, recommendations, or want to work together, please contact us at <a  style="color: #fff;font-weight:bolder;text-decoration:underline;" href="#contact" class="smoothscroll">here</a>.
                 </p>
             </div>
         </div>
@@ -728,7 +728,7 @@
     <div class="row section-header section-header--dark has-bottom-sep">
         <div class="column lg-12">
             <h3 class="text-pretitle">Recent Works</h3>
-            <h1 class="text-display-title">Here are some of our programs we have done lately. Feel free
+            <h1 class="text-display-title">Here are some of our projects we have done lately. Feel free
                 to check them out.</h1>
         </div>
     </div>
@@ -923,7 +923,7 @@
         </a>
         <div style="display: flex; align-items: center; justify-content: space-between; padding:20px 0; gap:10px;">
             <h6 style="margin: 0; text-transform: capitalize; letter-spacing: 0;font-size:14px; font-weight:600;">Recent
-                Programs</h6>
+                Projects</h6>
             <a href="{{url_for('main.new')}}" class="btn btn--primary"
                 style="height: 30px; padding: 10px; display: flex; align-items: center; margin: 0; letter-spacing:0; text-transform:capitalize"><i
                     class="fa-regular fa-square-plus" style="margin-right: 5px;"></i>New</a>
