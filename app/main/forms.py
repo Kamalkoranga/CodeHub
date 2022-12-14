@@ -40,7 +40,7 @@ class EditFileForm(FlaskForm):
     description = StringField('Description')
     code = TextAreaField(validators=[DataRequired()])
     filename = StringField('File name (with extension)', validators=[DataRequired()])
-    submit = SubmitField('Add')
+    submit = SubmitField('Save')
 
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')
