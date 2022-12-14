@@ -116,7 +116,7 @@ def new():
 def detail(filename):
     # print(current_app.root_path)
     file = Upload.query.filter_by(filename = filename).first()
-    with open(f'app/static/code/{file.filename}', 'wb') as f:
+    with open(f'app/static/code/{file.filename}', 'w') as f:
         f.write(file.data)
     fi = open(f'app/static/code/{file.filename}', 'r')
     a = fi.read()
