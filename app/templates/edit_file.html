@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock title %}
+
+{% block style %}
+<style>
+    label {
+        margin-bottom: 0;
+    }
+
+    @media screen and (min-width: 600px) {
+
+        .s-header__logo {
+            top: 1rem;
+        }
+    }
+
+    @media screen and (max-width:540px) {
+        .content {
+            max-width: 420px;
+        }
+    }
+</style>
+{% endblock style %}
+
+{% block nav %}
+<nav class="s-header__nav">
+    <ul>
+        <li><a href="{{url_for('main.starred')}}">Starred</a></li>
+        <li><a href="{{url_for('main.chat')}}">Chat</a></li>
+        <li><a href="{{url_for('main.developers')}}">developers</a></li>
+    </ul>
+</nav>
+
+<ul class="s-header__social">
+    <li>
+        <span style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
+            <a href="{{url_for('main.new')}}"><i class="fa-solid fa-plus" style="cursor: pointer;"></i></a>
+            <i class="fa-solid fa-caret-down dropbtn"></i>
+            <img style="margin-bottom: 0; border-radius:50%;height:auto;width:20px;" src="{{ current_user.avatar() }}"
+                alt="">
+            <i onclick="myFunction()" class="fa-solid fa-caret-down dropbtn"></i>
+        </span>
+        <div id="myDropdown" class="dropdown-content">
+            <a href="{{url_for('main.user', username=current_user.username)}}">Your profile</a>
+            <a href="{{url_for('main.starred')}}">Your stars</a>
+            <a href="{{url_for('main.projects')}}">Your projects</a>
+            <a href="{{url_for('auth.logout')}}" onclick="return confirm('Are you sure you want to sign out?')"
+                style="border-top: 1px solid;">Sign out</a>
+        </div>
+    </li>
+</ul>
+{% endblock nav %}
+
+{% block content %}
+<div class="content" style="margin: 100px auto; padding: 0 50px;">
+    <h1>Edit File</h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div>
+            {{ form.title.label }}
+            {{ form.title(size=32, placeholder='title', class='u-fullwidth') }}
+            {% for error in form.title.errors %}
+            <p style="color: #727373;text-align:center;">[{{ error }}]</p>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.description.label }}
+            {{ form.description(class='u-fullwidth', cols=50, rows=4, placeholder='description ...') }}
+            {% for error in form.description.errors %}
+            <p style="color: #727373;text-align:center;">[{{ error }}]</p>
+            {% endfor %}
+        </div>
+        <div>
+            {{ form.code.label }}
+            {{ form.code(cols="50", rows="4", spellcheck=false, placeholder="Enter something to save", class="u-fullwidth",
+            required=true) }}
+            {% for error in form.code.errors %}
+            <p style="color: #727373;text-align:center;">[{{ error }}]</p>
+            {% endfor %}
+        </div>
+        <div class="file-options">
+            <div class="option file-name">
+                {{ form.filename.label }}
+                {{ form.filename(class="u-fullwidth", spellcheck=false, placeholder="Enter file name") }}
+                {% for error in form.filename.errors %}
+                <p style="color: #727373; text-align:center;">[{{ error }}]</p>
+                {% endfor %}
+            </div>
+        </div>
+        <p>{{ form.submit(class='btn btn--primary u-fullwidth') }}</p>
+    </form>
+</div>
+{% endblock content%}

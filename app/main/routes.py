@@ -4,7 +4,7 @@ from flask import render_template, flash, redirect, url_for, request, current_ap
 from flask_login import current_user, login_required
 from app import db, socketio
 from flask_socketio import send
-from app.main.forms import EditProfileForm, EmptyForm, CommentForm, UploadFile
+from app.main.forms import EditProfileForm, EmptyForm, CommentForm, UploadFile, EditFileForm
 from app.models import User, Upload, Comment, Like
 from app.main import bp
 from app.email import new_send_email
@@ -199,6 +199,34 @@ def user(username):
     next_url = url_for('main.user', username=user.username, page=posts.next_num) if posts.has_next else None
     prev_url = url_for('main.user', username=user.username, page=posts.prev_num) if posts.has_prev else None
     return render_template('user.html', user=user, files=files, username=username, form = EmptyForm(), posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+@bp.route('/edit_file/<filename>', methods=['GET', 'POST'])
+@login_required
+def edit_file(filename):
+    file = Upload.query.filter_by(filename=filename).first()
+    if file:
+        with open(f'app/static/code/{file.filename}', 'wb') as f:
+            f.write(file.data)
+        fi = open(f'app/static/code/{file.filename}', 'r')
+        a = fi.read()
+    form = EditFileForm()
+    if form.validate_on_submit():
+        if '.py' in form.filename.data:
+            file.title =  form.title.data
+            file.description = form.description.data
+            file.filename = form.filename.data
+            file.data = form.code.data
+            db.session.commit()
+            flash('Your changes have been saved.')
+            return redirect(url_for('main.detail', filename=file.filename))
+        else:
+            flash('Add ".py" in filename')
+    if request.method == 'GET':
+        form.title.data = file.title
+        form.description.data = file.description
+        form.filename.data = file.filename
+        form.code.data = a
+    return render_template('edit_file.html', form=form, title=f'Edit - {file.filename}')
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required

@@ -35,5 +35,12 @@ class UploadFile(FlaskForm):
         if file is not None:
             raise ValidationError('Please use a different filename')
 
+class EditFileForm(FlaskForm):
+    title = StringField('Title', validators=[DataRequired()])
+    description = StringField('Description')
+    code = TextAreaField(validators=[DataRequired()])
+    filename = StringField('File name (with extension)', validators=[DataRequired()])
+    submit = SubmitField('Add')
+
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')
