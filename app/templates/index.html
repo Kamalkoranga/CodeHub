@@ -931,12 +931,15 @@
         <ul style="list-style-type: none; margin-left: 0;">
             {% for file in files %}
             {% if file.user.username == current_user.username %}
-            <li>
+            <li style="display:flex;align-items:center;gap:10px;">
                 <a href="{{ url_for('main.detail', filename=file.filename) }}"
                     style="display: flex; gap: 10px; align-items: center; font-size:14px;">
                     <img style="margin-bottom: 0; border-radius:50%;height:16px;" src="{{ file.user.avatar() }}" alt="">
                     {{current_user.username }}/{{ file.title.replace(" ", "_") }}
                 </a>
+                {% if file.private_file %}
+                    <cite>Private</cite>
+                {% endif %}
             </li>
             {% endif %}
             {% endfor %}
