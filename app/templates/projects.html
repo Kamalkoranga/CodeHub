@@ -36,7 +36,7 @@ Your Projects
 <section id="intro" class="s-intro target-section" style="margin: 0 auto;">
     <h3>Your Projects</h3>
     {% for i in current_user.uploads %}
-        <li><a href="{{url_for('main.detail', filename=i.filename)}}">{{ i.filename }}</a></li>
+        <li><a href="{{url_for('main.detail', filename=i.filename)}}">{{ i.filename }}</a>{% if i.private_file %} <small>- Private</small> {% endif %}</li>
     {% endfor %}
 </section>
 {% endblock content %}

@@ -92,6 +92,7 @@ class Upload(db.Model):
     description = db.Column(db.Text)
     filename = db.Column(db.String(50), unique=True)
     data = db.Column(db.Text)
+    private_file = db.Column(db.Boolean)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.String(64), db.ForeignKey('user.username'))
     comments = db.relationship('Comment', backref='upload')

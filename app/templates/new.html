@@ -112,6 +112,7 @@ New File | CodeHub
                     {% endfor %}
                 </div>
             </div>
+            <span style="display:flex; gap:20px;">{{ form.private_file() }} {{ form.private_file.label }}</span>
             <p>{{ form.submit(class='btn btn--primary u-fullwidth') }}</p>
         </form>
     </div>

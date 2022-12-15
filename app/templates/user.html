@@ -98,9 +98,16 @@
     <hr>
     <div class="table-responsive" style="max-width: 1200px;">
         {% for file in files|reverse %}
-        {% if file.user.username == username %}
-        {% include '_upload.html' %}
-        {% endif %}
+            {% if file.user.username == username %}
+                {% if user == current_user %}
+                    {% include '_upload.html' %}
+                {% else %}
+                    {% if file.private_file %}
+                    {% else %}
+                        {% include '_upload.html' %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
         {% endfor %}
         {% if prev_url %}
         <a href="{{ prev_url }}">Newer posts</a>

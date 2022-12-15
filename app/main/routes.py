@@ -103,7 +103,8 @@ def new():
             # file = form.file.data
             filename = form.filename.data
             code = form.code.data
-            upload = Upload(title = title, description = description, filename = filename, data = code, user_id=userr)
+            private_file = form.private_file.data
+            upload = Upload(title = title, description = description, filename = filename, data = code, private_file=private_file, user_id=userr)
             db.session.add(upload)
             db.session.commit()
             return redirect(url_for('main.index'))
@@ -205,7 +206,7 @@ def user(username):
 def edit_file(filename):
     file = Upload.query.filter_by(filename=filename).first()
     if file:
-        with open(f'app/static/code/{file.filename}', 'wb') as f:
+        with open(f'app/static/code/{file.filename}', 'w') as f:
             f.write(file.data)
         fi = open(f'app/static/code/{file.filename}', 'r')
         a = fi.read()
@@ -216,6 +217,7 @@ def edit_file(filename):
             file.description = form.description.data
             file.filename = form.filename.data
             file.data = form.code.data
+            file.private_file = form.private_file.data
             db.session.commit()
             flash('Your changes have been saved.')
             return redirect(url_for('main.detail', filename=file.filename))
@@ -226,6 +228,7 @@ def edit_file(filename):
         form.description.data = file.description
         form.filename.data = file.filename
         form.code.data = a
+        form.private_file.data = file.private_file
     return render_template('edit_file.html', form=form, title=f'Edit - {file.filename}')
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])

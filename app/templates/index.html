@@ -877,7 +877,7 @@
 
                     <label for="exampleMessage">Message</label>
                     <textarea class="u-fullwidth" placeholder="Your message" id="exampleMessage"
-                        name="message"></textarea>
+                        name="message" required></textarea>
 
                     <!-- <input class="btn--primary u-fullwidth" type="submit" value="Submit"> -->
                     <button class="btn--primary u-fullwidth" type="submit">Submit</button>
@@ -972,7 +972,10 @@
             {% for i in posts1|reverse %}
             {% for file in files %}
             {% if file.user.username == i.username %}
+            {% if file.private_file %}
+            {% else %}
             {% include '_upload.html' %}
+            {% endif %}
             {% endif %}
             {% endfor %}
             {% endfor %}
@@ -991,7 +994,10 @@
         <div id="explore" class="container" style="display:none">
             <hr style="margin: 7px 0 30px;">
             {% for file in posts2 %}
+            {% if file.private_file %}
+            {% else %}
             {% include '_upload.html' %}
+            {% endif %}
             {% endfor %}
             {% if prev_url2 %}
             <a href="{{ prev_url2 }}">Newer posts</a>

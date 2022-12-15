@@ -77,7 +77,7 @@
 
     <div class="content">
         <div class="child">
-            <h2 style="text-align:left; margin-bottom: 0px;">{{ file.filename.capitalize() }}</h2>
+            <h2 style="text-align:left; margin-bottom: 0px;">{{ file.filename.capitalize() }} {% if file.private_file %}<small>(Private)</small>{% endif %}</h2>
             <hr style="margin:20px; padding:0;">
             <pre style="border-radius: 20px;">
                 <code class="language-python">{{f}}</code>
