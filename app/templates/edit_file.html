@@ -90,7 +90,9 @@
                 {% endfor %}
             </div>
         </div>
-        <span style="display:flex; gap:20px;">{{ form.private_file() }} {{ form.private_file.label }}</span>
+        <span style="display:flex; gap:20px; margin:30px 0; align-items:center;">{{ form.private_file(style="margin:0;") }} {{
+            form.private_file.label(style="margin:0;") }} <cite style="font-size:12px; font-style:normal;">Nobody on the
+                internet can see this file/program.</cite></span>
         <p>{{ form.submit(class='btn btn--primary u-fullwidth') }}</p>
     </form>
 </div>

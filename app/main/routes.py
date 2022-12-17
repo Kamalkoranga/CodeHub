@@ -20,6 +20,13 @@ def before_request():
 def index():
     no = Upload.query.all()
     members=User.query.all()
+    files=Upload.query.order_by(Upload.timestamp.desc()).all()
+    public_files = []
+    for i in files:
+        if i.private_file:
+            pass
+        else:
+            public_files.append(i)
     if current_user.is_anonymous:
         f_users = []
     else:
@@ -73,7 +80,7 @@ def index():
     ]
     timeline.reverse()
     if current_user.is_anonymous:
-        return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users)
+        return render_template('index.html', files=public_files, no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users)
     else:
 
         page1 = request.args.get('page', 1, type=int)
@@ -128,7 +135,7 @@ def detail(filename):
         comments = Comment(author = username, content=comment, upload_id=file.id)
         db.session.add(comments)
         db.session.commit()
-        print(file.user)
+        # print(file.user)
         # Email Feature
         new_send_email(file.user.email, 'New Comment', 'email/comment', user=current_user, file=file)
 
@@ -259,7 +266,7 @@ def follow(username):
         current_user.follow(user)
         db.session.commit()
         flash('You are following {}!'.format(username))
-        print(user.email)
+        # print(user.email)
         # Email for follow
         new_send_email(user.email, 'New Follow', 'email/follow', user=current_user)
 
