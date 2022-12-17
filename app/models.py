@@ -20,7 +20,7 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.Text)
-    profile_pic = db.Column(db.Text, nullable=False)
+    profile_pic = db.Column(db.Text)
     uploads = db.relationship('Upload', backref='user', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
@@ -38,7 +38,15 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password_hash, password)
 
     def avatar(self):
-        return self.profile_pic
+        if self.profile_pic:
+            return self.profile_pic
+        else:
+            digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+            return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 120)
+
+    # def avatar(self, size):
+    #     digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+    #     return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
 
     def __repr__(self) -> str:
         return f'<User {self.username}>'
@@ -115,6 +123,7 @@ class Comment(db.Model):
     content = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     upload_id = db.Column(db.Integer, db.ForeignKey('upload.id'))
+    likes = db.relationship('Like', backref='comment', passive_deletes=True)
 
     def __repr__(self):
         return f'<Comment "{self.content[:20]}...">'
@@ -126,3 +135,4 @@ class Like(db.Model):
         'user.id', ondelete="CASCADE"), nullable=False)
     upload_id = db.Column(db.Integer, db.ForeignKey(
         'upload.id', ondelete="CASCADE"), nullable=False)
+    comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))

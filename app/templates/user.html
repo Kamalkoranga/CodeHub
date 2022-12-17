@@ -66,7 +66,7 @@
                 <h1>{{ user.username }}</h1>
                 {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
                 {% if user.last_seen %}<p>Last seen on: {{ moment(user.last_seen).format('LLL') }}</p>{% endif %}
-                <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+                <p><i class="fa-solid fa-users"></i> {{ user.followers.count() }} followers · {{ user.followed.count() }} following</p>
                 <!-- SHOWS LIST OF FOLLOWED USERS -->
                 <!-- {% for f in user.followed %}
                     <p>{{ f }}</p>

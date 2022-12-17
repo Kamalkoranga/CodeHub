@@ -4,9 +4,10 @@ from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from app import db, mail
 from app.auth import bp
-from app.auth.forms import ResetPasswordRequestForm, ResetPasswordForm
+from app.auth.forms import ResetPasswordRequestForm, ResetPasswordForm, RegisterForm, LoginForm
 from app.models import User
-from app.auth.email import send_password_reset_email
+# from app.auth.email import send_password_reset_email
+from app.email import new_send_email
 import os
 import pathlib
 import requests
@@ -29,9 +30,9 @@ flow = Flow.from_client_secrets_file(
     # redirect_uri="https://127.0.0.1:5000/auth/callback"
     redirect_uri = os.getenv('REDIRECT_URI')
 )
-'''
-@bp.route('/login', methods=['GET', 'POST'])
-def login():    
+
+@bp.route('/login_email', methods=['GET', 'POST'])
+def login_email():    
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = LoginForm()
@@ -39,7 +40,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password')
-            return redirect(url_for('auth.login'))
+            return redirect(url_for('auth.login_email'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
@@ -48,7 +49,7 @@ def login():
             return redirect(url_for('main.admin'))
         return redirect(url_for('main.index'))
     return render_template('auth/login.html', title='Sign In', form=form)
-'''
+
 @bp.route("/login")
 def login():
     authorization_url, state = flow.authorization_url()
@@ -124,6 +125,20 @@ def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
+@bp.route('/register_email', methods=['GET', 'POST'])
+def register_email():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.index'))
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user = User(name=form.name.data, username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('auth.login_email'))
+    return render_template('auth/register.html', title='Register', form=form)
+
 @bp.route('/register', methods=['GET', 'POST'])
 def register():    
     if current_user.is_authenticated:
@@ -151,9 +166,10 @@ def reset_password_request():
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user:
-            send_password_reset_email(user)
+            token = user.get_reset_password_token()
+            new_send_email(user.email, 'Reset Password', 'email/reset_password', user=user, token=token)
         flash('Check your email for the instructions to reset your password')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('auth.login_email'))
     return render_template('auth/reset_password_request.html', title='Reset Password', form=form)
 
 @bp.route('/reset_password/<token>', methods=['GET', 'POST'])
@@ -168,5 +184,5 @@ def reset_password(token):
         user.set_password(form.password.data)
         db.session.commit()
         flash('Your password has been reset.')
-        return redirect(url_for('auth.login'))
+        return redirect(url_for('auth.login_email'))
     return render_template('auth/reset_password.html', form=form)

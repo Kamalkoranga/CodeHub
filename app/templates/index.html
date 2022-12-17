@@ -533,8 +533,8 @@
 
 <ul class="s-header__social">
     {% if current_user.is_anonymous %}
-    <li><a href="{{url_for('auth.login')}}">Sign in</a></li>
-    <li><a href="{{url_for('auth.register')}}" class="stroke">Sign up</a></li>
+    <li><a href="{{url_for('auth.login_email')}}">Sign in</a></li>
+    <li><a href="{{url_for('auth.register_email')}}" class="stroke">Sign up</a></li>
     {% else %}
     <li>
         <span style="display: flex; align-items:center; gap:10px;font-size:14px;letter-spacing:0.05em;font-weight:600;">
@@ -589,7 +589,7 @@
                 students, CS
                 teachers, etc. by CS students of ST Lamart School.</p>
 
-            <a href="{{url_for('auth.register')}}" class="btn btn--primary u-fullwidth" style="text-align: center;">Sign
+            <a href="{{url_for('auth.register_email')}}" class="btn btn--primary u-fullwidth" style="text-align: center;">Sign
                 up for CodeHub</a>
 
         </div>

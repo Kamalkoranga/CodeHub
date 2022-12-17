@@ -19,6 +19,49 @@
             top: 1rem;
         }
     }
+
+    .login-btn {
+        justify-content: center;
+        flex-direction: row;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 220px;
+        padding: 10px;
+        border-radius: 20px;
+        background: #101112;
+        box-shadow:  -5px 5px 15px #060707,
+            5px -5px 15px #1a1b1d;
+    }
+
+    .btn-text {
+        justify-content: center;
+        padding: 10px;
+        font-family: 'Poppins', sans-serif;
+        color: rgb(85, 85, 85);
+    }
+
+    .login-btn img {
+        margin: 0;
+    }
+
+    #or::after {
+        content: " ";
+        position: absolute;
+        border: 1px solid;
+        top: 15px;
+        width: 200px;
+        left: 200px;
+    }
+
+    #or::before {
+        content: " ";
+        position: absolute;
+        border: 1px solid;
+        top: 15px;
+        width: 200px;
+        right: 200px;
+    }
     </style>
 {% endblock style %}
 
@@ -47,11 +90,22 @@
         </label>
 
         <p>{{ form.submit(class='btn--primary u-fullwidth') }}</p>
-        <p>
-            Forgot Your Password?
-            <a href="{{ url_for('auth.reset_password_request') }}">Click to Reset It</a>
-        </p>
     </form>
-    <p>New User? <a href="{{ url_for('auth.register') }}">Click to Register!</a></p>
+    <p id="or" style="margin:0; position:relative; text-align:center">OR</p>
+    <div align="center" style="margin: 20px 0;">
+        <a href="{{url_for('auth.login')}}" class="login-btn" style="text-decoration:none;">
+            <img id="google"
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2048px-Google_%22G%22_Logo.svg.png"
+                alt="Google" style="width:50px;height:50px;">
+            <div class="btn-text">
+                Login with Google
+            </div>
+        </a>
+    </div>
+    <p>
+        Forgot Your Password?
+        <a href="{{ url_for('auth.reset_password_request') }}">Click to Reset It</a>
+    </p>
+    <p>New User? <a href="{{ url_for('auth.register_email') }}">Click to Register!</a></p>
 </div>
 {% endblock %}
