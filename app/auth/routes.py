@@ -168,7 +168,6 @@ def validate():
         user.set_password(session['p'])
         db.session.add(user)
         db.session.commit()
-        flash("Verified")
         flash('Congratulations, you are now a registered user!')
         if current_app.config['ADMINS']:
             send_email(current_app.config['ADMINS'], 'New User', 'email/new_user', user=user)
