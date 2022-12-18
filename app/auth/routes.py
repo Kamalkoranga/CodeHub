@@ -17,6 +17,7 @@ from pip._vendor import cachecontrol
 import google.auth.transport.requests
 from flask_mail import Message
 from threading import Thread
+from random import randint
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
@@ -125,19 +126,59 @@ def logout():
     logout_user()
     return redirect(url_for('main.index'))
 
+otp = randint(10000, 99999)
+
 @bp.route('/register_email', methods=['GET', 'POST'])
 def register_email():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = RegisterForm()
-    if form.validate_on_submit():
-        user = User(name=form.name.data, username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
+    # if form.validate_on_submit():
+    #     user = User(name=form.name.data, username=form.username.data, email=form.email.data)
+    #     user.set_password(form.password.data)
+
+
+        # db.session.add(user)
+        # db.session.commit()
+        # flash('Congratulations, you are now a registered user!')
+        # return redirect(url_for('auth.login_email'))
+    return render_template('auth/register.html', title='Register', form=form)
+
+@bp.route('/verify', methods=["POST"])
+def verify():
+    # form = RegisterForm()
+    # if form.validate_on_submit():
+    #     user = User(name=form.name.data, username=form.username.data, email=form.email.data)
+    #     user.set_password(form.password.data)
+    #     new_send_email(user.email, 'Verify Email', 'email/code', user=user, code=otp)
+    user = User(name=request.form['name'], username=request.form['username'], email=request.form['email'])
+    # user.set_password(request.form['password'])
+    db.session.add(user)
+    db.session.commit()
+    session['e'] = user.email
+    session['p'] = request.form['password']
+    new_send_email(user.email, 'Verify Email', 'email/code', user=user, code=str(otp))
+    return render_template('auth/code.html')
+
+@bp.route('/validate', methods=["POST"])
+def validate():
+    user=User.query.filter_by(email=session['e']).first()
+    user_otp = request.form['otp']
+    if otp == int(user_otp):
+        user.set_password(session['p'])
         db.session.add(user)
         db.session.commit()
+        flash("Verified")
         flash('Congratulations, you are now a registered user!')
+        if current_app.config['ADMINS']:
+            send_email(current_app.config['ADMINS'], 'New User', 'email/new_user', user=user)
+            send_email([user.email], 'Welcome to CodeHub', 'email/welcome', user=user)
         return redirect(url_for('auth.login_email'))
-    return render_template('auth/register.html', title='Register', form=form)
+    else:
+        db.session.delete(user)
+        db.session.commit()
+        flash("Not Verified .. Try Again!!")
+        return redirect(url_for('auth.register_email'))
 
 @bp.route('/register', methods=['GET', 'POST'])
 def register():    

@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Verify OTP
+{% endblock title %}
+
+{% block content %}
+<section id="intro" class="s-intro target-section" style="margin: 0 auto;">
+    <h3>Verify OTP</h3>
+    <form action="{{url_for('auth.validate')}}" method="post">
+        <p>
+            <input type="text" id="otp" name="otp" placeholder="OTP">
+        </p>
+        <p><input type="submit" value="Submit"></p>
+    </form>
+</section>
+{% endblock content %}
