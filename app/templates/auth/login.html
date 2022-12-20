@@ -48,40 +48,40 @@
     #or::after {
         content: " ";
         position: absolute;
-        border: 1px solid;
+        border: 1px solid #222;
         top: 15px;
-        width: 200px;
+        width: 150px;
         left: 200px;
     }
 
     #or::before {
         content: " ";
         position: absolute;
-        border: 1px solid;
+        border: 1px solid #222;
         top: 15px;
-        width: 200px;
+        width: 150px;
         right: 200px;
     }
     </style>
 {% endblock style %}
 
 {% block content %}
-<div class="content" style="max-width: 400px; margin: 100px auto;">
-    <h3 class="u-add-bottom" style="text-align: center; margin-bottom:50px;">Sign In</h3>
+<div class="content" style="max-width: 400px; margin: 100px auto;border: 1px solid #24a89b;border-radius: 31px;padding: 0 30px;">
+    <h4 class="u-add-bottom" style="text-align: center; margin-bottom:50px;">Sign in to CodeHub</h4>
     <form method="POST" action="" novalidate>
         {{ form.hidden_tag() }}
         <div>
             <!-- {{ form.username.label }} -->
             {{ form.username(size=32, class='u-fullwidth', placeholder='Username') }}
             {% for error in form.username.errors %}
-                <span style="color: #727373;">[{{ error }}]</span>
+                <span style="color: #bf4042;">[{{ error }}]</span>
             {% endfor %}
         </div>
         <div>
             <!-- {{ form.password.label }} -->
             {{ form.password(size=32, class='u-fullwidth', placeholder='Password') }}
             {% for error in form.password.errors %}
-            <span style="color: #727373;">[{{ error }}]</span>
+            <span style="color: #bf4042;">[{{ error }}]</span>
             {% endfor %}
         </div>
         <label class="u-add-bottom">
@@ -102,10 +102,10 @@
             </div>
         </a>
     </div>
-    <p>
+    <p style="text-align:center;">
         Forgot Your Password?
         <a href="{{ url_for('auth.reset_password_request') }}">Click to Reset It</a>
     </p>
-    <p>New User? <a href="{{ url_for('auth.register_email') }}">Click to Register!</a></p>
+    <p style="text-align:center;">New User? <a href="{{ url_for('auth.register_email') }}">Click to Register!</a></p>
 </div>
 {% endblock %}

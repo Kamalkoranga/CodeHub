@@ -21,6 +21,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.Text)
     profile_pic = db.Column(db.Text)
+    isverified = db.Column(db.Boolean, default=False)
     uploads = db.relationship('Upload', backref='user', lazy='dynamic')
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
@@ -30,6 +31,9 @@ class User(db.Model, UserMixin):
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+    
+    def verify(self):
+        self.isverified = True
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)

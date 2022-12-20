@@ -40,7 +40,7 @@ def login_email():
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
+            flash('Incorrect password')
             return redirect(url_for('auth.login_email'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
@@ -95,6 +95,7 @@ def callback():
     if user is None or not user.check_password(google_id):
         user = User(name=name, username=username, email=email, profile_pic=profile_pic)
         user.set_password(google_id)
+        user.verify()
         db.session.add(user)
         db.session.commit()
         login_user(user, remember=True)
@@ -152,11 +153,11 @@ def verify():
     #     user.set_password(form.password.data)
     #     new_send_email(user.email, 'Verify Email', 'email/code', user=user, code=otp)
     user = User(name=request.form['name'], username=request.form['username'], email=request.form['email'])
-    # user.set_password(request.form['password'])
+    user.set_password(request.form['password'])
     db.session.add(user)
     db.session.commit()
     session['e'] = user.email
-    session['p'] = request.form['password']
+    # session['p'] = request.form['password']
     new_send_email(user.email, 'Verify Email', 'email/code', user=user, code=str(otp))
     return render_template('auth/code.html')
 
@@ -165,14 +166,21 @@ def validate():
     user=User.query.filter_by(email=session['e']).first()
     user_otp = request.form['otp']
     if otp == int(user_otp):
-        user.set_password(session['p'])
-        db.session.add(user)
+        # user.set_password(session['p'])
+        user.verify()
         db.session.commit()
+        login_user(user, remember=True)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('main.index')
+        if user.username == 'aman':
+            return redirect(url_for('main.admin'))
         flash('Congratulations, you are now a registered user!')
         if current_app.config['ADMINS']:
             send_email(current_app.config['ADMINS'], 'New User', 'email/new_user', user=user)
             send_email([user.email], 'Welcome to CodeHub', 'email/welcome', user=user)
-        return redirect(url_for('auth.login_email'))
+        return redirect(url_for('main.index'))
+        # return redirect(url_for('auth.login_email'))
     else:
         db.session.delete(user)
         db.session.commit()

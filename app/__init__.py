@@ -14,7 +14,7 @@ from flask_socketio import SocketIO, send
 db = SQLAlchemy()
 migrate = Migrate()
 login_manager = LoginManager()
-login_manager.login_view = 'auth.login'
+login_manager.login_view = 'auth.login_email'
 login_manager.login_message = 'Please log in to access this page.'
 mail = Mail()
 moment = Moment()

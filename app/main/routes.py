@@ -81,8 +81,13 @@ def index():
     timeline.reverse()
     if current_user.is_anonymous:
         return render_template('index.html', files=public_files, no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users)
-    else:
 
+    elif not current_user.is_anonymous and not current_user.isverified:
+        db.session.delete(current_user)
+        db.session.commit()
+        return render_template('notverified.html')
+
+    else:
         page1 = request.args.get('page', 1, type=int)
         posts1 = current_user.followed.paginate(page1, current_app.config['POSTS_PER_PAGE'], False)
 
@@ -200,7 +205,7 @@ def like(upload_id):
 @bp.route('/user/<username>')
 @login_required
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
+    user = User.query.filter_by(username=username).first()
     files = Upload.query.all()
     page = request.args.get('page', 1, type=int)
     posts = user.uploads.order_by(Upload.timestamp.desc()).paginate(page, current_app.config['POSTS_PER_PAGE'], False)

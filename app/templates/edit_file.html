@@ -63,14 +63,14 @@
             {{ form.title.label }}
             {{ form.title(size=32, placeholder='title', class='u-fullwidth') }}
             {% for error in form.title.errors %}
-            <p style="color: #727373;text-align:center;">[{{ error }}]</p>
+            <p style="color: #bf4042;text-align:center;">[{{ error }}]</p>
             {% endfor %}
         </div>
         <div>
             {{ form.description.label }}
             {{ form.description(class='u-fullwidth', cols=50, rows=4, placeholder='description ...') }}
             {% for error in form.description.errors %}
-            <p style="color: #727373;text-align:center;">[{{ error }}]</p>
+            <p style="color: #bf4042;text-align:center;">[{{ error }}]</p>
             {% endfor %}
         </div>
         <div>
@@ -78,7 +78,7 @@
             {{ form.code(cols="50", rows="4", spellcheck=false, placeholder="Enter something to save", class="u-fullwidth",
             required=true) }}
             {% for error in form.code.errors %}
-            <p style="color: #727373;text-align:center;">[{{ error }}]</p>
+            <p style="color: #bf4042;text-align:center;">[{{ error }}]</p>
             {% endfor %}
         </div>
         <div class="file-options">
@@ -86,7 +86,7 @@
                 {{ form.filename.label }}
                 {{ form.filename(class="u-fullwidth", spellcheck=false, placeholder="Enter file name") }}
                 {% for error in form.filename.errors %}
-                <p style="color: #727373; text-align:center;">[{{ error }}]</p>
+                <p style="color: #bf4042; text-align:center;">[{{ error }}]</p>
                 {% endfor %}
             </div>
         </div>

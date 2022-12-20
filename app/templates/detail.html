@@ -141,13 +141,13 @@
                 {{ form.username.label }}<br>
                 {{ form.username(size=50, readonly=true, style="width:100%;") }}<br>
                 {% for error in form.username.errors %}
-                <span style="color: red;">[{{ error }}]</span>
+                <span style="color: #bf4042;">[{{ error }}]</span>
                 {% endfor %}
             </p>
             <p style="flex-grow: 4;">
                 {{ form.comment(placeholder="Add a comment ...", style='width:100%; min-height:0;') }}<br>
                 {% for error in form.comment.errors %}
-                <span style="color: red;">[{{ error }}]</span>
+                <span style="color: #bf4042;">[{{ error }}]</span>
                 {% endfor %}
             </p>
             <p>{{ form.submit(class='btn--primary u-fullwidth') }}</p>

@@ -62,7 +62,7 @@
             {{ form.about_me.label }}<br>
             {{ form.about_me(cols=50, rows=4) }}<br>
             {% for error in form.about_me.errors %}
-            <span style="color: #727373;">[{{ error }}]</span>
+            <span style="color: #bf4042;">[{{ error }}]</span>
             {% endfor %}
         </p>
         <p>{{ form.submit(class='btn--primary u-fullwidth') }}</p>

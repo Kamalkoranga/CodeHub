@@ -48,62 +48,62 @@
     #or::after {
         content: " ";
         position: absolute;
-        border: 1px solid;
+        border: 1px solid #222;
         top: 15px;
-        width: 200px;
+        width: 150px;
         left: 200px;
     }
 
     #or::before {
         content: " ";
         position: absolute;
-        border: 1px solid;
+        border: 1px solid #222;
         top: 15px;
-        width: 200px;
+        width: 150px;
         right: 200px;
     }
 </style>
 {% endblock style %}
 
 {% block content %}
-<div class="content" style="max-width: 450px; margin: 100px auto; padding: 0 50px">
+<div class="content" style="max-width: 400px; margin: 100px auto;border: 1px solid #24a89b;border-radius: 31px;padding: 0 30px;">
 
-<h2 class="u-add-bottom" style="text-align: center; margin-bottom:50px;">Register</h2>
+<h4 class="u-add-bottom" style="text-align: center; margin-bottom:50px;">Create Account</h4>
 <form action="{{url_for('auth.verify')}}" method="post">
     {{ form.hidden_tag() }}
     <div>
         <!-- {{ form.username.label }} -->
         {{ form.name(size=32, class='u-fullwidth', placeholder='Name') }}
         {% for error in form.name.errors %}
-        <span style="color: #727373;">[{{ error }}]</span>
+        <span style="color: #bf4042;">[{{ error }}]</span>
         {% endfor %}
     </div>
     <div>
         <!-- {{ form.username.label }} -->
         {{ form.username(size=32, class='u-fullwidth', placeholder='Username') }}
         {% for error in form.username.errors %}
-        <span style="color: #727373;">[{{ error }}]</span>
+        <span style="color: #bf4042;">[{{ error }}]</span>
         {% endfor %}
     </div>
     <div>
         <!-- {{ form.email.label }} -->
         {{ form.email(size=64, class='u-fullwidth', placeholder='Email') }}
         {% for error in form.email.errors %}
-        <span style="color: #727373;">[{{ error }}]</span>
+        <span style="color: #bf4042;">[{{ error }}]</span>
         {% endfor %}
     </div>
     <div>
         <!-- {{ form.password.label }} -->
         {{ form.password(size=32, class='u-fullwidth', placeholder='Password') }}
         {% for error in form.password.errors %}
-        <span style="color: #727373;">[{{ error }}]</span>
+        <span style="color: #bf4042;">[{{ error }}]</span>
         {% endfor %}
     </div>
     <div>
         <!-- {{ form.password2.label }} -->
         {{ form.password2(size=32, class='u-fullwidth', placeholder='Repeat Password') }}
         {% for error in form.password2.errors %}
-        <span style="color: #727373;">[{{ error }}]</span>
+        <span style="color: #bf4042;">[{{ error }}]</span>
         {% endfor %}
     </div>
     <p>{{ form.submit(class='btn--primary u-fullwidth') }}</p>
