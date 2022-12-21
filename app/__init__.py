@@ -9,8 +9,6 @@ from flask_mail import Mail
 from flask_moment import Moment
 from config import Config
 from flask_socketio import SocketIO
-import sentry_sdk
-from sentry_sdk.integrations.flask import FlaskIntegration
 
 
 db = SQLAlchemy()
@@ -32,12 +30,6 @@ def create_app(config_class=Config):
     mail.init_app(app)
     moment.init_app(app)
     socketio.init_app(app, cors_allowed_origins="*")
-    sentry_sdk.init(
-        dsn="https://94539c0405a24d4d97af1f5a612120ab@o4504366229028864.ingest.sentry.io/4504366230274048",
-        integrations=[FlaskIntegration(),],
-        traces_sample_rate=1.0,
-        environment="production",
-        )
 
     from app.errors import bp as errors_bp
     app.register_blueprint(errors_bp)

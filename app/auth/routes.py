@@ -134,30 +134,29 @@ def register_email():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = RegisterForm()
-    # if form.validate_on_submit():
-    #     user = User(name=form.name.data, username=form.username.data, email=form.email.data)
-    #     user.set_password(form.password.data)
-
-
-        # db.session.add(user)
-        # db.session.commit()
-        # flash('Congratulations, you are now a registered user!')
-        # return redirect(url_for('auth.login_email'))
+    if form.validate_on_submit():
+        user = User(name=form.name.data, username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        session['e'] = user.email
+        return redirect(url_for('auth.verify', username=form.username.data))
     return render_template('auth/register.html', title='Register', form=form)
 
-@bp.route('/verify', methods=["POST"])
-def verify():
+@bp.route('/verify/<username>', methods=["POST", "GET"])
+def verify(username):
     # form = RegisterForm()
     # if form.validate_on_submit():
     #     user = User(name=form.name.data, username=form.username.data, email=form.email.data)
     #     user.set_password(form.password.data)
     #     new_send_email(user.email, 'Verify Email', 'email/code', user=user, code=otp)
-    user = User(name=request.form['name'], username=request.form['username'], email=request.form['email'])
-    user.set_password(request.form['password'])
-    db.session.add(user)
-    db.session.commit()
-    session['e'] = user.email
+    # user = User(name=request.form['name'], username=request.form['username'], email=request.form['email'])
+    # user.set_password(request.form['password'])
+    # db.session.add(user)
+    # db.session.commit()
+    # session['e'] = user.email
     # session['p'] = request.form['password']
+    user = User.query.filter_by(username=username).first()
     new_send_email(user.email, 'Verify Email', 'email/code', user=user, code=str(otp))
     return render_template('auth/code.html')
 
