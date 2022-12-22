@@ -4,7 +4,7 @@ from werkzeug.urls import url_parse
 from flask_login import login_user, logout_user, current_user
 from app import db, mail
 from app.auth import bp
-from app.auth.forms import ResetPasswordRequestForm, ResetPasswordForm, RegisterForm, LoginForm
+from app.auth.forms import ResetPasswordRequestForm, ResetPasswordForm, RegisterForm, LoginForm, Otp
 from app.models import User
 # from app.auth.email import send_password_reset_email
 from app.email import new_send_email
@@ -140,6 +140,8 @@ def register_email():
         db.session.add(user)
         db.session.commit()
         session['e'] = user.email
+        new_send_email(user.email, 'Verify Email', 'email/code', user=user, code=str(otp))
+        flash(f"Otp sent at {user.email}.")
         return redirect(url_for('auth.verify', username=form.username.data))
     return render_template('auth/register.html', title='Register', form=form)
 
@@ -154,16 +156,19 @@ def verify(username):
     # user.set_password(request.form['password'])
     # db.session.add(user)
     # db.session.commit()
-    # session['e'] = user.email
     # session['p'] = request.form['password']
     user = User.query.filter_by(username=username).first()
-    new_send_email(user.email, 'Verify Email', 'email/code', user=user, code=str(otp))
-    return render_template('auth/code.html')
+    session['e'] = user.email
+    form = Otp()
+    if form.validate_on_submit():
+        session['otp'] = form.otp.data
+        return redirect(url_for('auth.validate'))
+    return render_template('auth/code.html', form=form)
 
-@bp.route('/validate', methods=["POST"])
+@bp.route('/validate', methods=["POST", "GET"])
 def validate():
     user=User.query.filter_by(email=session['e']).first()
-    user_otp = request.form['otp']
+    user_otp = session['otp']
     if otp == int(user_otp):
         # user.set_password(session['p'])
         user.verify()

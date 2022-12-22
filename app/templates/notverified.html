@@ -4,10 +4,53 @@
 Unverified Account!
 {% endblock title %}
 
+{% block style %}
+<style>
+    .stroke {
+        display: flex;
+        border: 1px solid;
+        border-radius: 5px;
+        padding: 10px;
+    }
+
+    .stroke:hover {
+        background-color: #fff;
+        color: #000;
+    }
+
+    @media screen and (min-width: 600px){
+        .s-header__logo {
+            top: 1rem;
+        }
+    }
+</style>
+{% endblock style %}
+
+{% block nav %}
+<nav class="s-header__nav">
+    <ul>
+        {% if not current_user.is_anonymous %}
+        <li><a href="{{url_for('main.starred')}}">Starred</a></li>
+        <li><a href="{{url_for('main.chat')}}">Chat</a></li>
+        <li><a href="{{url_for('main.developers')}}">Developers</a></li>
+        {%endif%}
+    </ul>
+</nav>
+
+<ul class="s-header__social">
+    {% if current_user.is_anonymous %}
+    <li><a href="{{url_for('auth.login_email')}}">Sign in</a></li>
+    <li><a href="{{url_for('auth.register_email')}}" class="stroke">Sign up</a></li>
+    {% endif %}
+</ul>
+{% endblock nav %}
+
 {% block content %}
-<section id="intro" class="s-intro target-section" style="margin: 0 auto;word-break: break-all;max-width: 700px;">
+<section id="intro" class="s-intro target-section" style="margin: 100px auto;word-break: break-all;max-width: 700px;padding:0 20px;">
     <h1>Unverified Account</h1>
     <p>You have to create your account again!!</p>
     <strong>Tip: </strong><span>Verify your account by entering otp after creating account.</span>
+    <br>
+    <a href="{{url_for('auth.register_email')}}" class="btn btn--primary" style="margin-top:30px;">Create Account</a>
 </section>
 {% endblock content %}
