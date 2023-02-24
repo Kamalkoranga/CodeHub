@@ -5,7 +5,7 @@
 # [Codehub](https://codehub.gq)- Alternative of GitHub
 
 ## Inroduction
-CodeHub is a full stack web based application project which manages projects or programs of developers, students and teachers. It is an Internet hosting service for project development. It offers a wide range of features, including user-friendliness, developer contributions, and many more.
+CodeHub is a full stack web based application project which manages projects or programs of developers, students and teachers. It is an Internet hosting service for project development. It offers a wide range of features, including user-friendliness, developer contributions, and many more. While building this, I mainly focused in its backend part, rather than its ui.
 
 ## Objectives
 Objective of this project
@@ -32,6 +32,7 @@ The objectives are:-
 - Goggle Authintication System
 - Developer Support
 - Responsive
+- Email System
 
 ## Tech Stack
 Technologies used in building CodeHub:
