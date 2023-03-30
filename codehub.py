@@ -8,5 +8,5 @@ def make_shell_context():
     return {'db': db, 'User': User, 'Upload': Upload, 'comment': Comment}
 
 if __name__ == '__main__':
-    app.run(ssl_context="adhoc")
+    app.run(debug=True)
     # app.run(ssl_context=('cert.pem', 'key.pem'), debug=True)

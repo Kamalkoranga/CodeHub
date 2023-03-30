@@ -33,47 +33,47 @@ def index():
         f_users = current_user.followed.all()
     timeline = [
         {
-            'date': '6 September 2022',
+            'date': '13 January 2023',
             'heading': 'Beginning',
             'paragraph': 'Project Started'
         },
 
         {
-            'date': '12 September 2022',
+            'date': '1 February 2023',
             'heading': 'Deployed',
             'paragraph': 'Project Deployed Online at codehub.gq'
         },
 
         {
-            'date': '16 September 2022',
+            'date': '22 February 2023',
             'heading': 'UI updated',
             'paragraph': 'Updated webapp ui'
         },
 
         {
-            'date': '18 September 2022',
+            'date': '6 March 2023',
             'heading': 'Explore Page, Profile Page and Comment Section !!',
             'paragraph': "Explore the programs made by other developers, Check Profile to know about that particular developer at ''username'' and at last but not the least Comment section where you can appericiate about their code or suggest some easy methods at ''Explore page'' -> ''filename.py''"
         },
 
         {
-            'date': '20 September 2022',
+            'date': '11 March 2023',
             'heading': 'Title and Descriptions',
             'paragraph': 'Now you can give a stunning title and description about your program to others and fixed some ui bugs.'
         },
 
         {
-            'date': '21 September 2022',
+            'date': '17 March 2023',
             'heading': 'A new and modern UI',
             'paragraph': 'A new ui of homepage and dashboard after login, that is responsive and looks like github.'
         },
         {
-            'date': '24 September 2022',
+            'date': '23 March 2023',
             'heading': 'Follow and Unfollow other developers',
             'paragraph': 'Follow other developers to see their programs in seprate "Following" tab which helps to find their programs easily also you can unfollow others.'
         },
         {
-            'date': '1 November 2022',
+            'date': '1 April 2023',
             'heading': 'Completed development',
             'paragraph': 'We have completed our class 12th project "CodeHub". We will provide new features of CodeHub in future, So keep checking ... '
         }

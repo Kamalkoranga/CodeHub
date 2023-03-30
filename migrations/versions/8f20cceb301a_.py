@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 65fc4f850263
+Revision ID: 8f20cceb301a
 Revises: 
-Create Date: 2022-12-14 22:52:41.882007
+Create Date: 2023-03-30 13:35:49.719868
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '65fc4f850263'
+revision = '8f20cceb301a'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,7 +24,8 @@ def upgrade():
     sa.Column('username', sa.String(length=64), nullable=True),
     sa.Column('email', sa.String(length=120), nullable=True),
     sa.Column('password_hash', sa.Text(), nullable=True),
-    sa.Column('profile_pic', sa.Text(), nullable=False),
+    sa.Column('profile_pic', sa.Text(), nullable=True),
+    sa.Column('isverified', sa.Boolean(), nullable=True),
     sa.Column('about_me', sa.String(length=140), nullable=True),
     sa.Column('last_seen', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id')
@@ -43,6 +44,7 @@ def upgrade():
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('filename', sa.String(length=50), nullable=True),
     sa.Column('data', sa.Text(), nullable=True),
+    sa.Column('private_file', sa.Boolean(), nullable=True),
     sa.Column('timestamp', sa.DateTime(), nullable=True),
     sa.Column('user_id', sa.String(length=64), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.username'], ),
@@ -65,7 +67,9 @@ def upgrade():
     sa.Column('date_created', sa.DateTime(timezone=True), nullable=True),
     sa.Column('author', sa.Integer(), nullable=False),
     sa.Column('upload_id', sa.Integer(), nullable=False),
+    sa.Column('comment_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['author'], ['user.id'], ondelete='CASCADE'),
+    sa.ForeignKeyConstraint(['comment_id'], ['comment.id'], ),
     sa.ForeignKeyConstraint(['upload_id'], ['upload.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
