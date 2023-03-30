@@ -2,14 +2,14 @@
     "version": 2,
     "builds": [
         {
-            "src": "./codehub.py",
+            "src": "*.py",
             "use": "@vercel/python"
         }
     ],
     "routes": [
         {
-            "src": "/(.*)",
-            "dest": "/"
+            "src": "(.*)",
+            "dest": "/codehub.py"
         }
     ]
 }
