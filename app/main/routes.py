@@ -1,13 +1,28 @@
 
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request, current_app, jsonify
+from flask import (
+    render_template,
+    flash,
+    redirect,
+    url_for,
+    request,
+    current_app,
+    jsonify
+)
 from flask_login import current_user, login_required
 from app import db, socketio
 from flask_socketio import send
-from app.main.forms import EditProfileForm, EmptyForm, CommentForm, UploadFile, EditFileForm
+from app.main.forms import (
+    EditProfileForm,
+    EmptyForm,
+    CommentForm,
+    UploadFile,
+    EditFileForm
+)
 from app.models import User, Upload, Comment, Like
 from app.main import bp
 from app.email import new_send_email
+
 
 @bp.before_request
 def before_request():
@@ -15,12 +30,13 @@ def before_request():
         current_user.last_seen = datetime.now()
         db.session.commit()
 
+
 @bp.route('/index')
 @bp.route('/')
 def index():
     no = Upload.query.all()
-    members=User.query.all()
-    files=Upload.query.order_by(Upload.timestamp.desc()).all()
+    members = User.query.all()
+    files = Upload.query.order_by(Upload.timestamp.desc()).all()
     public_files = []
     for i in files:
         if i.private_file:
@@ -53,34 +69,52 @@ def index():
         {
             'date': '18 September 2022',
             'heading': 'Explore Page, Profile Page and Comment Section !!',
-            'paragraph': "Explore the programs made by other developers, Check Profile to know about that particular developer at ''username'' and at last but not the least Comment section where you can appericiate about their code or suggest some easy methods at ''Explore page'' -> ''filename.py''"
+            'paragraph': "Explore the programs made by other developers, \
+                Check Profile to know about that particular developer at \
+                    ''username'' and at last but not the least Comment \
+                        section where you can appericiate about their code or \
+                            suggest some easy methods at ''Explore page'' -> \
+                                ''filename.py''"
         },
 
         {
             'date': '20 September 2022',
             'heading': 'Title and Descriptions',
-            'paragraph': 'Now you can give a stunning title and description about your program to others and fixed some ui bugs.'
+            'paragraph': 'Now you can give a stunning title and description \
+                about your program to others and fixed some ui bugs.'
         },
 
         {
             'date': '21 September 2022',
             'heading': 'A new and modern UI',
-            'paragraph': 'A new ui of homepage and dashboard after login, that is responsive and looks like github.'
+            'paragraph': 'A new ui of homepage and dashboard after login, \
+                that is responsive and looks like github.'
         },
         {
             'date': '24 September 2022',
             'heading': 'Follow and Unfollow other developers',
-            'paragraph': 'Follow other developers to see their programs in seprate "Following" tab which helps to find their programs easily also you can unfollow others.'
+            'paragraph': 'Follow other developers to see their programs in \
+                seprate "Following" tab which helps to find their programs \
+                    easily also you can unfollow others.'
         },
         {
             'date': '1 November 2022',
             'heading': 'Completed development',
-            'paragraph': 'We have completed our class 12th project "CodeHub". We will provide new features of CodeHub in future, So keep checking ... '
+            'paragraph': 'We have completed our class 12th project "CodeHub". \
+                We will provide new features of CodeHub in future, So keep \
+                    checking ... '
         }
     ]
     timeline.reverse()
     if current_user.is_anonymous:
-        return render_template('index.html', files=public_files, no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users)
+        return render_template(
+            'index.html',
+            files=public_files,
+            no=no, members=members,
+            timeline=timeline,
+            comments=Comment.query.all(),
+            fuser=f_users
+        )
 
     elif not current_user.is_anonymous and not current_user.isverified:
         db.session.delete(current_user)
@@ -89,19 +123,46 @@ def index():
 
     else:
         page1 = request.args.get('page', 1, type=int)
-        posts1 = current_user.followed.paginate(page1, current_app.config['POSTS_PER_PAGE'], False)
+        posts1 = current_user.followed.paginate(
+            page1,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+        )
 
         page2 = request.args.get('page', 1, type=int)
-        posts2 = Upload.query.order_by(Upload.timestamp.desc()).paginate(page2, current_app.config['POSTS_PER_PAGE'], False)
+        posts2 = Upload.query.order_by(Upload.timestamp.desc()).paginate(
+            page2,
+            current_app.config['POSTS_PER_PAGE'],
+            False
+        )
 
+        next_url1 = url_for(
+            'main.index',
+            page=posts1.next_num
+        ) if posts1.has_next else None
+        prev_url1 = url_for(
+            'main.index',
+            page=posts1.prev_num
+        ) if posts1.has_prev else None
 
-        next_url1 = url_for('main.index', page=posts1.next_num) if posts1.has_next else None
-        prev_url1 = url_for('main.index', page=posts1.prev_num) if posts1.has_prev else None
+        next_url2 = url_for(
+            'main.index',
+            page=posts2.next_num
+        ) if posts2.has_next else None
+        prev_url2 = url_for(
+            'main.index',
+            page=posts2.prev_num
+        ) if posts2.has_prev else None
 
-        next_url2 = url_for('main.index', page=posts2.next_num) if posts2.has_next else None
-        prev_url2 = url_for('main.index', page=posts2.prev_num) if posts2.has_prev else None
+        return render_template(
+            'index.html',
+            files=Upload.query.order_by(Upload.timestamp.desc()).all(),
+            no=no, members=members, timeline=timeline,
+            comments=Comment.query.all(), fuser=f_users, posts1=posts1.items,
+            posts2=posts2.items, next_url1=next_url1,
+            prev_url1=prev_url1, next_url2=next_url2, prev_url2=prev_url2
+        )
 
-        return render_template('index.html', files=Upload.query.order_by(Upload.timestamp.desc()).all(), no=no, members=members, timeline=timeline, comments = Comment.query.all(), fuser=f_users, posts1=posts1.items, posts2=posts2.items, next_url1=next_url1, prev_url1=prev_url1, next_url2=next_url2, prev_url2=prev_url2)
 
 @bp.route('/new', methods=['GET', 'POST'])
 @login_required
@@ -110,13 +171,20 @@ def new():
     form = UploadFile()
     if form.validate_on_submit():
         if '.py' in form.filename.data:
-            title =  form.title.data
+            title = form.title.data
             description = form.description.data
             # file = form.file.data
             filename = form.filename.data
             code = form.code.data
             private_file = form.private_file.data
-            upload = Upload(title = title, description = description, filename = filename, data = code, private_file=private_file, user_id=userr)
+            upload = Upload(
+                title=title,
+                description=description,
+                filename=filename,
+                data=code,
+                private_file=private_file,
+                user_id=userr
+            )
             db.session.add(upload)
             db.session.commit()
             return redirect(url_for('main.index'))
@@ -124,11 +192,12 @@ def new():
             flash('Add ".py" in filename')
     return render_template('new.html', form=form)
 
+
 @bp.route('/file/<filename>', methods=['GET', 'POST'])
 @login_required
 def detail(filename):
     # print(current_app.root_path)
-    file = Upload.query.filter_by(filename = filename).first()
+    file = Upload.query.filter_by(filename=filename).first()
     with open(f'app/static/code/{file.filename}', 'w') as f:
         f.write(file.data)
     fi = open(f'app/static/code/{file.filename}', 'r')
@@ -137,25 +206,39 @@ def detail(filename):
     if form.validate_on_submit():
         username = form.username.data
         comment = form.comment.data
-        comments = Comment(author = username, content=comment, upload_id=file.id)
+        comments = Comment(author=username, content=comment, upload_id=file.id)
         db.session.add(comments)
         db.session.commit()
         # print(file.user)
         # Email Feature
-        new_send_email(file.user.email, 'New Comment', 'email/comment', user=current_user, file=file)
+        new_send_email(
+            file.user.email,
+            'New Comment',
+            'email/comment',
+            user=current_user,
+            file=file
+        )
 
         return redirect(url_for('main.detail', filename=file.filename))
     elif request.method == 'GET':
         form.username.data = current_user.username
 
-    return render_template('detail.html',f=a, file=file, username=file.user.username, form=form, users=User.query.all())
+    return render_template(
+        'detail.html',
+        f=a, file=file, username=file.user.username, form=form,
+        users=User.query.all()
+    )
+
 
 @bp.route('/starred')
 @login_required
 def starred():
     return render_template('starred.html')
 
+
 msg = ''
+
+
 @socketio.on('message')
 def handle(message):
     global msg
@@ -163,7 +246,8 @@ def handle(message):
 
     if message != 'User connected!':
         send(message, broadcast=True)
-        msg=message
+        msg = message
+
 
 @bp.route('/chat')
 @login_required
@@ -171,21 +255,27 @@ def chat():
     global msg
     return render_template('chat.html', msg=msg)
 
+
 @bp.route('/developers')
 @login_required
 def developers():
     return render_template('developers.html', users=User.query.all())
+
 
 @bp.route('/projects')
 @login_required
 def projects():
     return render_template('projects.html')
 
+
 @bp.route('/like-file/<upload_id>', methods=['GET', 'POST'])
 @login_required
 def like(upload_id):
     file = Upload.query.filter_by(id=upload_id).first()
-    like = Like.query.filter_by(author=current_user.id, upload_id=upload_id).first()
+    like = Like.query.filter_by(
+        author=current_user.id,
+        upload_id=upload_id
+    ).first()
 
     if not file:
         flash("File does not exist.", category='error')
@@ -197,9 +287,14 @@ def like(upload_id):
         like = Like(author=current_user.id, upload_id=upload_id)
         db.session.add(like)
         db.session.commit()
-        new_send_email(file.user.email, 'Program starred', 'email/starred', user=current_user, file=file)
-    
-    return jsonify({'likes': len(file.likes), 'liked': current_user.id in map(lambda x: x.author, file.likes)})
+        new_send_email(
+            file.user.email, 'Program starred', 'email/starred',
+            user=current_user, file=file
+        )
+    return jsonify({
+        'likes': len(file.likes),
+        'liked': current_user.id in map(lambda x: x.author, file.likes)
+    })
 
 
 @bp.route('/user/<username>')
@@ -208,10 +303,21 @@ def user(username):
     user = User.query.filter_by(username=username).first()
     files = Upload.query.all()
     page = request.args.get('page', 1, type=int)
-    posts = user.uploads.order_by(Upload.timestamp.desc()).paginate(page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('main.user', username=user.username, page=posts.next_num) if posts.has_next else None
-    prev_url = url_for('main.user', username=user.username, page=posts.prev_num) if posts.has_prev else None
-    return render_template('user.html', user=user, files=files, username=username, form = EmptyForm(), posts=posts.items, next_url=next_url, prev_url=prev_url)
+    posts = user.uploads.order_by(Upload.timestamp.desc()).paginate(
+        page, current_app.config['POSTS_PER_PAGE'], False
+    )
+    next_url = url_for(
+        'main.user', username=user.username, page=posts.next_num
+    ) if posts.has_next else None
+    prev_url = url_for(
+        'main.user', username=user.username, page=posts.prev_num
+    ) if posts.has_prev else None
+    return render_template(
+        'user.html', user=user, files=files, username=username,
+        form=EmptyForm(), posts=posts.items, next_url=next_url,
+        prev_url=prev_url
+    )
+
 
 @bp.route('/edit_file/<filename>', methods=['GET', 'POST'])
 @login_required
@@ -225,7 +331,7 @@ def edit_file(filename):
     form = EditFileForm()
     if form.validate_on_submit():
         if '.py' in form.filename.data:
-            file.title =  form.title.data
+            file.title = form.title.data
             file.description = form.description.data
             file.filename = form.filename.data
             file.data = form.code.data
@@ -241,7 +347,10 @@ def edit_file(filename):
         form.filename.data = file.filename
         form.code.data = a
         form.private_file.data = file.private_file
-    return render_template('edit_file.html', form=form, title=f'Edit - {file.filename}')
+    return render_template(
+        'edit_file.html', form=form, title=f'Edit - {file.filename}'
+    )
+
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
@@ -254,7 +363,10 @@ def edit_profile():
         return redirect(url_for('main.user', username=current_user.username))
     if request.method == 'GET':
         form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html', title='Edit Profile', form=form)
+    return render_template(
+        'edit_profile.html', title='Edit Profile', form=form
+    )
+
 
 @bp.route('/follow/<username>', methods=['POST'])
 @login_required
@@ -273,10 +385,13 @@ def follow(username):
         flash('You are following {}!'.format(username))
         # print(user.email)
         # Email for follow
-        new_send_email(user.email, 'New Follow', 'email/follow', user=current_user)
+        new_send_email(
+            user.email, 'New Follow', 'email/follow', user=current_user
+        )
 
         return redirect(url_for('main.user', username=username))
     return redirect(url_for('main.index'))
+
 
 @bp.route('/unfollow/<username>', methods=['POST'])
 @login_required
@@ -296,16 +411,18 @@ def unfollow(username):
         return redirect(url_for('main.user', username=username))
     return redirect(url_for('main.index'))
 
+
 @bp.route('/delete/<filename>')
 def delete_file(filename):
     file = Upload.query.filter_by(filename=filename).first()
-    userr = file.user
+    # userr = file.user
     db.session.delete(file)
     db.session.commit()
     flash('Programme deleted')
     if current_user.username == 'aman':
         return redirect(url_for('main.admin'))
     return redirect(url_for('main.index'))
+
 
 @bp.route('/deleteUser/<username>')
 def delete_user(username):
@@ -324,6 +441,7 @@ def delete_user(username):
     else:
         return redirect(url_for('main.index'))
 
+
 @bp.post('/comments/<int:comment_id>/delete')
 def delete_comment(comment_id):
     comment = Comment.query.get_or_404(comment_id)
@@ -332,10 +450,13 @@ def delete_comment(comment_id):
     db.session.commit()
     return redirect(url_for('main.detail', filename=filename))
 
+
 @bp.route('/admin')
 @login_required
 def admin():
     admin = current_user.username
     files = Upload.query.all()
     users = User.query.all()
-    return render_template('index.html', files=files, users=users, admin=admin, members=users)
+    return render_template(
+        'index.html', files=files, users=users, admin=admin, members=users
+    )

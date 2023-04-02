@@ -8,13 +8,18 @@ import jwt
 from app import db, login_manager
 from sqlalchemy.sql import func
 
-followers = db.Table('followers',
+followers = db.Table(
+    'followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
 )
 
-# The User class is a database model that inherits from db.Model and UserMixin
+
 class User(db.Model, UserMixin):
+    """
+    The User class is a database model that
+    inherits from db.Model and UserMixin
+    """
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), nullable=False)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -31,7 +36,7 @@ class User(db.Model, UserMixin):
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
-    
+
     def verify(self):
         self.isverified = True
 
@@ -44,13 +49,13 @@ class User(db.Model, UserMixin):
     def avatar(self):
         if self.profile_pic:
             return self.profile_pic
-        else:
-            digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-            return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, 120)
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={120}'
 
     # def avatar(self, size):
     #     digest = md5(self.email.lower().encode('utf-8')).hexdigest()
-    #     return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
+    #     return 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'\
+        # .format(digest, size)
 
     def __repr__(self) -> str:
         return f'<User {self.username}>'
@@ -69,14 +74,18 @@ class User(db.Model, UserMixin):
 
     def followed_posts(self):
         """
-        "Return a query object that contains all the posts of the users that the current user is
-        following, as well as the current user's own posts, ordered by timestamp."
+        "Return a query object that contains all the posts of the users
+        that the current user is following, as well as the current user's
+        own posts, ordered by timestamp."
 
-        The first line of the function is a query object that contains all the posts of the users that
-        the current user is following. The second line is a query object that contains the current
-        user's own posts. The third line combines the two query objects into one, and orders the posts
-        by timestamp
-        :return: The followed.union(own) is returning a union of the two queries.
+        The first line of the function is a query object that contains all the
+        posts of the users that the current user is following. The second line
+        is a query object that contains the current user's own posts. The
+        third line combines the two query objects into one, and orders the
+        posts by timestamp.
+
+        :return: The followed.union(own) is returning a union of the two
+        queries.
         """
         followed = Upload.query.join(
             followers, (followers.c.followed_id == Upload.user_id)).filter(
@@ -85,20 +94,31 @@ class User(db.Model, UserMixin):
         return followed.union(own).order_by(Upload.timestamp.desc())
 
     def get_reset_password_token(self, expires_in=600):
-        return jwt.encode({'reset_password': self.id, 'exp': time() + expires_in}, current_app.config['SECRET_KEY'], algorithm='HS256')
+        return jwt.encode(
+            {
+                'reset_password': self.id,
+                'exp': time() + expires_in
+            },
+            current_app.config['SECRET_KEY'], algorithm='HS256')
 
     @staticmethod
     def verify_reset_password_token(token):
         try:
-            id = jwt.decode(token, current_app.config['SECRET_KEY'],
-            algorithms=['HS256'])['reset_password']
-        except:
+            id = jwt.decode(
+                token,
+                current_app.config['SECRET_KEY'],
+                algorithms=['HS256']
+            )['reset_password']
+        except Exception:
             return
         return User.query.get(id)
 
-# The Upload class is a database model that represents a file upload. It has a title, description,
-# filename, data, timestamp, user_id, and comments
+
 class Upload(db.Model):
+    """
+    The Upload class is a database model that represents a file upload. It
+    has a title, description, filename, data, timestamp, user_id, and comments
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50))
     description = db.Column(db.Text)
@@ -113,15 +133,20 @@ class Upload(db.Model):
     def __repr__(self) -> str:
         return f'<Upload {self.filename}>'
 
+
 @login_manager.user_loader
 def load_user(id):
     return User.query.get(int(id))
 
-# It defines a table named comment, with four columns, id, author, content, and timestamp. The id
-# column is an integer and is the primary key of the table. The author column is a string with a
-# maximum length of 100 characters. The content column is a text column. The timestamp column is a
-# datetime column
+
 class Comment(db.Model):
+    """
+    It defines a table named comment, with four columns, id, author, content,
+    and timestamp. The id column is an integer and is the primary key of the
+    table. The author column is a string with a maximum length of 100
+    characters. The content column is a text column. The timestamp column is a
+    datetime column
+    """
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String(100))
     content = db.Column(db.Text)
@@ -131,6 +156,7 @@ class Comment(db.Model):
 
     def __repr__(self):
         return f'<Comment "{self.content[:20]}...">'
+
 
 class Like(db.Model):
     id = db.Column(db.Integer, primary_key=True)

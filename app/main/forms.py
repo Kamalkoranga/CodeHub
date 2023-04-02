@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, TextAreaField, BooleanField
 from wtforms.validators import ValidationError, DataRequired, Length
-from app.models import User, Upload
+from app.models import Upload
+
 
 class EditProfileForm(FlaskForm):
     # username = StringField('Username', validators=[DataRequired()])
@@ -12,17 +13,25 @@ class EditProfileForm(FlaskForm):
         super(EditProfileForm, self).__init__(*args, **kwargs)
         self.original_username = original_username
 
+
 class CommentForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    comment = TextAreaField('Comment', validators=[DataRequired(), Length(min=0, max=200)])
+    comment = TextAreaField(
+        'Comment',
+        validators=[DataRequired(), Length(min=0, max=200)]
+    )
     submit = SubmitField('Comment')
+
 
 class UploadFile(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description (optional)')
     code = TextAreaField(validators=[DataRequired()])
     private_file = BooleanField('Private')
-    filename = StringField('File name (with extension)', validators=[DataRequired()])
+    filename = StringField(
+        'File name (with extension)',
+        validators=[DataRequired()]
+    )
     submit = SubmitField('Add')
 
     def validate_filename(self, filename):
@@ -30,13 +39,18 @@ class UploadFile(FlaskForm):
         if file is not None:
             raise ValidationError('Please use a different filename')
 
+
 class EditFileForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     description = StringField('Description')
     code = TextAreaField(validators=[DataRequired()])
     private_file = BooleanField('Private')
-    filename = StringField('File name (with extension)', validators=[DataRequired()])
+    filename = StringField(
+        'File name (with extension)',
+        validators=[DataRequired()]
+    )
     submit = SubmitField('Save')
+
 
 class EmptyForm(FlaskForm):
     submit = SubmitField('Submit')

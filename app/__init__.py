@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
-from config import Config
+from config import Config, Development
 from flask_socketio import SocketIO
 
 
@@ -19,6 +19,7 @@ login_manager.login_message = 'Please log in to access this page.'
 mail = Mail()
 moment = Moment()
 socketio = SocketIO()
+
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -44,7 +45,10 @@ def create_app(config_class=Config):
         if app.config['MAIL_SERVER']:
             auth = None
             if app.config['MAIL_USERNAME'] or app.config['MAIL_PASSWORD']:
-                auth = (app.config['MAIL_USERNAME'], app.config['MAIL_PASSWORD'])
+                auth = (
+                    app.config['MAIL_USERNAME'],
+                    app.config['MAIL_PASSWORD']
+                )
             secure = None
             if app.config['MAIL_USE_TLS']:
                 secure = ()
@@ -64,7 +68,11 @@ def create_app(config_class=Config):
         else:
             if not os.path.exists('logs'):
                 os.mkdir('logs')
-            file_handler = RotatingFileHandler('logs/codehub.log', maxBytes=10240, backupCount=10)
+            file_handler = RotatingFileHandler(
+                'logs/codehub.log',
+                maxBytes=10240,
+                backupCount=10
+            )
             file_handler.setFormatter(logging.Formatter(
                 '%(asctime)s %(levelname)s: %(message)s '
                 '[in %(pathname)s:%(lineno)d]'))
