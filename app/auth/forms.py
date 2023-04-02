@@ -1,7 +1,14 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, IntegerField
+from wtforms import (
+    StringField,
+    PasswordField,
+    BooleanField,
+    SubmitField,
+    IntegerField
+)
 from wtforms.validators import DataRequired, Email, EqualTo, ValidationError
 from app.models import User
+
 
 class LoginForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
@@ -14,12 +21,16 @@ class LoginForm(FlaskForm):
         if user is None:
             raise ValidationError('User not found!!')
 
+
 class RegisterForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     username = StringField('Username', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    password2 = PasswordField('Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    password2 = PasswordField(
+        'Repeat Password',
+        validators=[DataRequired(), EqualTo('password')]
+    )
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -32,6 +43,7 @@ class RegisterForm(FlaskForm):
         if user is not None:
             raise ValidationError('Please use a different email address.')
 
+
 class ResetPasswordRequestForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     submit = SubmitField('Request Password Reset')
@@ -41,13 +53,16 @@ class ResetPasswordRequestForm(FlaskForm):
         if not user:
             raise ValidationError('User with this email not found!')
 
+
 class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
-    'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+        'Repeat Password',
+        validators=[DataRequired(), EqualTo('password')]
+    )
     submit = SubmitField('Request Password Reset')
+
 
 class Otp(FlaskForm):
     otp = IntegerField('OTP', validators=[DataRequired()])
     submit = SubmitField('Verify')
-    
