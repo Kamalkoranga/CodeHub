@@ -3,6 +3,10 @@ from api.main import main
 from api.models import User, TimeLine, Upload, Comment, Like
 from api import db
 
+'''
+    GET METHODS
+'''
+
 
 @main.route('/users/<username>', methods=['GET'])
 def get_one_user(username):
@@ -96,6 +100,7 @@ def get_files():
     response = {}
     for i in range(len(files)):
         response[i] = {
+            "id": files[i].id,
             "title": files[i].title,
             "description": files[i].description,
             "filename": files[i].filename,
@@ -106,6 +111,7 @@ def get_files():
             "developer": files[i].user_id,
             "comments": {
                 j: {
+                    'id': files[i].comments[j].id,
                     files[i].comments[j].author: files[i].comments[j].content
                 } for j in range(len(files[i].comments))
             },
@@ -117,6 +123,11 @@ def get_files():
         }
         # print(files[i].comments)
     return jsonify(response), 200
+
+
+'''
+    POST METHODS
+'''
 
 
 @main.route('/timelines', methods=['POST'])
@@ -220,3 +231,43 @@ def follow_unfollow_user(username):
         current_user.follow(user)
         db.session.commit()
         return jsonify({'msg': 'followed user'}), 200
+
+
+'''
+    DELETE METHODS
+'''
+
+
+@main.route('/files/<filename>', methods=['DELETE'])
+def delete_file(filename):
+    file = Upload.query.filter_by(filename=filename).first()
+    if not file:
+        return jsonify({'msg': 'file not found'}), 400
+    db.session.delete(file)
+    db.session.commit()
+    return jsonify({'msg': 'file deleted!'}), 200
+
+
+@main.route('/users/<username>', methods=['DELETE'])
+def delete_user(username):
+    user = User.query.filter_by(username=username).first()
+    if user:
+        if user.uploads:
+            files = user.uploads
+            for file in files:
+                db.session.delete(file)
+                db.session.commit()
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({'msg': 'user deleted!'}), 200
+    return jsonify({'msg': 'user not found'}), 400
+
+
+@main.route('/comments/<int:comment_id>', methods=['DELETE'])
+def delete_comment(comment_id):
+    comment = Comment.query.filter_by(id=comment_id).first()
+    if not comment:
+        return jsonify({'msg': 'comment not found'}), 400
+    db.session.delete(comment)
+    db.session.commit()
+    return jsonify({'msg': 'comment deleted'}), 200
