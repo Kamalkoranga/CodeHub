@@ -3601,7 +3601,7 @@ img.u-pull-left {
 .s-works {
     padding: 0 25px;
     padding-top    : var(--vspace-5);
-    /* padding-bottom : var(--vspace-4); */
+    padding-bottom : var(--vspace-4);
     /* padding-bottom: 80px; */
 }
 
@@ -4013,7 +4013,6 @@ img.u-pull-left {
     background-color : var(--color-gray-14);
     padding-top      : var(--vspace-5);
     padding-bottom   : var(--vspace-3);
-    padding-bottom: var(--vspace-4);
 }
 
 .s-contact__content {
