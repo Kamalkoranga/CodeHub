@@ -5,7 +5,7 @@ from flask import current_app
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
-from app import db, login_manager
+from api import db, login_manager
 from sqlalchemy.sql import func
 
 followers = db.Table(
@@ -166,3 +166,11 @@ class Like(db.Model):
     upload_id = db.Column(db.Integer, db.ForeignKey(
         'upload.id', ondelete="CASCADE"), nullable=False)
     comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
+
+
+class TimeLine(db.Model):
+    __tablename__ = 'timelines'
+    id = db.Column(db.Integer, primary_key=True)
+    date = db.Column(db.String(120), nullable=False)
+    title = db.Column(db.String(120), nullable=False)
+    body = db.Column(db.Text)

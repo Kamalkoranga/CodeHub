@@ -24,5 +24,5 @@ class Config(object):
 
 
 class Development(Config):
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_DATABASE_URI = "postgresql://postgres:kamal12345@localhost:5432/codehub_api"
     DEBUG = True
