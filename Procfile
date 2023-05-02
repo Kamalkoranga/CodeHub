@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn codehub:app
+web: flask db upgrade; gunicorn codehub:api
