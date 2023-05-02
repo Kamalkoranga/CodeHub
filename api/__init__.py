@@ -1,6 +1,3 @@
-import logging
-from logging.handlers import SMTPHandler, RotatingFileHandler
-import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -9,7 +6,7 @@ from flask_mail import Mail
 from flask_moment import Moment
 from config import Config, Development
 from flask_socketio import SocketIO
-
+from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
 migrate = Migrate()
@@ -19,6 +16,7 @@ login_manager.login_message = 'Please log in to access this page.'
 mail = Mail()
 moment = Moment()
 socketio = SocketIO()
+jwt = JWTManager()
 
 
 def create_app(config_class=Development):
@@ -27,6 +25,7 @@ def create_app(config_class=Development):
 
     db.init_app(api)
     migrate.init_app(api, db)
+    jwt.init_app(api)
     login_manager.init_app(api)
     mail.init_app(api)
     moment.init_app(api)
@@ -35,8 +34,8 @@ def create_app(config_class=Development):
     # from app.errors import bp as errors_bp
     # api.register_blueprint(errors_bp)
 
-    # from app.auth import bp as auth_bp
-    # api.register_blueprint(auth_bp, url_prefix='/auth')
+    from api.auth import auth as auth_bp
+    api.register_blueprint(auth_bp, url_prefix='/auth')
 
     from api.main import main as main_bp
     api.register_blueprint(main_bp)

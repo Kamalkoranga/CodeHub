@@ -170,20 +170,6 @@ def add_new_file(username):
     return jsonify({'msg': 'added!'}), 200
 
 
-@main.route('/users', methods=['POST'])
-def add_new_user():
-    data = request.get_json()
-    new_user = User(
-        name=data['name'],
-        username=data['username'],
-        email=data['email']
-    )
-    new_user.set_password(data['password'])
-    db.session.add(new_user)
-    db.session.commit()
-    return jsonify({'msg': 'added!'}), 200
-
-
 @main.route('/comment/<filename>', methods=['POST'])
 def add_new_comment(filename):
     data = request.get_json()

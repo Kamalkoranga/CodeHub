@@ -7,6 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from api import db, login_manager
 from sqlalchemy.sql import func
+from random import randint
 
 followers = db.Table(
     'followers',
@@ -26,12 +27,16 @@ class User(db.Model, UserMixin):
     isverified = db.Column(db.Boolean, default=False)
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
+    otp = db.Column(db.Integer, default=randint(100000, 999999))
     likes = db.relationship('Like', backref='user', passive_deletes=True)
     followed = db.relationship(
         'User', secondary=followers,
         primaryjoin=(followers.c.follower_id == id),
         secondaryjoin=(followers.c.followed_id == id),
         backref=db.backref('followers', lazy='dynamic'), lazy='dynamic')
+
+    def set_otp(self, otp):
+        self.otp = otp
 
     def verify(self):
         self.isverified = True
