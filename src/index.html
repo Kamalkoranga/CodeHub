@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CodeHub</title>
+
+    <script>
+      document.documentElement.classList.remove("no-js");
+      document.documentElement.classList.add("js");
+    </script>
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/vendor.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- favicons
+    ================================================== -->
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="images/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="images/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="images/favicon-16x16.png"
+    />
+    <link rel="manifest" href="site.webmanifest" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css"
+      integrity="sha512-5A8nwdMOWrSz20fDsjczgUidUBR8liPYU+WymTZP1lmY9G6Oc7HlZv156XqnsgNUzTyMefFTcsFH/tnJE/+xBg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background-color: #101112;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #24a89b;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #fff;
+      }
+
+      ::selection {
+        background-color: white;
+        color: #24a89b;
+      }
+
+      .s-header__social a {
+        color: #fff;
+        font-weight: 500;
+      }
+    </style>
+  </head>
+
+  <body id="top">
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+      <div id="loader"></div>
+    </div>
+
+    <!-- page wrap
+    ================================================== -->
+    <div class="s-pagewrap">
+      <header class="s-header">
+        <div class="s-header__block">
+          <div class="s-header__logo">
+            <a class="logo logo1" href="/">
+              <img src="images/logo.png" alt="Homepage" />
+            </a>
+          </div>
+
+          <a class="s-header__menu-toggle" href="#0"><span>Menu</span></a>
+        </div>
+
+        <div class="row s-header__nav-wrap">
+          <nav class="s-header__nav">
+            <ul>
+              <li class="current">
+                <a href="#intro" class="smoothscroll">Intro</a>
+              </li>
+              <li><a href="#services" class="smoothscroll">What We Do</a></li>
+              <li><a href="#works" class="smoothscroll">Our Works</a></li>
+              <li><a href="#contact" class="smoothscroll">Get In Touch</a></li>
+            </ul>
+          </nav>
+
+          <ul class="s-header__social">
+            <li><a href="{{url_for('auth.login_email')}}">Sign in</a></li>
+            <li>
+              <a href="{{url_for('auth.register_email')}}" class="stroke"
+                >Sign up</a
+              >
+            </li>
+          </ul>
+        </div>
+      </header>
+      <section id="intro" class="s-intro target-section">
+        <div class="row">
+            <div class="column">
+                <div class="s-intro__top-block">
+                    <span class="s-intro__bg"></span>
+                    <h1 class="s-intro__text" style="padding-bottom: 25%;">
+                        We're a creative group <br>
+                        of people who programs <br>
+                        websites, apps and <br>
+                        much more<span>.</span>
+                    </h1>
+    
+                    <a href="#services" class="s-intro__scroll-down smoothscroll">
+                        <span>Scroll Down</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            style="fill:rgba(0, 0, 0, 1);transform:rotate(180deg); filter:progid:DXImageTransform.Microsoft.BasicImage(rotation=2)">
+                            <path
+                                d="M21 11L6.414 11 11.707 5.707 10.293 4.293 2.586 12 10.293 19.707 11.707 18.293 6.414 13 21 13z">
+                            </path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="row row-x-center s-intro__about-wrap">
+            <div class="column s-intro__about">
+                <h2 class="s-intro__about-title">Hello, Welcome to CodeHub.</h2>
+    
+                <p>
+                  CodeHub is a full stack web based application project which manages projects of developers, students, CS teachers, etc.
+                </p>
+    
+                <a href="{{url_for('auth.register_email')}}" class="btn btn--primary u-fullwidth" style="text-align: center;">
+                  Sign up for CodeHub
+                </a>
+            </div>
+        </div>
+    
+        <div class="row about-stats stats block-lg-one-fourth block-md-one-half block-mob-whole" data-animate-block>
+            <div class="column stats__item" data-animate-el>
+                <div class="stats__count" data-counter=83><span>83</span>+</div>
+                <h5>Hours Work</h5>
+                <p>
+                    The number of hours it took to create CodeHub, a user-friendly, code manager, and collaborative online platform.
+                </p>
+            </div>
+            <div class="column stats__item" data-animate-el>
+                <div class="stats__count" data-counter=90><span>90</span>+</div>
+                <h5>Performance</h5>
+                <p>
+                    According to Google PageSpeed Insights, CodeHub's performance and accessibility are always 90+ out of
+                    100.
+                </p>
+            </div>
+            <div class="column stats__item" data-animate-el>
+                <div class="stats__count" data-counter={{members|length}}><span>{{members|length}}</span>+</div>
+                <h5>Memmbers Joinded</h5>
+                <p>
+                  <ul class="members">
+                      {% for member in members[0:3] %}
+                      <li>
+                          <a href="{{url_for('main.user', username=member.username)}}">{{ member.username }}</a> <cite>...
+                              recently joined</cite>
+                      </li>
+                      {% endfor %}
+                  </ul>
+                  {% if members|length >=5 %}
+                  <span>.... {{ members|length - 3 }} + other members</span>
+                  {% endif %}
+                </p>
+            </div>
+            <div class="column stats__item" data-animate-el>
+                <div class="stats__count" data-counter={{no|length}}><span>{{no|length}}</span>+</div>
+                <h5>Saved Projects</h5>
+                <p>
+                    CodeHub allows you to save your projects online, whether they are written in Python, C, C++,
+                    Java, HTML,
+                    or JS.
+                </p>
+            </div>
+        </div>
+        <div id="timeline-content">
+            <h1>Updates Timeline</h1>
+            <div class="timeline-container">
+                <ul class="timeline">
+                    {% for i in timeline[0:3] %}
+                    <li class="event" data-date="{{ i.date }}">
+                        <h5>{{ i.heading }}</h5>
+                        <p>{{ i.paragraph }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <section id="services" class="s-services target-section">
+    
+        <div class="row section-header has-bottom-sep">
+            <div class="column lg-12">
+                <h3 class="text-pretitle">What We Do</h3>
+                <h1 class="text-display-title">
+                    We host your projects and maintain them
+                </h1>
+            </div>
+        </div>
+    
+        <div class="row services-list block-lg-one-half block-tab-whole" data-animate-block>
+    
+            <div class="column service-item" data-animate-el>
+                <div class="service-icon-block">
+                    <span class="service-icon service-icon--product-design"></span>
+                </div>
+                <div class="service-text">
+                    <h3 class="h4">Any Language</h3>
+                    <p>
+                        You can write code in any language, such as python, c, c++, c#, html, css, js, java, php, and so on, and host it on
+                        CodeHub. It is now available for Python, but it will be opened for all other languages before <strong>June 2023</strong>.
+                    </p>
+                </div>
+            </div>
+    
+            <div class="column service-item" data-animate-el>
+                <div class="service-icon-block">
+                    <span class="service-icon service-icon--branding"></span>
+                </div>
+                <div class="service-text">
+                    <h3 class="h4">Productive</h3>
+                    <p>
+                        You do not have to worry about the lengthy code hosting procedure while using CodeHub to host your code. You just copy
+                        the code and put it into codehub. As a result, and you will save time and become more productive.
+                    </p>
+                </div>
+            </div>
+    
+            <div class="column service-item" data-animate-el>
+                <div class="service-icon-block">
+                    <span class="service-icon service-icon--frontend"></span>
+                </div>
+                <div class="service-text">
+                    <h3 class="h4">Accessibility</h3>
+                    <p>
+                        If you have access to the internet and gmail, you can access your project's code from anywhere in the world. Simply log
+                        in from any device, including mobile phones, PCs, laptops, and tablets, then log out when done.
+                    </p>
+                </div>
+            </div>
+    
+            <div class="column service-item" data-animate-el>
+                <div class="service-icon-block">
+                    <span class="service-icon service-icon--research"></span>
+                </div>
+                <div class="service-text">
+                    <h3 class="h4">Developer Support</h3>
+                    <p>
+                        You can collaborate on any project in CodeHub with another developer. Additionally, you can assist other developers with
+                        their projects. If you have any questions, recommendations, or want to work together, please contact us at <a  style="color: #fff;font-weight:bolder;text-decoration:underline;" href="#contact" class="smoothscroll">here</a>.
+                    </p>
+                </div>
+            </div>
+    
+        </div>
+    
+    </section>
+    
+    <section id="works" class="s-works target-section">
+    
+        <div class="row section-header section-header--dark has-bottom-sep">
+            <div class="column lg-12">
+                <h3 class="text-pretitle">Recent Works</h3>
+                <h1 class="text-display-title">Here are some of our projects we have done lately. Feel free
+                    to check them out.</h1>
+            </div>
+        </div>
+    
+        {% if files %}
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Project</th>
+                    <th scope="col">Developer</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for file in files[:5] %}
+                {% if file.private_file %}
+                {% else %}
+                <tr>
+                    <td data-label="Project"><a href="#">{{file.title}}</a></td>
+                    <td data-label="Developer">{{file.user.username.capitalize()}}</td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="text-align: center;">Work in progress !</p>
+        {% endif %}
+    
+    
+    </section>
+    
+    
+    <!-- ## contact
+                ================================================== -->
+    <section id="contact" class="s-contact target-section">
+    
+        <div class="row section-header section-header--dark"">
+                        <div class=" column lg-12">
+            <h3 class="text-pretitle">Get In Touch</h3>
+            <h1 class="text-display-title">Do you have an idea, question, help? Let's connect.</h1>
+        </div>
+        </div>
+    
+        <div class="row row-x-center text-center s-contact__content">
+            <div class="column lg-12">
+                <div class="form">
+                    <form action="https://formspree.io/f/xaykqyqg" method="POST">
+                        <div>
+                            <label for="sampleInput">Your email</label>
+                            <input class="u-fullwidth" type="email" placeholder="test@mailbox.com" id="sampleInput"
+                                name="email">
+                        </div>
+                        <div>
+                            <label for="sampleRecipientInput">Reason for contacting</label>
+                            <div class="ss-custom-select">
+                                <select class="u-fullwidth" id="sampleRecipientInput" name="reason">
+                                    <option value="Work Together">Work Together</option>
+                                    <option value="Help">Help</option>
+                                    <option value="Question">Question</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <label for="exampleMessage">Message</label>
+                        <textarea class="u-fullwidth" placeholder="Your message" id="exampleMessage"
+                            name="message" required></textarea>
+    
+                        <!-- <input class="btn--primary u-fullwidth" type="submit" value="Submit"> -->
+                        <button class="btn--primary u-fullwidth" type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+      <section class="s-contact target-section" style="padding: 0">
+        <footer class="s-footer" style="padding: 30px 0">
+          <div class="row s-footer__top">
+            <div
+              class="column lg-5 md-8 stack-on-700 s-footer__block contact-address"
+            >
+              <h4 class="h6">Where to Find Us</h4>
+
+              <p>
+                Pantnagar, US Nagar <br />
+                Uttarakhand, India
+              </p>
+            </div>
+
+            <div
+              class="column lg-3 md-4 stack-on-700 s-footer__block contact-social"
+            >
+              <h4 class="h6">Follow Us</h4>
+
+              <ul class="contact-list">
+                <li>
+                  <a href="https://www.linkedin.com/in/kamalkoranga/"
+                    >Linkedin</a
+                  >
+                </li>
+                <li>
+                  <a href="https://twitter.com/kamalskoranga17">Twitter</a>
+                </li>
+                <li><a href="https://github.com/Kamalkoranga">GitHub</a></li>
+              </ul>
+            </div>
+
+            <div class="column lg-3 md-12 s-footer__block contact-number">
+              <h4 class="h6">Contact Us</h4>
+
+              <ul class="contact-list">
+                <li>
+                  <a href="mailto:devemail13.1@gmail.com"
+                    >devemail13.1@gmail.com</a
+                  >
+                </li>
+                <li><a href="tel:197-543-2345">+91 9410561937</a></li>
+                <li><a href="tel:197-123-9876">+91 9670011603</a></li>
+              </ul>
+            </div>
+          </div>
+          <!-- end s-footer__top -->
+
+          <div class="row s-footer__bottom">
+            <div class="column ss-copyright">
+              <span>© <span id="current-year"></span> CodeHub, Inc.</span>
+              <span>By <a href="#">Kamal Koranga</a></span>
+            </div>
+
+            <div class="ss-go-top">
+              <a class="smoothscroll" title="Back to Top" href="#top">
+                <span class="ss-go-top__icon">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    style="
+                      fill: rgba(0, 0, 0, 1);
+                      transform: rotate(90deg);
+                      filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1);
+                    "
+                  >
+                    <path
+                      d="M6 4H18V6H6zM11 14L11 20 13 20 13 14 18 14 12 8 6 14z"
+                    ></path>
+                  </svg>
+                </span>
+                <span class="ss-go-top__text">Back to Top</span>
+              </a>
+            </div>
+          </div>
+          <!-- end s-footer__top -->
+        </footer>
+      </section>
+    </div>
+
+    <!-- photoswipe background
+    ================================================== -->
+    <div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+      <div class="pswp__bg"></div>
+      <div class="pswp__scroll-wrap">
+        <div class="pswp__container">
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+          <div class="pswp__item"></div>
+        </div>
+
+        <div class="pswp__ui pswp__ui--hidden">
+          <div class="pswp__top-bar">
+            <div class="pswp__counter"></div>
+            <button
+              class="pswp__button pswp__button--close"
+              title="Close (Esc)"
+            ></button>
+            <button
+              class="pswp__button pswp__button--share"
+              title="Share"
+            ></button>
+            <button
+              class="pswp__button pswp__button--fs"
+              title="Toggle fullscreen"
+            ></button>
+            <button
+              class="pswp__button pswp__button--zoom"
+              title="Zoom in/out"
+            ></button>
+            <div class="pswp__preloader">
+              <div class="pswp__preloader__icn">
+                <div class="pswp__preloader__cut">
+                  <div class="pswp__preloader__donut"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"
+          >
+            <div class="pswp__share-tooltip"></div>
+          </div>
+          <button
+            class="pswp__button pswp__button--arrow--left"
+            title="Previous (arrow left)"
+          ></button>
+          <button
+            class="pswp__button pswp__button--arrow--right"
+            title="Next (arrow right)"
+          ></button>
+          <div class="pswp__caption">
+            <div class="pswp__caption__center"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end photoSwipe background -->
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    <script
+      src="https://kit.fontawesome.com/80b2cf2fe8.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <script>
+      const year = document.querySelector("#current-year");
+      year.innerHTML = new Date().getFullYear();
+    </script>
+    {% block script %}{% endblock script %} {{ moment.include_moment() }}
+  </body>
+</html>

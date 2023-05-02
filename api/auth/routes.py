@@ -205,4 +205,4 @@ def reset_password(token):
         return jsonify({'msg': 'user not found'}), 400
     user.set_password(data['new_password'])
     db.session.commit()
-    return jsonify({'msg': 'password reseted!'}), 200
+    return jsonify({'msg': 'password reseted!'}), 200  # password changed page
