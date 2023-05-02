@@ -178,3 +178,31 @@ def verify(username):
             'msg': 'user verified',
             'access_token': access_token}), 200
     return jsonify({'msg': 'otp is wrong'}), 400
+
+
+@auth.route('/reset_password_request', methods=['POST'])
+def reset_password_request():
+    data = request.get_json()
+    user = User.query.filter_by(email=data['email']).first()
+    if not user:
+        return jsonify({'msg': 'user not found'}), 400
+    token = user.get_reset_password_token()
+    send_email(
+        user.email,
+        'Reset Password',
+        'email/reset_password',
+        user=user,
+        token=token
+    )
+    return jsonify({'msg': 'reset password email sent'}), 200
+
+
+@auth.route('/reset_password/<token>', methods=['POST'])
+def reset_password(token):
+    data = request.get_json()
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return jsonify({'msg': 'user not found'}), 400
+    user.set_password(data['new_password'])
+    db.session.commit()
+    return jsonify({'msg': 'password reseted!'}), 200
