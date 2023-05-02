@@ -17,6 +17,11 @@ from api import db
 '''GET METHODS'''
 
 
+@main.route('/')
+def index():
+    return 'Hello Api'
+
+
 @main.route('/users/<username>', methods=['GET'])
 def get_one_user(username):
     user = User.query.filter_by(username=username).first()
