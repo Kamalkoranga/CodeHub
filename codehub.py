@@ -9,5 +9,5 @@ def make_shell_context():
     return {'db': db, 'User': User, 'file': File, 'comment': Comment}
 
 
-if __name__ == '__main__':
-    api.run(debug=True)
+# if __name__ == '__main__':
+#     api.run(debug=True)
