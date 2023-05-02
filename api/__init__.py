@@ -3,9 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_moment import Moment
 from config import Config, Development
-from flask_socketio import SocketIO
 from flask_jwt_extended import JWTManager
 
 db = SQLAlchemy()
@@ -14,12 +12,10 @@ login_manager = LoginManager()
 login_manager.login_view = 'auth.login_email'
 login_manager.login_message = 'Please log in to access this page.'
 mail = Mail()
-moment = Moment()
-socketio = SocketIO()
 jwt = JWTManager()
 
 
-def create_app(config_class=Development):
+def create_app(config_class=Config):
     api = Flask(__name__)
     api.config.from_object(config_class)
 
@@ -28,8 +24,6 @@ def create_app(config_class=Development):
     jwt.init_app(api)
     login_manager.init_app(api)
     mail.init_app(api)
-    moment.init_app(api)
-    socketio.init_app(api, cors_allowed_origins="*")
 
     # from app.errors import bp as errors_bp
     # api.register_blueprint(errors_bp)
