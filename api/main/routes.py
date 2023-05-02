@@ -1,11 +1,20 @@
 from flask import jsonify, request
 from api.main import main
-from api.models import User, TimeLine, Upload, Comment, Like
+from api.models import User, TimeLine, File, Comment, Like
 from api import db
+# from flask_login import current_user
 
-'''
-    GET METHODS
-'''
+
+# @main.route('/current_user', methods=['GET'])
+# def get_current_user():
+#     return jsonify({
+#         "id": current_user.id,
+#         "username": current_user.username,
+#         "email": current_user.email
+#     }), 200
+
+
+'''GET METHODS'''
 
 
 @main.route('/users/<username>', methods=['GET'])
@@ -21,9 +30,9 @@ def get_one_user(username):
         "username": user.username,
         "email": user.email,
         "is_verified": user.isverified,
-        "no_of_files": user.uploads.count(),
+        "no_of_files": user.files.count(),
         "files": {
-            j: user.uploads[j].filename for j in range(user.uploads.count())},
+            j: user.files[j].filename for j in range(user.files.count())},
         "about": user.about_me,
         "last_seen": user.last_seen,
         "following": {j: following[j].username for j in range(len(following))},
@@ -36,7 +45,7 @@ def get_users():
     users = User.query.all()
     response = {}
     for i in range(len(users)):
-        no_of_files = users[i].uploads.count()
+        no_of_files = users[i].files.count()
         response[i] = {
             "id": users[i].id,
             "name": users[i].name,
@@ -45,7 +54,7 @@ def get_users():
             "is_verified": users[i].isverified,
             "no_of_files": no_of_files,
             "files": {
-                j: users[i].uploads[j].filename for j in range(no_of_files)},
+                j: users[i].files[j].filename for j in range(no_of_files)},
             "about": users[i].about_me,
             "last_seen": users[i].last_seen
         }
@@ -67,7 +76,7 @@ def get_timelines():
 
 @main.route('/files/<filename>', methods=['GET'])
 def get_one_file(filename):
-    file = Upload.query.filter_by(filename=filename).first()
+    file = File.query.filter_by(filename=filename).first()
     if not file:
         return jsonify({'msg': 'file not found'}), 400
 
@@ -96,7 +105,7 @@ def get_one_file(filename):
 
 @main.route('/files', methods=['GET'])
 def get_files():
-    files = Upload.query.all()
+    files = File.query.all()
     response = {}
     for i in range(len(files)):
         response[i] = {
@@ -145,13 +154,16 @@ def add_new_timeline():
 @main.route('/file/<username>', methods=['POST'])
 def add_new_file(username):
     data = request.get_json()
-    new_file = Upload(
+    user = User.query.filter_by(username=username).first()
+    if not user:
+        return jsonify({'msg': 'user not found'}), 400
+    new_file = File(
         title=data['title'],
         description=data['description'],
         filename=data['filename'],
         data=data['data'],
-        private_file=True if data['priva6te_file'] == 'True' else False,
-        user_id=username
+        private_file=True if data['private_file'] == 'True' else False,
+        user_id=user.id
     )
     db.session.add(new_file)
     db.session.commit()
@@ -175,13 +187,13 @@ def add_new_user():
 @main.route('/comment/<filename>', methods=['POST'])
 def add_new_comment(filename):
     data = request.get_json()
-    file = Upload.query.filter_by(filename=filename).first()
+    file = File.query.filter_by(filename=filename).first()
     if file is None:
         return jsonify({'msg': 'file not found'}), 400
     new_comment = Comment(
         author=data['author'],
         content=data['content'],
-        upload_id=file.id
+        file_id=file.id
     )
     db.session.add(new_comment)
     db.session.commit()
@@ -191,16 +203,15 @@ def add_new_comment(filename):
 @main.route('/like/<filename>', methods=['POST', 'GET'])
 def like_file(filename):
     data = request.get_json()
-    file = Upload.query.filter_by(filename=filename).first()
+    file = File.query.filter_by(filename=filename).first()
+    if not file:
+        return jsonify({'msg': 'file not found'}), 400
     like = Like.query.filter_by(
         author=data['author'],
-        upload_id=file.id
+        file_id=file.id
     ).first()
 
-    if not file:
-        return jsonify({"error": "File does not exist."}, 400)
-
-    elif like:
+    if like:
         db.session.delete(like)
         db.session.commit()
         return jsonify({'msg': 'unliked'})
@@ -208,7 +219,7 @@ def like_file(filename):
     else:
         like = Like(
             author=data['author'],
-            upload_id=file.id
+            file_id=file.id
         )
         db.session.add(like)
         db.session.commit()
@@ -234,13 +245,45 @@ def follow_unfollow_user(username):
 
 
 '''
+    PUT (UPDATE) METHODS
+'''
+
+
+@main.route('/edit_profile', methods=['PUT'])
+def edit_profile():
+    data = request.get_json()
+    current_user = User.query.filter_by(username=data['current_user']).first()
+    current_user.name = data['name']
+    current_user.username = data['username']
+    current_user.email = data['email']
+    current_user.about_me = data['about']
+    db.session.commit()
+    return jsonify({'msg': 'updated'}), 200
+
+
+@main.route('/edit_file/<filename>', methods=['PUT'])
+def edit_file(filename):
+    file = File.query.filter_by(filename=filename).first()
+    if not file:
+        return jsonify({'msg': 'file not found'}), 400
+    data = request.get_json()
+    file.title = data['title']
+    file.description = data['description']
+    file.filename = data['filename']
+    file.data = data['data']
+    file.private_file = True if data['private_file'] == 'True' else False
+    db.session.commit()
+    return jsonify({'msg': 'file updated!'}), 200
+
+
+'''
     DELETE METHODS
 '''
 
 
 @main.route('/files/<filename>', methods=['DELETE'])
 def delete_file(filename):
-    file = Upload.query.filter_by(filename=filename).first()
+    file = File.query.filter_by(filename=filename).first()
     if not file:
         return jsonify({'msg': 'file not found'}), 400
     db.session.delete(file)
@@ -252,8 +295,8 @@ def delete_file(filename):
 def delete_user(username):
     user = User.query.filter_by(username=username).first()
     if user:
-        if user.uploads:
-            files = user.uploads
+        if user.files:
+            files = user.files
             for file in files:
                 db.session.delete(file)
                 db.session.commit()
