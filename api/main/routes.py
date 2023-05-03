@@ -93,7 +93,7 @@ def get_one_file(filename):
         "is_private_file": file.private_file,
         "created_at": file.timestamp,
         "user_id": file.user_id,
-        "developer": file.user_id,
+        "developer": file.user.username,
         "comments": {
             j: {
                 file.comments[j].author: file.comments[j].content
@@ -122,7 +122,7 @@ def get_files():
             "is_private_file": files[i].private_file,
             "created_at": files[i].timestamp,
             "user_id": files[i].user_id,
-            "developer": files[i].user_id,
+            "developer": files[i].user.username,
             "comments": {
                 j: {
                     'id': files[i].comments[j].id,

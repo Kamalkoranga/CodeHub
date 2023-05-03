@@ -113,7 +113,8 @@ async function get_all_files() {
                         const username = document.createElement("a");
 
                         title.innerHTML = file.title;
-                        username.innerHTML = file.user_id;
+                        username.innerHTML = file.developer;
+                        username.style.textTransform = "uppercase";
                         td1.appendChild(title);
                         td2.appendChild(username);
                         td1.setAttribute("data-label", "Project");
