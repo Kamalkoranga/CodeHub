@@ -16,6 +16,7 @@
     ================================================== -->
     <link rel="stylesheet" href="css/vendor.css" />
     <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/custom.css" />
 
     <!-- favicons
     ================================================== -->
@@ -45,7 +46,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <style>
+    <!-- <style>
       ::-webkit-scrollbar {
         width: 10px;
       }
@@ -71,7 +72,8 @@
         color: #fff;
         font-weight: 500;
       }
-    </style>
+    </style> -->
+    <script defer src="js/api.js"></script>
   </head>
 
   <body id="top">
@@ -173,21 +175,10 @@
                 </p>
             </div>
             <div class="column stats__item" data-animate-el>
-                <div class="stats__count" data-counter={{members|length}}><span>{{members|length}}</span>+</div>
-                <h5>Memmbers Joinded</h5>
-                <p>
-                  <ul class="members">
-                      {% for member in members[0:3] %}
-                      <li>
-                          <a href="{{url_for('main.user', username=member.username)}}">{{ member.username }}</a> <cite>...
-                              recently joined</cite>
-                      </li>
-                      {% endfor %}
-                  </ul>
-                  {% if members|length >=5 %}
-                  <span>.... {{ members|length - 3 }} + other members</span>
-                  {% endif %}
-                </p>
+                <div class="stats__count no_of_users_div"><span class="no_of_users"></span>+</div>
+                <h5>Memmbers Joined</h5>
+                <ul class="members"></ul>
+                <span class="members_span"></span>
             </div>
             <div class="column stats__item" data-animate-el>
                 <div class="stats__count" data-counter={{no|length}}><span>{{no|length}}</span>+</div>
@@ -202,14 +193,7 @@
         <div id="timeline-content">
             <h1>Updates Timeline</h1>
             <div class="timeline-container">
-                <ul class="timeline">
-                    {% for i in timeline[0:3] %}
-                    <li class="event" data-date="{{ i.date }}">
-                        <h5>{{ i.heading }}</h5>
-                        <p>{{ i.paragraph }}</p>
-                    </li>
-                    {% endfor %}
-                </ul>
+                <ul class="timeline"></ul>
             </div>
         </div>
     </section>
@@ -519,6 +503,5 @@
       const year = document.querySelector("#current-year");
       year.innerHTML = new Date().getFullYear();
     </script>
-    {% block script %}{% endblock script %} {{ moment.include_moment() }}
   </body>
 </html>
