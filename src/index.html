@@ -181,7 +181,7 @@
                 <span class="members_span"></span>
             </div>
             <div class="column stats__item" data-animate-el>
-                <div class="stats__count" data-counter={{no|length}}><span>{{no|length}}</span>+</div>
+                <div class="stats__count no_of_files_div"><span class="no_of_files"></span>+</div>
                 <h5>Saved Projects</h5>
                 <p>
                     CodeHub allows you to save your projects online, whether they are written in Python, C, C++,
@@ -276,32 +276,19 @@
                     to check them out.</h1>
             </div>
         </div>
-    
-        {% if files %}
-        <table>
+
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">Project</th>
                     <th scope="col">Developer</th>
                 </tr>
             </thead>
-            <tbody>
-                {% for file in files[:5] %}
-                {% if file.private_file %}
-                {% else %}
-                <tr>
-                    <td data-label="Project"><a href="#">{{file.title}}</a></td>
-                    <td data-label="Developer">{{file.user.username.capitalize()}}</td>
-                </tr>
-                {% endif %}
-                {% endfor %}
-            </tbody>
+            <tbody class="table_body"></tbody>
         </table>
-        {% else %}
-        <p style="text-align: center;">Work in progress !</p>
-        {% endif %}
-    
-    
+        <p style="text-align: center;" class="no_file_msg">
+          Work in progress !
+        </p>
     </section>
     
     

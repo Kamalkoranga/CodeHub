@@ -81,11 +81,64 @@ async function get_all_users() {
     }
 }
 
+async function get_all_files() {
+    const url = 'https://codehub.p.rapidapi.com/files';
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '13a3fdc433mshc472900b88d594cp11dce7jsnadce2b996b30',
+            'X-RapidAPI-Host': 'codehub.p.rapidapi.com'
+        }
+    };
 
+    try {
+        const response = await fetch(url, options);
+        const files = await response.json();
+
+        const no_of_files = Object.keys(files).length;
+        document.querySelector(".no_of_files_div").setAttribute("data-counter", no_of_files);
+        document.querySelector(".no_of_files").innerHTML = no_of_files;
+
+        if (no_of_files >= 1) {
+            document.querySelector('.no_file_msg').style.display  = "none";
+            for (let i  in files) {
+                if (i < 5) {
+                    const file = files[i];
+                    if (!file.is_private_file) {
+                        const parent = document.querySelector('.table_body');
+                        const tr = document.createElement("tr");
+                        const td1 = document.createElement("td");
+                        const td2 = document.createElement("td");
+                        const title = document.createElement("a");
+                        const username = document.createElement("a");
+
+                        title.innerHTML = file.title;
+                        username.innerHTML = file.user_id;
+                        td1.appendChild(title);
+                        td2.appendChild(username);
+                        td1.setAttribute("data-label", "Project");
+                        td2.setAttribute("data-label", "Developer");
+                        tr.appendChild(td1);
+                        tr.appendChild(td2);
+                        parent.appendChild(tr);
+                    }
+                }
+                else {
+                    break;
+                }
+            }
+        }
+        else {
+            document.querySelector('.table').style.display = "none";
+        }
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 // Function Call
 get_timelines();
 get_all_users();
-
+get_all_files();
 
 // window.onload = onload_func;
