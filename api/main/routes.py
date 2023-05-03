@@ -225,6 +225,9 @@ def follow_unfollow_user(username):
     if user is None:
         return jsonify({'msg': 'user not found!'}), 400
 
+    if current_user == user:
+        return jsonify({'msg': "can't follow/unfollow yourself"}), 400
+
     if current_user.is_following(user):
         current_user.unfollow(user)
         db.session.commit()
@@ -244,7 +247,13 @@ def follow_unfollow_user(username):
 def edit_profile():
     data = request.get_json()
     current_user = User.query.filter_by(username=data['current_user']).first()
+    if not current_user:
+        return jsonify({'msg': 'user not found'}), 400
     current_user.name = data['name']
+    username_validate = User.query.filter_by(username=data['username']).first()
+    email_validate = User.query.filter_by(email=data['email']).first()
+    if username_validate is not None or email_validate is not None:
+        return jsonify({'msg': 'username or email has taken'}), 201
     current_user.username = data['username']
     current_user.email = data['email']
     current_user.about_me = data['about']

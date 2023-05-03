@@ -2,7 +2,7 @@ import os
 import pathlib
 from google_auth_oauthlib.flow import Flow
 from ..auth import auth
-from flask import request, jsonify, session, redirect, abort, current_app
+from flask import request, jsonify, session, redirect, abort, current_app, url_for
 from ..models import User
 from flask_jwt_extended import create_access_token
 import requests
@@ -44,7 +44,8 @@ def login():
     if not user.check_password(password):
         return jsonify({'msg': 'incorrect password'}), 400
     if not user.isverified:
-        return jsonify({'msg': 'user is not verfied..'}), 400
+        verify_request(username=username)
+        return jsonify({'msg': 'verify the user first..'}), 400
     access_token = create_access_token(identity=username)
     return jsonify({'access_token': access_token}), 200
 
@@ -136,7 +137,7 @@ def register_google():
     return redirect(authorization_url)
 
 
-@auth.route('/verify_request/<username>', methods=['GET'])
+# @auth.route('/verify_request/<username>', methods=['GET'])
 def verify_request(username):
     user = User.query.filter_by(username=username).first()
     otp = random.randint(100000, 999999)
@@ -149,7 +150,7 @@ def verify_request(username):
     )
     user.set_otp(otp)
     db.session.commit()
-    return jsonify({'msg': 'otp sent'}), 200
+    # return jsonify({'msg': 'otp sent'}), 200
 
 
 @auth.route('/verify/<username>', methods=['POST'])
