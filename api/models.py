@@ -110,7 +110,7 @@ class File(db.Model):
     private_file = db.Column(db.Boolean)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    comments = db.relationship('Comment', backref='file')
+    comments = db.relationship('Comment', backref='file', passive_deletes=True)
     likes = db.relationship('Like', backref='file', passive_deletes=True)
 
     def __repr__(self) -> str:
@@ -127,7 +127,8 @@ class Comment(db.Model):
     author = db.Column(db.String(100))
     content = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    file_id = db.Column(db.Integer, db.ForeignKey('file.id'))
+    file_id = db.Column(db.Integer, db.ForeignKey(
+        'file.id', ondelete="CASCADE"), nullable=False)
 
     def __repr__(self):
         return f'<Comment "{self.content[:20]}...">'
@@ -140,7 +141,6 @@ class Like(db.Model):
         'user.id', ondelete="CASCADE"), nullable=False)
     file_id = db.Column(db.Integer, db.ForeignKey(
         'file.id', ondelete="CASCADE"), nullable=False)
-    comment_id = db.Column(db.Integer, db.ForeignKey('comment.id'))
 
 
 class TimeLine(db.Model):
