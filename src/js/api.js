@@ -12,19 +12,24 @@ async function get_timelines() {
         const response = await fetch(url, options);
         const result = await response.json();
         for (let i in result) {
-            const element = result[i];
-            const li = document.createElement("li");
-            const title = document.createElement("h5");
-            const body = document.createElement("p");
-            title.innerHTML = element['title'];
-            body.innerHTML = element['body'];
-            li.className = 'event';
-            li.setAttribute("data-date", element["date"]);
-            li.appendChild(title);
-            li.appendChild(body);
-
-            const parent = document.querySelector('.timeline');
-            parent.appendChild(li);
+            if (i < 3) {
+                const element = result[i];
+                const li = document.createElement("li");
+                const title = document.createElement("h5");
+                const body = document.createElement("p");
+                title.innerHTML = element['title'];
+                body.innerHTML = element['body'];
+                li.className = 'event';
+                li.setAttribute("data-date", element["date"]);
+                li.appendChild(title);
+                li.appendChild(body);
+    
+                const parent = document.querySelector('.timeline');
+                parent.appendChild(li);
+            }
+            else {
+                break;
+            }
         }
     } catch (error) {
         console.error(error);
