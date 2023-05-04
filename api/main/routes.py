@@ -68,7 +68,7 @@ def get_users():
 
 @main.route('/timelines', methods=['GET'])
 def get_timelines():
-    timelines = TimeLine.query.all()
+    timelines = TimeLine.query.order_by(TimeLine.id.desc()).all()
     response = {}
     for i in range(len(timelines)):
         response[i] = {
