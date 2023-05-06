@@ -124,16 +124,16 @@ def index():
     else:
         page1 = request.args.get('page', 1, type=int)
         posts1 = current_user.followed.paginate(
-            page1,
-            current_app.config['POSTS_PER_PAGE'],
-            False
+            page=page1,
+            per_page=current_app.config['POSTS_PER_PAGE'],
+            error_out=False
         )
 
         page2 = request.args.get('page', 1, type=int)
         posts2 = Upload.query.order_by(Upload.timestamp.desc()).paginate(
-            page2,
-            current_app.config['POSTS_PER_PAGE'],
-            False
+            page=page2,
+            per_page=current_app.config['POSTS_PER_PAGE'],
+            error_out=False
         )
 
         next_url1 = url_for(
@@ -304,7 +304,9 @@ def user(username):
     files = Upload.query.all()
     page = request.args.get('page', 1, type=int)
     posts = user.uploads.order_by(Upload.timestamp.desc()).paginate(
-        page, current_app.config['POSTS_PER_PAGE'], False
+        page=page,
+        per_page=current_app.config['POSTS_PER_PAGE'],
+        error_out=False
     )
     next_url = url_for(
         'main.user', username=user.username, page=posts.next_num
