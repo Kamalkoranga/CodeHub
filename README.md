@@ -1,5 +1,5 @@
 <p  align="center">
-<img src="https://user-images.githubusercontent.com/83089446/204849589-0ab4f315-b630-4de0-9475-04ed851f5af4.png">
+<img src="https://media.licdn.com/dms/image/D4D16AQGh4dM-y6KAMw/profile-displaybackgroundimage-shrink_350_1400/0/1680019229317?e=1688601600&v=beta&t=8ZpTacHNl4zetDeCx4jU5gDI8thJBUhls7oN6CKg1ZQ">
 </p>
 
 # [Codehub](https://codehub.gq)- Alternative of GitHub
@@ -48,5 +48,5 @@ Contributions are always welcome!
 
 ## Feedback
 
-If you have any feedback, please contact us at [instagram](https://www.instagram.com/kamalskoranga/).
+If you have any feedback, please contact us at kamalkoranga75@gmail.com.
 
