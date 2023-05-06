@@ -12,7 +12,7 @@ class Config(object):
     SQLALCHEMY_POOL_RECYCLE = 299  # may be solution of Operational Error
     LOG_TO_STDOUT = os.getenv('LOG_TO_STDOUT')
     SQLALCHEMY_ENABLE_POOL_PRE_PING = True
-    POSTS_PER_PAGE = 30
+    POSTS_PER_PAGE = 3
     MAIL_SERVER = os.getenv('MAIL_SERVER')
     MAIL_PORT = int(os.getenv('MAIL_PORT'))
     MAIL_USE_TLS = os.getenv('MAIL_USE_TLS') is not None
