@@ -31,14 +31,45 @@ import google.auth.transport.requests
 from flask_mail import Message
 from threading import Thread
 from random import randint
+from dotenv import load_dotenv
+import json
+
+load_dotenv()
 
 os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
-
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+PROJECT_ID = os.getenv('PROJECT_ID')
+AUTH_URI = os.getenv('AUTH_URI')
+TOKEN_URI = os.getenv('TOKEN_URI')
+CERT_URL = os.getenv('CERT_URL')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
+REDIRECT_URI = os.getenv('REDIRECT_URI')
+REDIRECT_URI2 = os.getenv('REDIRECT_URI2')
+
 client_secrets_file = os.path.join(
     pathlib.Path(__file__).parent,
     "client_secret.json"
 )
+
+# Update client_secret.json with environment variables
+client_secrets_data = {
+    "web": {
+        "client_id": GOOGLE_CLIENT_ID,
+        "project_id": PROJECT_ID,
+        "auth_uri": AUTH_URI,
+        "token_uri": TOKEN_URI,
+        "auth_provider_x509_cert_url": CERT_URL,
+        "client_secret": CLIENT_SECRET,
+        "redirect_uris": [
+            REDIRECT_URI,
+            REDIRECT_URI2
+        ]
+    }
+}
+
+# Write the updated client_secret.json file
+with open(client_secrets_file, 'w') as f:
+    json.dump(client_secrets_data, f)
 
 flow = Flow.from_client_secrets_file(
     client_secrets_file=client_secrets_file,
@@ -47,8 +78,8 @@ flow = Flow.from_client_secrets_file(
         "https://www.googleapis.com/auth/userinfo.email",
         "openid"
     ],
-    # redirect_uri="https://127.0.0.1:5000/auth/callback"
-    redirect_uri=os.getenv('REDIRECT_URI')
+    # redirect_uri=REDIRECT_URI2
+    redirect_uri=REDIRECT_URI
 )
 
 
