@@ -8,7 +8,7 @@ from flask import (
     abort,
     current_app
 )
-from werkzeug.urls import url_parse
+from urllib.parse import urlparse as url_parse
 from flask_login import login_user, logout_user, current_user
 from app import db, mail
 from app.auth import bp
@@ -78,8 +78,9 @@ flow = Flow.from_client_secrets_file(
         "https://www.googleapis.com/auth/userinfo.email",
         "openid"
     ],
-    # redirect_uri=REDIRECT_URI2
-    redirect_uri=REDIRECT_URI
+    # Change here for testing in local machine
+    redirect_uri=REDIRECT_URI2
+    # redirect_uri=REDIRECT_URI
 )
 
 
