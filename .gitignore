@@ -168,3 +168,4 @@ app.db
 .vscode/
 data.sqlite
 app/auth/client_secret.json
+*.sqlite
