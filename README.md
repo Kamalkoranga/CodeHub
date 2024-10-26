@@ -1,5 +1,4 @@
-![back_photo](![Add a subheading](https://github.com/Kamalkoranga/CodeHub/assets/83089446/b703937f-f33e-41fc-bd93-259900d914e6)
-)
+![Background](assets/codehub-bg.png)
 
 # [Codehub](https://codehub.onrender.com)- Alternative of GitHub
 
@@ -28,4 +27,4 @@ Technologies used in building CodeHub:
 - **Hosting** -> Railway
 
 ## Dashboard
-![image](https://github.com/Kamalkoranga/CodeHub/assets/83089446/45cb6b24-156d-41ab-b996-745c59282baa)
+![DashBoard](assets/codehub-dashboard.png)
