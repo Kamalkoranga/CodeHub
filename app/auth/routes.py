@@ -79,8 +79,8 @@ flow = Flow.from_client_secrets_file(
         "openid"
     ],
     # Change here for testing in local machine
-    redirect_uri=REDIRECT_URI2
-    # redirect_uri=REDIRECT_URI
+    # redirect_uri=REDIRECT_URI2
+    redirect_uri=REDIRECT_URI
 )
 
 
@@ -108,7 +108,7 @@ def login_email():
 def login():
     authorization_url, state = flow.authorization_url()
     session["state"] = state
-    # print(authorization_url)
+    print('a: ', authorization_url)
     return redirect(authorization_url)
 
 
